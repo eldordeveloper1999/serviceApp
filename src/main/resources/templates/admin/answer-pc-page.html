@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Service App</title>
+    <link rel="stylesheet" href="../../vendors/typicons.font/font/typicons.css">
+    <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="../../vendors/select2/select2.min.css">
+    <link rel="stylesheet" href="../../vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/vertical-layout-light/style.css">
+    <link rel="shortcut icon" href="../../images/favicon.png"/>
+</head>
+
+<body>
+<div class="container-scroller">
+    <nav th:replace="layouts/navbar :: navbar"></nav>
+    <div class="container-fluid page-body-wrapper">
+        <div class="theme-setting-wrapper">
+            <div id="settings-trigger"><i class="typcn typcn-cog-outline"></i></div>
+            <div id="theme-settings" class="settings-panel">
+                <i class="settings-close typcn typcn-delete-outline"></i>
+                <p class="settings-heading">SIDEBAR SKINS</p>
+                <div class="sidebar-bg-options" id="sidebar-light-theme">
+                    <div class="img-ss rounded-circle bg-light border mr-3"></div>
+                    Light
+                </div>
+                <div class="sidebar-bg-options selected" id="sidebar-dark-theme">
+                    <div class="img-ss rounded-circle bg-dark border mr-3"></div>
+                    Dark
+                </div>
+                <p class="settings-heading mt-2">HEADER SKINS</p>
+                <div class="color-tiles mx-0 px-4">
+                    <div class="tiles success"></div>
+                    <div class="tiles warning"></div>
+                    <div class="tiles danger"></div>
+                    <div class="tiles primary"></div>
+                    <div class="tiles info"></div>
+                    <div class="tiles dark"></div>
+                    <div class="tiles default border"></div>
+                </div>
+            </div>
+        </div>
+
+        <nav th:replace="layouts/sidebar :: sidebar"></nav>
+
+        <!-- partial -->
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="row">
+                    <div class="col-12 grid-margin">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Buyurtmani tugatish</h4>
+                                <form class="form-sample" method="post" th:action="@{/pc/continue}"
+                                      th:object="${pcOrderDto}">
+                                    <p class="card-description">
+                                        Buyurtmani yakunlash
+                                    </p>
+                                    <form class="form-sample">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-3 col-form-label">Buyurtma nomi</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="hidden" name="id" th:field="*{id}"
+                                                               th:value="${pcOrderDto.id}"/>
+                                                        <input type="hidden" name="id" th:field="*{is_full}"
+                                                               th:value="${pcOrderDto.is_full}"/>
+                                                        <input type="text" class="form-control" th:field="*{title}"
+                                                               th:value="${pcOrderDto.getTitle()}" readonly/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-3 col-form-label">Tavsif</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" class="form-control"
+                                                               th:field="*{description}" name="description"
+                                                               th:value="${pcOrderDto.getTaskDescription()}" readonly/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-3 col-form-label">Bo'lim</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" class="form-control" name="department"
+                                                               th:field="*{department}"
+                                                               th:value="${pcOrderDto.department}" readonly/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-3 col-form-label">Inventar raqami</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" class="form-control" name="department"
+                                                               th:field="*{inventarNumber}"
+                                                               th:value="${pcOrderDto.inventarNumber}" readonly/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="card-description">
+                                            Buyurtma berilgan sana
+                                        </p>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-3 col-form-label">Sana</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" class="form-control" name="date"
+                                                               th:field="*{start_date}"
+                                                               th:value="${pcOrderDto.getDate()}" readonly/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-3 col-form-label">Vaqt</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" class="form-control" name="start_time"
+                                                               th:field="*{start_time}"
+                                                               th:value="${pcOrderDto.getStart_time()}" readonly/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="card-description">
+                                            Buyurtma tugatilgan sana
+                                        </p>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-3 col-form-label">Sana</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" class="form-control" th:field="*{date}"
+                                                               th:value="${pcOrderDto.date}" readonly/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-3 col-form-label">Vaqt</label>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" class="form-control" th:field="*{time}"
+                                                               th:value="${pcOrderDto.time}" readonly/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-3 col-form-label">Natija</label>
+                                                    <div class="col-sm-9">
+                                                        <select class="form-control" th:field="*{answerName}">
+                                                            <div th:each="answer1 : ${answers}">
+                                                                <option th:value="${answer1.getName()}">
+                                                                    [[${answer1.getName()}]]
+                                                                </option>
+                                                            </div>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-3 col-form-label">Natija</label>
+                                                    <div class="col-sm-9">
+                                                        <textarea rows="4" cols="50" name="comment"
+                                                                  class="form-control" th:field="*{description}">Izoh qoldiring ...</textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" th:if="${pcOrderDto.getIs_full() == true}">
+                                            <button type="submit" class="btn btn-primary mr-2">Davom etish</button>
+                                            <input class="btn btn-light" type="button" value="Bekor qilish!"
+                                                   onclick="history.back()">
+                                        </div>
+                                        <div class="form-group" th:if="${pcOrderDto.getIs_full() == false}">
+                                          <button type="submit" class="btn btn-primary mr-2" disabled
+                                                    title="Buyurtma beruvchi hali tasdiqlamadi">Tugatish
+                                            </button>
+                                            <input class="btn btn-light" type="button" value="Bekor qilish!"
+                                                   onclick="history.back()">
+                                        </div>
+                                        <div class="text-right">
+                                            <a class="btn btn-sm btn-secondary"
+                                               th:href="@{'/pc/expense/' + ${pcOrderDto.getId()}}">Xarajatlarni kiritish</a>
+                                        </div>
+                                    </form>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../../vendors/js/vendor.bundle.base.js"></script>
+</div>
+<script src="../../js/off-canvas.js"></script>
+<script src="../../js/hoverable-collapse.js"></script>
+<script src="../../js/template.js"></script>
+<script src="../../js/settings.js"></script>
+<script src="../../js/todolist.js"></script>
+<script src="../../vendors/typeahead.js/typeahead.bundle.min.js"></script>
+<script src="../../vendors/select2/select2.min.js"></script>
+<script src="../../js/file-upload.js"></script>
+<script src="../../js/typeahead.js"></script>
+<script src="../../js/select2.js"></script>
+</body>
+
+</html>

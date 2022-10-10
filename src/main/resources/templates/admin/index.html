@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="vendors/typicons.font/font/typicons.css">
+    <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="css/vertical-layout-light/style.css">
+    <link rel="shortcut icon" href="images/favicon.png"/>
+</head>
+<body>
+<div class="container-scroller">
+    <nav th:replace="layouts/navbar :: navbar"></nav>
+    <div class="container-fluid page-body-wrapper">
+        <div class="theme-setting-wrapper">
+            <div id="settings-trigger"><i class="typcn typcn-cog-outline"></i></div>
+            <div id="theme-settings" class="settings-panel">
+                <i class="settings-close typcn typcn-delete-outline"></i>
+                <p class="settings-heading">Dash Colors</p>
+                <div class="sidebar-bg-options" id="sidebar-light-theme">
+                    <div class="img-ss rounded-circle bg-light border mr-3"></div>
+                    Light
+                </div>
+                <div class="sidebar-bg-options selected" id="sidebar-dark-theme">
+                    <div class="img-ss rounded-circle bg-dark border mr-3"></div>
+                    Dark
+                </div>
+                <p class="settings-heading mt-2">Header Colors</p>
+                <div class="color-tiles mx-0 px-4">
+                    <div class="tiles success"></div>
+                    <div class="tiles warning"></div>
+                    <div class="tiles danger"></div>
+                    <div class="tiles primary"></div>
+                    <div class="tiles info"></div>
+                    <div class="tiles dark"></div>
+                    <div class="tiles default border"></div>
+                </div>
+            </div>
+        </div>
+        <nav th:replace="layouts/sidebar :: sidebar"></nav>
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h3 class="mb-0 font-weight-bold">Kenneth Osborne</h3>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="d-flex align-items-center justify-content-md-end">
+                            <div class="mb-3 mb-xl-0 pr-1">
+                                <div class="dropdown">
+                                    <button class="btn bg-white btn-sm dropdown-toggle btn-icon-text border mr-2"
+                                            type="button" id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false">
+                                        <i class="typcn typcn-calendar-outline mr-2"></i>Last 7 days
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuSizeButton3"
+                                         data-x-placement="top-start">
+                                        <h6 class="dropdown-header">Last 14 days</h6>
+                                        <a class="dropdown-item" href="#">Last 21 days</a>
+                                        <a class="dropdown-item" href="#">Last 28 days</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pr-1 mb-3 mb-xl-0">
+                                <button type="button" class="btn btn-sm bg-white btn-icon-text border"><i
+                                        class="typcn typcn-info-large-outline mr-2"></i>info
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row  mt-3">
+                    <div class="col-xl-5 d-flex grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex flex-wrap justify-content-between">
+                                    <h3 class="card-title mb-3">Kunlik buyurtmalar</h3>
+                                    <h3>Tasklar soni - [[${countAllTasks}]]</h3>
+                                </div>
+                                <div class="mt-2">
+                                    <div class="d-flex align-items-center justify-content-md-end">
+                                        <div class="mb-3 mb-xl-0 pr-1">
+                                            <div class="dropdown">
+                                                <button class="btn bg-white btn-sm dropdown-toggle btn-icon-text border mr-2"
+                                                        type="button" id="dropdownMenu" data-toggle="dropdown"
+                                                        aria-haspopup="true"
+                                                        aria-expanded="false">
+                                                    <i class="typcn typcn-calendar-outline mr-2"></i>[[${day}]]
+                                                </button>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuSizeButton3"
+                                                     data-x-placement="top-start">
+                                                    <a class="dropdown-item" th:href="@{/}">Today</a>
+                                                    <a class="dropdown-item" th:href="@{/last/1}">Last 1 day</a>
+                                                    <a class="dropdown-item" th:href="@{/last/2}">Last 2 days</a>
+                                                    <a class="dropdown-item" th:href="@{/last/3}">Last 3 days</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-2">
+                                    <div class="d-flex justify-content-between">
+                                        <h4>Bajarilgan topshiriqlar([[${countFinishedTasks}]])</h4>
+                                        <h4 th:text="( ${countFinishedTasks} == 0  ? '0' :  (${countFinishedTasks * 1.0} / ${countAllTasks} * 100.0)) + '%;'"></h4>
+                                    </div>
+                                    <div class="progress progress-md  mt-2">
+                                        <div class="progress-bar bg-secondary" role="progressbar"
+                                             th:style="'width:' + ( ${countFinishedTasks} == 0  ? '0' :  (${countFinishedTasks * 1.0} / ${countAllTasks} * 100.0)) + '%;'"
+                                             aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"
+                                             th:att></div>
+                                    </div>
+                                </div>
+                                <div class="mt-4">
+                                    <div class="d-flex justify-content-between">
+                                        <h4>Bajarilmagan([[${countUnFinishedTasks}]])</h4>
+                                        <h4 th:text="( ${countUnFinishedTasks} == 0  ? '0' :  (${countUnFinishedTasks * 1.0 * 100.0} / ${countAllTasks})) + '%;'"></h4>
+                                    </div>
+                                    <div class="progress progress-md  mt-2">
+                                        <div class="progress-bar bg-success" role="progressbar"
+                                             th:style="'width:' + ( ${countUnFinishedTasks} == 0  ? '0' :  (${countUnFinishedTasks * 1.0 * 100.0} / ${countAllTasks})) + '%;'"
+                                             aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                                <div class="mt-4 mb-5">
+                                    <div class="d-flex justify-content-between">
+                                        <h4>Bajarishni iloji yo'q([[${countCannotFinishTasks}]])</h4>
+                                        <h4 th:text="( ${countCannotFinishTasks} == 0  ? '0' :  (${countCannotFinishTasks * 1.0} / ${countAllTasks} * 100.0)) + '%;'"></h4>
+                                    </div>
+                                    <div class="progress progress-md mt-2">
+                                        <div class="progress-bar bg-warning" role="progressbar"
+                                             th:style="'width:' + ( ${countCannotFinishTasks} == 0  ? '0' :  (${countCannotFinishTasks * 1.0} / ${countAllTasks} * 100.0)) + '%;'"
+                                             aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                                <canvas id="salesTopChart"></canvas>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-7 d-flex grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex flex-wrap justify-content-between">
+                                    <h4 class="card-title mb-3">Printer bo'yicha buyurtmalar</h4>
+                                    <br>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <tbody>
+                                        <tr th:each="task : ${tasksForShow}">
+                                            <td>
+                                                <div class="d-flex">
+                                                    <div>
+                                                        <div> Title</div>
+                                                        <div class="font-weight-bold mt-1"
+                                                             th:utext="${task.getTitle()}"></div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                Department
+                                                <div class="font-weight-bold  mt-1"
+                                                     th:utext="${task.getDepartment()}"></div>
+                                            </td>
+                                            <td>
+                                                Status
+                                                <div class="font-weight-bold text-success  mt-1"
+                                                     th:utext="${task.getStatus()}"></div>
+                                            </td>
+                                            <td>
+                                                Date
+                                                <div class="font-weight-bold  mt-1" th:utext="${task.getDate()}"></div>
+                                            </td>
+                                            <td>
+                                                Time
+                                                <div class="font-weight-bold  mt-1"
+                                                     th:utext="${task.getStart_time()}"></div>
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-sm btn-secondary"
+                                                   th:href="@{'/task/finishTask/' + ${task.getId()}}">Bajarish</a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <br>
+                                    <div class="text-center">
+                                        <form action="/task/workplace" method="get">
+                                            <button style="height:40px;width:200px" type="submit" class="btn btn-light">
+                                                Hammasini ko'rish
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row  mt-3">
+                    <div class="col-xl-12 d-flex grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex flex-wrap justify-content-between">
+                                    <h4 class="card-title mb-3">Boshqa buyurtmalar</h4>
+                                    <br>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <tbody>
+                                        <tr th:each="task : ${tasksForShow2}">
+                                            <td>
+                                                <div class="d-flex">
+                                                    <div>
+                                                        <div> Title</div>
+                                                        <div class="font-weight-bold mt-1"
+                                                             th:utext="${task.getTitle()}"></div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                Department
+                                                <div class="font-weight-bold  mt-1"
+                                                     th:utext="${task.getDepartment()}"></div>
+                                            </td>
+                                            <td>
+                                                Status
+                                                <div class="font-weight-bold text-success  mt-1"
+                                                     th:utext="${task.getStatus()}"></div>
+                                            </td>
+                                            <td>
+                                                Date
+                                                <div class="font-weight-bold  mt-1" th:utext="${task.getDate()}"></div>
+                                            </td>
+                                            <td>
+                                                Time
+                                                <div class="font-weight-bold  mt-1"
+                                                     th:utext="${task.getStart_time()}"></div>
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-sm btn-secondary"
+                                                   th:href="@{'/pc/finishTask/' + ${task.getId()}}">Bajarish</a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <br>
+                                    <div class="text-center">
+                                        <form action="/task/pc-task" method="get">
+                                            <button style="height:40px;width:200px" type="submit" class="btn btn-light">
+                                                Hammasini ko'rish
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="vendors/js/vendor.bundle.base.js"></script>
+<script src="js/off-canvas.js"></script>
+<script src="js/hoverable-collapse.js"></script>
+<script src="js/template.js"></script>
+<script src="js/settings.js"></script>
+<script src="js/todolist.js"></script>
+<script src="vendors/progressbar.js/progressbar.min.js"></script>
+<script src="vendors/chart.js/Chart.min.js"></script>
+<script src="js/dashboard.js"></script>
+
+<script type="text/javascript" src="newChart.js"></script>
+<script type="text/javascript">
+    myBarChart.myBarChart();
+</script>
+</body>
+</html>
+
+
+
+

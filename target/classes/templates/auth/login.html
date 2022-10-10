@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Service App</title>
+    <link rel="stylesheet" href="vendors/typicons.font/font/typicons.css">
+    <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="css/vertical-layout-light/style.css">
+    <link rel="shortcut icon" href="images/favicon.png"/>
+</head>
+
+<body>
+<div class="container-scroller">
+    <div class="container-fluid page-body-wrapper full-page-wrapper">
+        <div class="content-wrapper d-flex align-items-center auth px-0">
+            <div class="row w-100 mx-0">
+                <div class="col-lg-4 mx-auto">
+                    <div class="auth-form-light text-left py-5 px-4 px-sm-5">
+                        <form class="form-sample" method="post" th:action="@{/loginPost}" th:object="${loginRequest}">
+                            <div class="brand-logo">
+                                <img src="images/img.png" alt="logo">
+                            </div>
+                            <form class="form-sample">
+                                <h4 class="font-weight-light">Davom etish uchun login va parol kiriting</h4>
+                                <div th:if="${param.error}" class="alert alert-error">Parol yoki login xato!!!</div>
+                                <div th:if="${param.logout}" class="alert alert-success">Siz chiqdingiz!</div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-lg" id="username" name="username"
+                                           placeholder="Username" th:field="*{username}">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" class="form-control form-control-lg" name="password"
+                                           id="password" placeholder="Password" th:field="*{password}">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Log in</button>
+                            </form>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="vendors/js/vendor.bundle.base.js"></script>
+<script src="js/off-canvas.js"></script>
+<script src="js/hoverable-collapse.js"></script>
+<script src="js/template.js"></script>
+<script src="js/settings.js"></script>
+<script src="js/todolist.js"></script>
+</body>
+
+</html>

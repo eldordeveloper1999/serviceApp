@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Service App</title>
+    <link rel="stylesheet" href="../../vendors/typicons.font/font/typicons.css">
+    <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="../../vendors/select2/select2.min.css">
+    <link rel="stylesheet" href="../../vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/vertical-layout-light/style.css">
+    <link rel="shortcut icon" href="../../images/favicon.png"/>
+</head>
+
+<body>
+<div class="container-scroller">
+    <nav th:replace="layouts/navbar :: navbar"></nav>
+    <div class="container-fluid page-body-wrapper">
+        <nav th:replace="layouts/sidebar :: sidebar"></nav>
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="row">
+                    <div class="col-12 grid-margin">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title"></h4>
+                                <form class="form-sample" method="post" th:action="@{/task/finish}"
+                                      th:object="${expense}">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">Texnikani model</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control" th:field="*{texnikaNomi}"
+                                                           th:value="${expense.getTexnikaNomi()}" readonly/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">Inventar nomeri</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control"
+                                                           th:field="*{inventarNumber}"
+                                                           th:value="${expense.getInventarNumber()}" readonly/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">Tuzatilgan sana</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" placeholder="sana" type="date"
+                                                           th:field="*{tuzatilganSana}"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">Buzilgan sana</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" placeholder="sana" type="date"
+                                                           th:field="*{buzilganSana}"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">To'ldirilgan kartrij soni</label>
+                                                <div class="col-sm-9">
+                                                    <input type="number" class="form-control"
+                                                           th:field="*{toldirilganKartrijSoni}"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">Inventar toner</label>
+                                                <div class="col-sm-9">
+                                                    <select class="form-control"
+                                                            th:field="*{inventarToneForZapravka}" selected="selected">
+                                                        <div th:each="product : ${products}">
+                                                            <option th:value="${product.getInventarNumber()}">
+                                                                [[${product.getName()}]]
+                                                            </option>
+                                                        </div>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">Almashtirilgan baraban
+                                                    soni</label>
+                                                <div class="col-sm-9">
+                                                    <input type="number" class="form-control"
+                                                           th:field="*{almashtirilganBarabanSoni}"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">Inventar baraban</label>
+                                                <div class="col-sm-9">
+                                                    <select class="form-control"
+                                                            th:field="*{inventarBaraban}" selected="selected">
+                                                        <div th:each="product : ${products}">
+                                                            <option th:value="${product.getInventarNumber()}">
+                                                                [[${product.getName()}]]
+                                                            </option>
+                                                        </div>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">Almashtirilgan val soni</label>
+                                                <div class="col-sm-9">
+                                                    <input type="number" class="form-control"
+                                                           th:field="*{almashtirilganValSoni}"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">Inventar val</label>
+                                                <div class="col-sm-9">
+<!--                                                    <input type="text" class="form-control"-->
+<!--                                                           th:field="*{inventarVal}"/>-->
+                                                    <select class="form-control"
+                                                            th:field="*{inventarVal}" selected="selected">
+                                                        <div th:each="product : ${products}">
+                                                            <option th:value="${product.getInventarNumber()}">
+                                                                [[${product.getName()}]]
+                                                            </option>
+                                                        </div>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">Almashtirilgan plyonka
+                                                    soni</label>
+                                                <div class="col-sm-9">
+                                                    <input type="number" class="form-control"
+                                                           th:field="*{almashtirilganPlyonkaSoni}"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">Inventar plyonka</label>
+                                                <div class="col-sm-9">
+<!--                                                    <input type="text" class="form-control"-->
+<!--                                                           th:field="*{inventarPlyonka}"/>-->
+                                                    <select class="form-control"
+                                                            th:field="*{inventarPlyonka}" selected="selected">
+                                                        <div th:each="product : ${products}">
+                                                            <option th:value="${product.getInventarNumber()}">
+                                                                [[${product.getName()}]]
+                                                            </option>
+                                                        </div>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">Almashtirilgan rakel soni</label>
+                                                <div class="col-sm-9">
+                                                    <input type="number" class="form-control"
+                                                           th:field="*{almashtirilganRakelSoni}"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">Inventar rakel</label>
+                                                <div class="col-sm-9">
+<!--                                                    <input type="text" class="form-control"-->
+<!--                                                           th:field="*{inventarRakel}"/>-->
+                                                    <select class="form-control"
+                                                            th:field="*{inventarRakel}" selected="selected">
+                                                        <div th:each="product : ${products}">
+                                                            <option th:value="${product.getInventarNumber()}">
+                                                                [[${product.getName()}]]
+                                                            </option>
+                                                        </div>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">Almashtirilgan lezva soni</label>
+                                                <div class="col-sm-9">
+                                                    <input type="number" class="form-control"
+                                                           th:field="*{almashtirilganLezvaSoni}"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">Inventar lezva</label>
+                                                <div class="col-sm-9">
+<!--                                                    <input type="text" class="form-control"-->
+<!--                                                           th:field="*{inventarLezva}"/>-->
+                                                    <select class="form-control"
+                                                            th:field="*{inventarLezva}" selected="selected">
+                                                        <div th:each="product : ${products}">
+                                                            <option th:value="${product.getInventarNumber()}">
+                                                                [[${product.getName()}]]
+                                                            </option>
+                                                        </div>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">Almashtirilgan kartrij
+                                                    soni</label>
+                                                <div class="col-sm-9">
+                                                    <input type="number" class="form-control"
+                                                           th:field="*{almashtirilganKartrijSoni}"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">Inventar kartrij</label>
+                                                <div class="col-sm-9">
+<!--                                                    <input type="text" class="form-control"-->
+<!--                                                           th:field="*{inventarKartrij}"/>-->
+                                                    <select class="form-control"
+                                                            th:field="*{inventarKartrij}">
+                                                        <div th:each="product : ${products}">
+                                                            <option th:value="${product.getInventarNumber()}" selected="selected">
+                                                                [[${product.getName()}]]
+                                                            </option>
+                                                        </div>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary mr-2">Davom etish</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../../vendors/js/vendor.bundle.base.js"></script>
+<script src="../../js/off-canvas.js"></script>
+<script src="../../js/hoverable-collapse.js"></script>
+<script src="../../js/template.js"></script>
+<script src="../../js/settings.js"></script>
+<script src="../../js/todolist.js"></script>
+<script src="../../vendors/typeahead.js/typeahead.bundle.min.js"></script>
+<script src="../../vendors/select2/select2.min.js"></script>
+<script src="../../js/file-upload.js"></script>
+<script src="../../js/typeahead.js"></script>
+<script src="../../js/select2.js"></script>
+</body>
+
+</html>

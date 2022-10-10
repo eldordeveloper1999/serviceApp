@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Restore Page</title>
+    <link rel="stylesheet" href="../../vendors/typicons.font/font/typicons.css">
+    <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css">
+    <link rel="stylesheet" href="../../css/vertical-layout-light/style.css">
+    <link rel="shortcut icon" href="../../images/favicon.png"/>
+</head>
+<body>
+<div class="container-scroller">
+    <nav th:replace="layouts/navbar :: navbar"></nav>
+    <div class="container-fluid page-body-wrapper">
+        <div class="theme-setting-wrapper">
+            <div id="settings-trigger"><i class="typcn typcn-cog-outline"></i></div>
+            <div id="theme-settings" class="settings-panel">
+                <i class="settings-close typcn typcn-delete-outline"></i>
+                <p class="settings-heading">Dash Colors</p>
+                <div class="sidebar-bg-options" id="sidebar-light-theme">
+                    <div class="img-ss rounded-circle bg-light border mr-3"></div>
+                    Light
+                </div>
+                <div class="sidebar-bg-options selected" id="sidebar-dark-theme">
+                    <div class="img-ss rounded-circle bg-dark border mr-3"></div>
+                    Dark
+                </div>
+                <p class="settings-heading mt-2">Header Colors</p>
+                <div class="color-tiles mx-0 px-4">
+                    <div class="tiles success"></div>
+                    <div class="tiles warning"></div>
+                    <div class="tiles danger"></div>
+                    <div class="tiles primary"></div>
+                    <div class="tiles info"></div>
+                    <div class="tiles dark"></div>
+                    <div class="tiles default border"></div>
+                </div>
+            </div>
+        </div>
+        <nav th:replace="layouts/sidebar :: sidebar"></nav>
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h3 class="mb-0 font-weight-bold">Bazaga mahsulot qo'shish</h3>
+                    </div>
+                </div>
+                <div class="row  mt-3">
+                    <div class="col-xl-12 d-flex grid-margin stretch-card">
+                        <div class="col-md-6 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">[[${printerName}]]</h4>
+                                    <form class="form-sample" method="post" th:action="@{/task/restore/}"
+                                          th:object="${product}">
+                                        </br>
+                                        <div class="form-group row">
+                                            <div class="col">
+                                                <label>Mahsulot nomi</label>
+                                                <div>
+                                                    <input type="hidden" name="id" th:field="*{printerId}" th:value="${printerId}"/>
+                                                    <input class="typeahead" type="text" placeholder="nomi" th:field="*{name}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col">
+                                                <label>Inventar</label>
+                                                <div id="bloodhound">
+                                                    <input class="typeahead" type="text" placeholder="inventar" th:field="*{inventarNumber}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Iltimos buyurtmani tanlang</label>
+                                            <input class="typeahead" type="number" placeholder="soni" th:field="*{count}">
+                                        </div>
+                                        </br>
+                                        </br>
+                                        <button type="submit" class="btn btn-primary">Davom etish</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../../vendors/js/vendor.bundle.base.js"></script>
+<script src="../../js/off-canvas.js"></script>
+<script src="../../js/hoverable-collapse.js"></script>
+<script src="../../js/template.js"></script>
+<script src="../../js/settings.js"></script>
+<script src="../../js/todolist.js"></script>
+<script src="../../vendors/progressbar.js/progressbar.min.js"></script>
+<script src="../../vendors/chart.js/Chart.min.js"></script>
+<script src="../../js/dashboard.js"></script>
+</body>
+</html>
+
+
+
+
+
