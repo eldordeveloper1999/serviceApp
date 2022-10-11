@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.PackagePrivate;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -17,5 +19,5 @@ public class ReportDto {
 
     Integer count;
 
-    String departmentName;
+    List<String> departments;
 }

@@ -9,10 +9,16 @@ import com.company.serviceapp.projection.ReportProjection;
 import com.company.serviceapp.repository.ExpensesRepository;
 import com.company.serviceapp.repository.NewProductRepository;
 import com.company.serviceapp.repository.PrinterRepository;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFTable;
+import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -76,7 +82,37 @@ public class AdminService {
             System.out.println(reportDto.getName() + ' ' + reportDto.getInventorNumber() + ' ' + reportDto.getDepartmentName() + ' ' + reportDto.getCount());
         }
 
+        writeToWord(all);
 
+    }
+
+
+    public void writeToWord(List<ReportProjection> reports) {
+        XWPFDocument document= new XWPFDocument();
+        try(FileOutputStream out = new FileOutputStream(new File("1111.docx"))){
+            // Creating Table
+            XWPFTable tab = document.createTable();
+            XWPFTableRow row = tab.getRow(0); // First row
+            // Columns
+            row.getCell(0).setText("Sl. No.");
+            row.addNewTableCell().setText("Name");
+            row.addNewTableCell().setText("Count");
+            row.addNewTableCell().setText("Inventar");
+            row.addNewTableCell().setText("Bo'lim");
+            int i = 1;
+            for (ReportProjection report : reports) {
+                row = tab.createRow(); // Second Row
+                row.getCell(0).setText(i++ + ".");
+                row.getCell(1).setText(report.getName());
+                row.getCell(2).setText(String.valueOf(report.getCount()));
+                row.getCell(3).setText(report.getInventorNumber());
+                row.getCell(4).setText(report.getDepartmentName());
+            }
+
+            document.write(out);
+        }catch(Exception e) {
+            System.out.println(e);
+        }
     }
 
 }
