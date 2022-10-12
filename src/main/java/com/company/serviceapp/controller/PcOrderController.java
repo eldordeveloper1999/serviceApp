@@ -122,4 +122,15 @@ public class PcOrderController {
 
     }
 
+    @GetMapping(value = "/pc-equipment")
+    public String getEquipmentAddToBasePage() {
+        return "restore-equipment-page";
+    }
+
+    @PostMapping(value = "/restore-equipment")
+    public String equipmentAddToBase() {
+        pcOrderService.equipmentsAddToBase();
+        return "success-page";
+    }
+
 }

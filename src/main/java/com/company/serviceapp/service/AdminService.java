@@ -77,11 +77,6 @@ public class AdminService {
         all.addAll(toneRZapravka);
         all.addAll(lezva);
 
-
-        for (ReportProjection reportDto : all) {
-            System.out.println(reportDto.getName() + ' ' + reportDto.getInventorNumber() + ' ' + reportDto.getDepartmentName() + ' ' + reportDto.getCount());
-        }
-
         writeToWord(all);
 
     }
