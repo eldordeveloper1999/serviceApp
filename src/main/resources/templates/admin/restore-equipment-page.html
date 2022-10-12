@@ -52,13 +52,12 @@
               <div class="card">
                 <div class="card-body">
                   <form class="form-sample" method="post" th:action="@{/pc/restore-equipment/}"
-                        th:object="${product}">
+                        th:object="${equipment}">
                     </br>
                     <div class="form-group row">
                       <div class="col">
                         <label>Mahsulot nomi</label>
                         <div>
-                          <input type="hidden" name="id" th:field="*{printerId}" th:value="${printerId}"/>
                           <input class="typeahead" type="text" placeholder="nomi" th:field="*{name}">
                         </div>
                       </div>
@@ -67,12 +66,12 @@
                       <div class="col">
                         <label>Inventar</label>
                         <div id="bloodhound">
-                          <input class="typeahead" type="text" placeholder="inventar" th:field="*{inventarNumber}">
+                          <input class="typeahead" type="text" placeholder="inventar" th:field="*{inventorNumber}">
                         </div>
                       </div>
                     </div>
                     <div class="form-group">
-                      <label>Iltimos buyurtmani tanlang</label>
+                      <label>Mahsulot sonini kiriting</label>
                       <input class="typeahead" type="number" placeholder="soni" th:field="*{count}">
                     </div>
                     </br>

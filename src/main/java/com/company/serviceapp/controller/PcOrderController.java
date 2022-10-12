@@ -68,13 +68,14 @@ public class PcOrderController {
         model.addAttribute("pcOrderDto", pcOrderDto);
         model.addAttribute("equipments", equipments);
         model.addAttribute("pcExpense", pcExpenseDto);
+        model.addAttribute("orderId", orderId);
         return "admin/pc-expense-page";
     }
 
-    @PostMapping("/get-expense")
-    public void getExpenses(@ModelAttribute("pcExpense") PcExpenseDto pcExpenseDto, HttpServletResponse response) throws IOException {
+    @PostMapping("/get-expense/{orderId}")
+    public void getExpenses(@PathVariable String orderId, @ModelAttribute("pcExpense") PcExpenseDto pcExpenseDto, HttpServletResponse response) throws IOException {
         pcOrderService.setPcOrderExpenses(pcExpenseDto);
-        response.sendRedirect("/");
+        response.sendRedirect("/pc/finishTask/" + orderId + "");
     }
 
     @GetMapping("/pc-monthly")
@@ -123,14 +124,16 @@ public class PcOrderController {
     }
 
     @GetMapping(value = "/pc-equipment")
-    public String getEquipmentAddToBasePage() {
-        return "restore-equipment-page";
+    public String getEquipmentAddToBasePage(Model model) {
+        model.addAttribute("equipment", new PcEquipmentDto());
+        return "admin/restore-equipment-page";
     }
 
     @PostMapping(value = "/restore-equipment")
-    public String equipmentAddToBase() {
-        pcOrderService.equipmentsAddToBase();
-        return "success-page";
+    public String equipmentAddToBase(@ModelAttribute("equipment") PcEquipmentDto pcEquipmentDto, Model model) {
+        pcOrderService.equipmentsAddToBase(pcEquipmentDto);
+        model.addAttribute("msg", "Mahsulot muvaffaqiyatli bazaga qo'shildi");
+        return "admin/success-page";
     }
 
 }

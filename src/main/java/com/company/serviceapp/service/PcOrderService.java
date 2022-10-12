@@ -1,5 +1,6 @@
 package com.company.serviceapp.service;
 
+import com.company.serviceapp.dto.PcEquipmentDto;
 import com.company.serviceapp.dto.PcExpenseDto;
 import com.company.serviceapp.dto.PcOrderDto;
 import com.company.serviceapp.dto.PcRequestDto;
@@ -261,7 +262,7 @@ public class PcOrderService {
 
         LocalDate date2 = LocalDate.parse(pcExpenseDto.getFixedDate());
 
-        PCExpense pcExpense = new PCExpense(null, pcExpenseDto.getTitle(), pcExpenseDto.getInventorNumber(), date, date2, null,
+        PCExpense pcExpense = new PCExpense(null, pcExpenseDto.getTitle(), pcExpenseDto.getInventorNumber(), date, date2, clientOrderService.getCurrentUser(),
                 pcExpenseDto.getConsumableProductCount(), pcEquipment.getInventorNumber());
 
         pcEquipment.setCount(pcEquipment.getCount() - pcExpense.getConsumableProductCount());
@@ -274,5 +275,10 @@ public class PcOrderService {
 
 
         pcExpenseRepository.save(pcExpense);
+    }
+
+    public void equipmentsAddToBase(PcEquipmentDto pcEquipmentDto) {
+        PcEquipment pcEquipment = new PcEquipment(null, pcEquipmentDto.getName(), pcEquipmentDto.getInventorNumber(), pcEquipmentDto.getCount());
+        pcEquipmentsRepository.save(pcEquipment);
     }
 }

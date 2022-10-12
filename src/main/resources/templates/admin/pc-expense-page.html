@@ -25,7 +25,7 @@
             <div class="card">
               <div class="card-body">
                 <h4 class="card-title"></h4>
-                <form class="form-sample" method="post" th:action="@{/pc/get-expense}"
+                <form class="form-sample" method="post" th:action="@{'/pc/get-expense/' + ${orderId}}"
                       th:object="${pcExpense}">
                   <div class="row">
                     <div class="col-md-6">
