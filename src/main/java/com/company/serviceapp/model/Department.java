@@ -27,6 +27,8 @@ public class Department {
 
     String name;
 
+    String shortName;
+
     public Department(String name) {
         this.name = name;
     }

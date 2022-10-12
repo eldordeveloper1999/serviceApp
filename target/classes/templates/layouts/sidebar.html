@@ -76,11 +76,16 @@
         <i class="menu-arrow"></i>
       </a>
       <div class="collapse" id="tables" th:each="printer : ${printers}">
-
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"><a class="nav-link" th:href="@{'/task/printer/' + ${printer.getId()}}">[[${printer.getModel()}]]</a></li>
         </ul>
       </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" th:href="@{/pc/pc-equipment}">
+        <i class="typcn typcn-document-text menu-icon"></i>
+        <span class="menu-title">Kompyuter jihozlari</span>
+      </a>
     </li>
     <li class="nav-item">
       <a class="nav-link" data-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="tables">

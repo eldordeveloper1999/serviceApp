@@ -85,10 +85,8 @@ public class AdminService {
     public void writeToWord(List<ReportProjection> reports) {
         XWPFDocument document= new XWPFDocument();
         try(FileOutputStream out = new FileOutputStream(new File("1111.docx"))){
-            // Creating Table
             XWPFTable tab = document.createTable();
-            XWPFTableRow row = tab.getRow(0); // First row
-            // Columns
+            XWPFTableRow row = tab.getRow(0);
             row.getCell(0).setText("Sl. No.");
             row.addNewTableCell().setText("Name");
             row.addNewTableCell().setText("Count");
@@ -96,7 +94,7 @@ public class AdminService {
             row.addNewTableCell().setText("Bo'lim");
             int i = 1;
             for (ReportProjection report : reports) {
-                row = tab.createRow(); // Second Row
+                row = tab.createRow();
                 row.getCell(0).setText(i++ + ".");
                 row.getCell(1).setText(report.getName());
                 row.getCell(2).setText(String.valueOf(report.getCount()));
@@ -109,5 +107,7 @@ public class AdminService {
             System.out.println(e);
         }
     }
+
+
 
 }
