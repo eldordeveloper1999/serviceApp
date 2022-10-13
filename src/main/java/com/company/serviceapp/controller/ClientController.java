@@ -48,7 +48,9 @@ public class ClientController {
     UserRepository userRepository;
 
     @GetMapping
-    public String homePage(Model model, ClientRequestDto clientRequestDto, RedirectAttributes redirectAttrs) {
+    public String homePage(Model model, RedirectAttributes redirectAttrs) {
+
+        User currentUser = clientOrderService.getCurrentUser();
 
         List<Printer> printers = printerRepository.findAll();
 
@@ -71,6 +73,7 @@ public class ClientController {
         model.addAttribute("printers", printers);
         model.addAttribute("statuses", statusList);
         model.addAttribute("tasks", tasks);
+        model.addAttribute("currentUser", currentUser.getFullName());
         model.addAttribute("clientRequest", new ClientRequestDto());
 
         return "client/clientPage";

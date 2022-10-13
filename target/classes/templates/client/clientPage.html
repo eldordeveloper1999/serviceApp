@@ -14,7 +14,7 @@
 </head>
 <body>
 <div class="container-scroller">
-    <nav th:replace="layouts/navbar :: navbar"></nav>
+    <nav th:replace="client/layout/navbar :: navbar"></nav>
     <div class="container-fluid page-body-wrapper">
         <div class="theme-setting-wrapper">
             <div id="settings-trigger"><i class="typcn typcn-cog-outline"></i></div>
@@ -121,7 +121,7 @@
             <div class="content-wrapper">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h3 class="mb-0 font-weight-bold">Client Name</h3>
+                        <h3 class="mb-0 font-weight-bold">[[${currentUser}]]</h3>
                     </div>
                 </div>
                 <div class="row  mt-3">

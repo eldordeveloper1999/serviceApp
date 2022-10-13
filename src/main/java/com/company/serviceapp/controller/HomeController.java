@@ -2,12 +2,14 @@ package com.company.serviceapp.controller;
 
 import com.company.serviceapp.model.Status;
 import com.company.serviceapp.model.Order;
+import com.company.serviceapp.model.User;
 import com.company.serviceapp.projection.DepartmentProjection;
 import com.company.serviceapp.projection.OrderProjection;
 import com.company.serviceapp.projection.OrderProjectionForClient;
 import com.company.serviceapp.repository.PrinterRepository;
 import com.company.serviceapp.repository.StatusRepository;
 import com.company.serviceapp.service.AdminService;
+import com.company.serviceapp.service.ClientOrderService;
 import com.company.serviceapp.service.OrderService;
 import com.company.serviceapp.service.PcOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,12 +41,18 @@ public class HomeController {
     @Autowired
     PcOrderService pcOrderService;
 
+    @Autowired
+    ClientOrderService clientOrderService;
+
     @GetMapping("/")
     public String homePage(Model model) {
+
+        User currentUser = clientOrderService.getCurrentUser();
 
         List<DepartmentProjection> departmentProjections = orderService.getDepartmentOrdersCount();
 
         model.addAttribute("departments", departmentProjections);
+        model.addAttribute("currentUser", currentUser.getFullName());
 
         first(model);
 
