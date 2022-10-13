@@ -86,7 +86,7 @@
                                                             th:field="*{inventarToneForZapravka}" selected="selected">
                                                         <div th:each="product : ${products}">
                                                             <option th:value="${product.getInventarNumber()}">
-                                                                [[${product.getName()}]]
+                                                                [[${product.getName()}]] ([[${product.getCount()}]])
                                                             </option>
                                                         </div>
                                                     </select>
