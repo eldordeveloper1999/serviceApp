@@ -14,13 +14,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -87,7 +85,7 @@ public class ClientController {
     }
 
     @GetMapping("/order-view-unfinished")
-    public String unfinishedOrderViewForClient(Model model, HttpSession session) {
+    public String unfinishedOrderViewForClient(Model model) {
 
         UUID userId = getCurrentUser().getId();
 
@@ -123,7 +121,7 @@ public class ClientController {
     }
 
     @GetMapping("/kvartal")
-    public String getQuarterlyOrders(Model model) {
+    public String getCurrentQuarterlyOrders(Model model) {
 
         UUID userId = getCurrentUser().getId();
 
@@ -131,12 +129,29 @@ public class ClientController {
 
         model.addAttribute("tasksForShow", quarterlyOrders);
 
-        return "client/order-view-client";
+        model.addAttribute("kvartal", clientOrderService.getCurrentQuarter());
+
+        return "client/statistics/quarterly";
+
+    }
+
+    @GetMapping("/kvartal/{num}")
+    public String getQuarterlyOrders(Model model, @PathVariable String num) {
+
+        UUID userId = getCurrentUser().getId();
+
+        List<OrderProjectionForClient> quarterlyOrders = clientOrderService.getQuarterlyOrders(userId, num);
+
+        model.addAttribute("tasksForShow", quarterlyOrders);
+
+        model.addAttribute("kvartal", num);
+
+        return "client/statistics/quarterly";
 
     }
 
     @GetMapping("/yearly")
-    public String getYearlyOrders(Model model) {
+    public String getCurrentYearlyOrders(Model model) {
 
         UUID userId = getCurrentUser().getId();
 
@@ -144,7 +159,24 @@ public class ClientController {
 
         model.addAttribute("tasksForShow", yearlyOrders);
 
-        return "client/order-view-client";
+        model.addAttribute("year", LocalDate.now().getYear());
+
+        return "client/statistics/yearly";
+
+    }
+
+    @GetMapping("/yearly/{year}")
+    public String getYearlyOrders(Model model, @PathVariable String year) {
+
+        UUID userId = getCurrentUser().getId();
+
+        List<OrderProjectionForClient> yearlyOrders = clientOrderService.getYearlyOrders(userId, year);
+
+        model.addAttribute("tasksForShow", yearlyOrders);
+
+        model.addAttribute("year", year);
+
+        return "client/statistics/yearly";
 
     }
 

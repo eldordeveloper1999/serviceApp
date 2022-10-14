@@ -246,6 +246,24 @@ public class PcOrderService {
         return result;
     }
 
+    public List<OrderProjectionForClient> getYearlyOrders(String year) {
+        List<OrderProjectionForClient> result = new ArrayList<>();
+
+        LocalDate date = LocalDate.now();
+
+        int yearW = Integer.parseInt(year);
+
+        List<OrderProjectionForClient> yearlyOrdersByClient = pcOrderRepository.getYearlyOrdersByClient();
+
+        for (OrderProjectionForClient orderProjection : yearlyOrdersByClient) {
+            if (orderProjection.getEnd_time().getYear() == yearW) {
+                result.add(orderProjection);
+            }
+        }
+
+        return result;
+    }
+
     public Integer getCurrentQuarter() {
         return null;
     }
@@ -280,5 +298,23 @@ public class PcOrderService {
     public void equipmentsAddToBase(PcEquipmentDto pcEquipmentDto) {
         PcEquipment pcEquipment = new PcEquipment(null, pcEquipmentDto.getName(), pcEquipmentDto.getInventorNumber(), pcEquipmentDto.getCount());
         pcEquipmentsRepository.save(pcEquipment);
+    }
+
+    public List<PCOrder> getDailyPcOrders() {
+        LocalDate localDate = LocalDate.from(LocalDateTime.now());
+
+        return pcOrderRepository.getAllDailyPcOrders(localDate);
+    }
+
+    public Integer getDailyFinishedPcOrdersCount() {
+        LocalDate localDate = LocalDate.from(LocalDateTime.now());
+
+        return pcOrderRepository.getDailyFinishedPcOrdersCount(localDate);
+    }
+
+    public Integer getDailyUnFinishedPcOrdersCount() {
+        LocalDate localDate = LocalDate.from(LocalDateTime.now());
+
+        return pcOrderRepository.getDailyUnFinishedPcOrdersCount(localDate);
     }
 }

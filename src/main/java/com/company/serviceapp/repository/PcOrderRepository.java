@@ -1,11 +1,13 @@
 package com.company.serviceapp.repository;
 
+import com.company.serviceapp.model.Order;
 import com.company.serviceapp.model.PCOrder;
 import com.company.serviceapp.projection.OrderProjection;
 import com.company.serviceapp.projection.OrderProjectionForClient;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -59,4 +61,13 @@ public interface PcOrderRepository extends JpaRepository<PCOrder, UUID> {
             "where o.is_full = true\n" +
             "  and o.is_finished = true")
     List<OrderProjectionForClient> getYearlyOrdersByClient();
+
+    @Query(nativeQuery = true, value = "select * from pc_orders where date = :localDate")
+    List<PCOrder> getAllDailyPcOrders(LocalDate localDate);
+
+    @Query(nativeQuery = true, value = "select count(*) from pc_orders where date = :localDate and is_finished = true and is_full = true")
+    Integer getDailyFinishedPcOrdersCount(LocalDate localDate);
+
+    @Query(nativeQuery = true, value = "select count(*) from pc_orders where date = :localDate and is_finished = false and is_full = false")
+    Integer getDailyUnFinishedPcOrdersCount(LocalDate localDate);
 }

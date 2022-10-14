@@ -15,6 +15,8 @@ import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
@@ -51,7 +53,7 @@ public class AdminService {
 
     }
 
-    public void getReportFile() {
+    public ByteArrayInputStream getReportFile() {
         List<ReportProjection> baraban = expensesRepository.getBaraban();
 
         List<ReportProjection> kartrij = expensesRepository.getKartrij();
@@ -77,12 +79,12 @@ public class AdminService {
         all.addAll(toneRZapravka);
         all.addAll(lezva);
 
-        writeToWord(all);
+        return writeToWord(all);
 
     }
 
 
-    public void writeToWord(List<ReportProjection> reports) {
+    public ByteArrayInputStream writeToWord(List<ReportProjection> reports) {
         XWPFDocument document= new XWPFDocument();
         try(FileOutputStream out = new FileOutputStream(new File("1111.docx"))){
             XWPFTable tab = document.createTable();
@@ -101,13 +103,18 @@ public class AdminService {
                 row.getCell(3).setText(report.getInventorNumber());
                 row.getCell(4).setText(report.getDepartmentName());
             }
-
             document.write(out);
+
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            document.write(outputStream);
+            return new ByteArrayInputStream(outputStream.toByteArray());
+
         }catch(Exception e) {
             System.out.println(e);
         }
-    }
 
+        return null;
+    }
 
 
 }

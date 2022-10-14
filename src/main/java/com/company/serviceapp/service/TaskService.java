@@ -44,7 +44,7 @@ public class TaskService {
 
         int month = date.getMonth().getValue();
 
-        List<OrderProjectionForClient> monthlyOrdersByClient = taskRepository.getMonthlyOrdersByClient();
+        List<OrderProjectionForClient> monthlyOrdersByClient = taskRepository.getMonthlyOrders();
 
         for (OrderProjectionForClient orderProjection : monthlyOrdersByClient) {
             if (orderProjection.getEnd_time().getMonth().getValue() == month) {
@@ -70,7 +70,7 @@ public class TaskService {
             default -> 0;
         };
 
-        List<OrderProjectionForClient> quarterlyOrdersByClient = taskRepository.getQuarterlyOrdersByClient();
+        List<OrderProjectionForClient> quarterlyOrdersByClient = taskRepository.getQuarterlyOrders();
 
         for (OrderProjectionForClient orderProjection : quarterlyOrdersByClient) {
             switch (quarter) {
@@ -107,7 +107,7 @@ public class TaskService {
     public List<OrderProjectionForClient> getQuarterlyOrders(int quarter) {
         List<OrderProjectionForClient> result = new ArrayList<>();
 
-        List<OrderProjectionForClient> quarterlyOrdersByClient = taskRepository.getQuarterlyOrdersByClient();
+        List<OrderProjectionForClient> quarterlyOrdersByClient = taskRepository.getQuarterlyOrders();
 
         for (OrderProjectionForClient orderProjection : quarterlyOrdersByClient) {
             switch (quarter) {
@@ -148,10 +148,26 @@ public class TaskService {
 
         int year = date.getYear();
 
-        List<OrderProjectionForClient> yearlyOrdersByClient = taskRepository.getYearlyOrdersByClient();
+        List<OrderProjectionForClient> yearlyOrdersByClient = taskRepository.getYearlyOrders();
 
         for (OrderProjectionForClient orderProjection : yearlyOrdersByClient) {
             if (orderProjection.getEnd_time().getYear() == year) {
+                result.add(orderProjection);
+            }
+        }
+
+        return result;
+    }
+
+    public List<OrderProjectionForClient> getYearlyOrders(String year) {
+        List<OrderProjectionForClient> result = new ArrayList<>();
+
+        Integer yearW = Integer.valueOf(year);
+
+        List<OrderProjectionForClient> yearlyOrdersByClient = taskRepository.getYearlyOrders();
+
+        for (OrderProjectionForClient orderProjection : yearlyOrdersByClient) {
+            if (orderProjection.getEnd_time().getYear() == yearW) {
                 result.add(orderProjection);
             }
         }

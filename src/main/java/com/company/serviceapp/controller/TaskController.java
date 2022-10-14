@@ -11,12 +11,14 @@ import com.company.serviceapp.service.AdminService;
 import com.company.serviceapp.service.OrderService;
 import com.company.serviceapp.service.PcOrderService;
 import com.company.serviceapp.service.TaskService;
+import org.apache.commons.compress.utils.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -160,9 +162,24 @@ public class TaskController {
     }
 
     @GetMapping("/yearly")
-    public String getYearlyOrders(Model model) {
+    public String getCurrentYearlyOrders(Model model) {
 
         List<OrderProjectionForClient> yearlyOrders = taskService.getYearlyOrders();
+
+        model.addAttribute("tasksForShow", yearlyOrders);
+
+        model.addAttribute("year", LocalDate.now().getYear());
+
+        return "admin/statistics/task-yearly";
+
+    }
+
+    @GetMapping("/yearly/{year}")
+    public String getYearlyOrders(Model model, @PathVariable String year) {
+
+        List<OrderProjectionForClient> yearlyOrders = taskService.getYearlyOrders(year);
+
+        model.addAttribute("year", year);
 
         model.addAttribute("tasksForShow", yearlyOrders);
 
@@ -227,9 +244,17 @@ public class TaskController {
         return "admin/workplace-for-finished";
     }
 
-    @GetMapping(value = "/report-file")
-    public void getReportFile() {
-        adminService.getReportFile();
+//    @GetMapping(value = "/report-file")
+//    public void getReportFile() {
+//        adminService.getReportFile();
+//    }
+
+    @GetMapping("/report-file")
+    public void downloadCsv(HttpServletResponse response) throws IOException {
+        response.setContentType("application/octet-stream");
+        response.setHeader("Content-Disposition", "attachment; filename=1111.docx");
+        ByteArrayInputStream stream = adminService.getReportFile();
+        IOUtils.copy(stream, response.getOutputStream());
     }
 
 }

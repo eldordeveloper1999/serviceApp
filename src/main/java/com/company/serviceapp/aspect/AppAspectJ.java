@@ -1,6 +1,7 @@
 package com.company.serviceapp.aspect;
 
 
+import com.company.serviceapp.model.PCOrder;
 import com.company.serviceapp.model.Printer;
 import com.company.serviceapp.projection.OrderProjection;
 import com.company.serviceapp.service.AspectService;
@@ -37,7 +38,9 @@ public class AppAspectJ {
 
                 List<Printer> printers = aspectService.getPrinters();
 
-                ((Model) arg).addAttribute("notifications_count", taskProjections.size());
+                List<OrderProjection> pcOrders = aspectService.getPcOrders();
+
+                ((Model) arg).addAttribute("notifications_count", taskProjections.size() + pcOrders.size());
                 ((Model) arg).addAttribute("printers", printers);
 
                // ((Model) arg).addAttribute("notifications", taskProjections);

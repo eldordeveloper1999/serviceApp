@@ -119,6 +119,21 @@ public class PcOrderController {
 
         model.addAttribute("tasksForShow", yearlyOrders);
 
+        model.addAttribute("year", LocalDate.now().getYear());
+
+        return "admin/statistics/pc-task-yearly";
+
+    }
+
+    @GetMapping("/pc-yearly/{year}")
+    public String getYearlyOrders(Model model, @PathVariable String year) {
+
+        List<OrderProjectionForClient> yearlyOrders = pcOrderService.getYearlyOrders(year);
+
+        model.addAttribute("tasksForShow", yearlyOrders);
+
+        model.addAttribute("year", year);
+
         return "admin/statistics/pc-task-yearly";
 
     }

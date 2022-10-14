@@ -27,7 +27,7 @@ public interface TaskRepository extends JpaRepository<Task, UUID> {
             "            join status s on s.id = O.status_id\n" +
             "where o.is_full = true\n" +
             "  and o.is_finished = true")
-    List<OrderProjectionForClient> getMonthlyOrdersByClient();
+    List<OrderProjectionForClient> getMonthlyOrders();
 
     @Query(nativeQuery = true, value = "select cast(o.id as varchar), t.title, O.date, O.start_time, d.name as department, s.name as status, o.end_time\n" +
             "from orders o\n" +
@@ -37,7 +37,7 @@ public interface TaskRepository extends JpaRepository<Task, UUID> {
             "            join status s on s.id = O.status_id\n" +
             "where o.is_full = true\n" +
             "  and o.is_finished = true")
-    List<OrderProjectionForClient> getQuarterlyOrdersByClient();
+    List<OrderProjectionForClient> getQuarterlyOrders();
 
     @Query(nativeQuery = true, value = "select cast(o.id as varchar), t.title, O.date, O.start_time, d.name as department, s.name as status, o.end_time\n" +
             "from orders o\n" +
@@ -47,5 +47,5 @@ public interface TaskRepository extends JpaRepository<Task, UUID> {
             "            join status s on s.id = O.status_id\n" +
             "where o.is_full = true\n" +
             "  and o.is_finished = true")
-    List<OrderProjectionForClient> getYearlyOrdersByClient();
+    List<OrderProjectionForClient> getYearlyOrders();
 }

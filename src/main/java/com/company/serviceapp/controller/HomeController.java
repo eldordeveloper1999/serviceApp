@@ -1,5 +1,6 @@
 package com.company.serviceapp.controller;
 
+import com.company.serviceapp.model.PCOrder;
 import com.company.serviceapp.model.Status;
 import com.company.serviceapp.model.Order;
 import com.company.serviceapp.model.User;
@@ -73,9 +74,15 @@ public class HomeController {
 
         List<Order> dailyOrders = orderService.getDailyOrders();
 
+        List<PCOrder> dailyPcOrders = pcOrderService.getDailyPcOrders();
+
         List<Order> finishedDailyOrders = orderService.getDailyFinishedOrders();
 
+        Integer finishedDailyPcOrders = pcOrderService.getDailyFinishedPcOrdersCount();
+
         List<Order> unFinishedDailyOrders = orderService.getDailyUnFinishedOrders();
+
+        Integer unFinishedDailyPcOrders = pcOrderService.getDailyUnFinishedPcOrdersCount();
 
         List<Order> cannotFinishOrders = orderService.getDailyCannotFinishOrders();
 
@@ -90,21 +97,23 @@ public class HomeController {
 
         if (dailyOrders.size() == 0) {
             model.addAttribute("countAllTasks", 1);
+            model.addAttribute("countTasks", 0);
             model.addAttribute("finishedPercent", 0);
             model.addAttribute("unFinishedPercent", 0);
             model.addAttribute("cannotFinishPercent", 0);
         } else {
-            double i = (finishedDailyOrders.size() / dailyOrders.size()) * 100;
-            model.addAttribute("countAllTasks", dailyOrders.size());
+            double i = ((finishedDailyOrders.size() + finishedDailyPcOrders) / (dailyOrders.size() + dailyPcOrders.size())) * 100;
+            model.addAttribute("countAllTasks", dailyOrders.size() + dailyPcOrders.size());
+            model.addAttribute("countTasks", dailyOrders.size() + dailyPcOrders.size());
             model.addAttribute("finishedPercent", i);
-            double x = unFinishedDailyOrders.size() / dailyOrders.size() * 100;
+            double x = (unFinishedDailyOrders.size() + unFinishedDailyPcOrders) / (dailyOrders.size() + dailyPcOrders.size()) * 100;
             model.addAttribute("unFinishedPercent", x);
-            model.addAttribute("cannotFinishPercent", (cannotFinishOrders.size() / dailyOrders.size() * 100));
+            model.addAttribute("cannotFinishPercent", (cannotFinishOrders.size() / (dailyOrders.size()) * 100));
         }
 
         model.addAttribute("dailyTasks", dailyOrders);
-        model.addAttribute("countFinishedTasks", finishedDailyOrders.size());
-        model.addAttribute("countUnFinishedTasks", unFinishedDailyOrders.size());
+        model.addAttribute("countFinishedTasks", finishedDailyOrders.size() + finishedDailyPcOrders);
+        model.addAttribute("countUnFinishedTasks", unFinishedDailyOrders.size() + unFinishedDailyPcOrders);
         model.addAttribute("countCannotFinishTasks", cannotFinishOrders.size());
 
         model.addAttribute("tasksForShow", tasksForShow);
