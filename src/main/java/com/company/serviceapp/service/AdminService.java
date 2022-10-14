@@ -9,16 +9,11 @@ import com.company.serviceapp.projection.ReportProjection;
 import com.company.serviceapp.repository.ExpensesRepository;
 import com.company.serviceapp.repository.NewProductRepository;
 import com.company.serviceapp.repository.PrinterRepository;
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import org.apache.poi.xwpf.usermodel.XWPFTable;
-import org.apache.poi.xwpf.usermodel.XWPFTableRow;
+import org.apache.poi.xwpf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -85,8 +80,8 @@ public class AdminService {
 
 
     public ByteArrayInputStream writeToWord(List<ReportProjection> reports) {
-        XWPFDocument document= new XWPFDocument();
-        try(FileOutputStream out = new FileOutputStream(new File("1111.docx"))){
+        XWPFDocument document = new XWPFDocument();
+        try (FileOutputStream out = new FileOutputStream(new File("1111.docx"))) {
             XWPFTable tab = document.createTable();
             XWPFTableRow row = tab.getRow(0);
             row.getCell(0).setText("Sl. No.");
@@ -109,11 +104,67 @@ public class AdminService {
             document.write(outputStream);
             return new ByteArrayInputStream(outputStream.toByteArray());
 
-        }catch(Exception e) {
+        } catch (Exception e) {
             System.out.println(e);
         }
 
+
         return null;
+    }
+
+    public static void main(String[] args) {
+        XWPFDocument xwpfdocument = new XWPFDocument();
+        File file = new File("D:\\serviceApp\\1111.docx");
+        FileOutputStream ostream
+                = null;
+        try {
+            ostream = new FileOutputStream(file);
+            XWPFParagraph para = xwpfdocument.createParagraph();
+            para.setAlignment(ParagraphAlignment.RIGHT);
+            XWPFRun xwpfrun = para.createRun();
+            xwpfrun.setText(
+                    "УБ бошлиғи\n");
+
+            xwpfdocument.write(ostream);
+            ostream = new FileOutputStream(file);
+            XWPFParagraph para1 = xwpfdocument.createParagraph();
+            para.setAlignment(ParagraphAlignment.RIGHT);
+            XWPFRun xwpfrun1 = para.createRun();
+            xwpfrun.setText(
+                            "Ш. Ш. Рихсиевга\n");
+
+            xwpfdocument.write(ostream);
+            ostream = new FileOutputStream(file);
+            XWPFParagraph para2 = xwpfdocument.createParagraph();
+            para.setAlignment(ParagraphAlignment.RIGHT);
+            XWPFRun xwpfrun2 = para.createRun();
+            xwpfrun.setText(
+                            "Материалларни ҳисобдан чиқариш учун\n");
+
+            xwpfdocument.write(ostream);
+
+            XWPFParagraph parag = xwpfdocument.createParagraph();
+            para.setAlignment(ParagraphAlignment.CENTER);
+            XWPFRun xwpfrunn = para.createRun();
+            xwpfrun.setText(
+                    "2022 Август  ой учун компьютерлар ва принтерларни таъмирлашда\n");
+
+            xwpfdocument.write(ostream);
+
+            XWPFParagraph parag1 = xwpfdocument.createParagraph();
+            para.setAlignment(ParagraphAlignment.CENTER);
+            XWPFRun xwpfrunn1 = para.createRun();
+            xwpfrun.setText(
+                            "фойдаланилган материаллари тўғрисида ҳисобот");
+
+            xwpfdocument.write(ostream);
+
+            ostream.close();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
