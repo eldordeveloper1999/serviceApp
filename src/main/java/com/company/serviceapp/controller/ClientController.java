@@ -1,15 +1,14 @@
 package com.company.serviceapp.controller;
 
 import com.company.serviceapp.dto.ClientRequestDto;
-import com.company.serviceapp.model.Printer;
-import com.company.serviceapp.model.Status;
-import com.company.serviceapp.model.Task;
-import com.company.serviceapp.model.User;
+import com.company.serviceapp.dto.OrderDto;
+import com.company.serviceapp.model.*;
 import com.company.serviceapp.projection.OrderProjection;
 import com.company.serviceapp.projection.OrderProjectionForClient;
 import com.company.serviceapp.repository.*;
 import com.company.serviceapp.service.ClientOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -19,6 +18,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -188,8 +189,53 @@ public class ClientController {
         return userRepository.findByUsername(name);
     }
 
-//    @GetMapping("/accept")
-//    public String acceptResult() {
-//
-//    }
+
+    @GetMapping("/get-accept")
+    public String getAcceptResultPage(Model model) {
+
+        User currentUser = getCurrentUser();
+
+        Order orderById = orderRepository.getOrderForAcceptResult(currentUser.getId());
+
+        orderById.setIs_finished(true);
+
+        orderRepository.save(orderById);
+
+        LocalDateTime end_time = orderById.getEnd_time();
+
+        LocalTime time;
+
+        LocalDate data;
+
+        if (end_time == null) {
+
+            time = LocalTime.now();
+
+            data = LocalDate.now();
+
+        } else {
+
+            time = LocalTime.from(end_time);
+
+            data = LocalDate.from(end_time);
+
+        }
+
+        OrderDto orderDto = new OrderDto(orderById.getId(), orderById.getTask().getTitle(), orderById.getTask().getDescription(),
+                orderById.getDepartment().getName(), orderById.getStart_time(),
+                orderById.getDate(), time, data, orderById.getIs_full(), true , orderById.getIs_accept(), orderById.getInventarNumber(), orderById.getPrinter().getModel());
+
+        model.addAttribute("order", orderDto);
+
+        model.addAttribute("printerModel", orderDto.getPrinterModel());
+
+        return "client/accept-page";
+    }
+
+    @PostMapping("/accept")
+    public String acceptResult(@ModelAttribute("order") OrderDto orderDto, Model model) {
+        clientOrderService.acceptResultFromAdmin();
+        model.addAttribute("msg", "Amalni muvaffiqayatli yakunladingiz");
+        return "client/successPage";
+    }
 }

@@ -47,7 +47,9 @@ public class Order {
 
     Boolean is_finished;   //for admin
 
-    Boolean is_full;   //for client
+    Boolean is_full;   //for full
+
+    Boolean is_accept;   //for client
 
     @ManyToOne
     Answer answer;

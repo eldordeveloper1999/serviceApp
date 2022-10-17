@@ -63,7 +63,7 @@ public class ClientOrderService {
         Department department = departmentRepository.getByUserId(userId);
 
         Printer printer = printerRepository.findById(clientRequestDto.getPrinterId()).get();
-        Order order = new Order(null, printer1, department, status, LocalTime.now(), LocalDate.now(), null, false, false, null, clientRequestDto.getInventarName(), printer);
+        Order order = new Order(null, printer1, department, status, LocalTime.now(), LocalDate.now(), null, false, false, false, null, clientRequestDto.getInventarName(), printer);
         orderRepository.save(order);
 
     }
@@ -258,5 +258,12 @@ public class ClientOrderService {
         }
 
         return res;
+    }
+
+    public void acceptResultFromAdmin() {
+        User currentUser = getCurrentUser();
+        Order result = orderRepository.getOrderForAcceptResult(currentUser.getId());
+        result.setIs_accept(true);
+        orderRepository.save(result);
     }
 }

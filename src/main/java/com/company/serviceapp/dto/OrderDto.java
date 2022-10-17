@@ -38,6 +38,8 @@ public class OrderDto {
 
     Boolean is_finished;
 
+    Boolean is_accept;
+
     String inventarNumber;
 
     String printerModel;
@@ -45,7 +47,7 @@ public class OrderDto {
     public OrderDto(UUID id, String title, String description,
                     String department, LocalTime start_time,
                     LocalDate start_date, LocalTime time, LocalDate date,
-                    Boolean is_full, Boolean is_finished ,String inventarNumber, String printerModel) {
+                    Boolean is_full, Boolean is_finished, Boolean is_accept, String inventarNumber, String printerModel) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -56,6 +58,7 @@ public class OrderDto {
         this.date = date;
         this.is_full = is_full;
         this.is_finished = is_finished;
+        this.is_accept = is_accept;
         this.inventarNumber = inventarNumber;
         this.printerModel = printerModel;
     }

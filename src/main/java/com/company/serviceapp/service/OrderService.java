@@ -170,7 +170,7 @@ public class OrderService {
 
         Printer printer = printerRepository.getByModel(orderDto.getPrinterModel());
 
-        Order order = new Order(orderDto.getId(), task, department, status, orderDto.getStart_time(), orderDto.getDate(), end_time, true, true, answer, orderDto.getInventarNumber(), printer);
+        Order order = new Order(orderDto.getId(), task, department, status, orderDto.getStart_time(), orderDto.getDate(), end_time, true, true, true, answer, orderDto.getInventarNumber(), printer);
 
         orderRepository.save(order);
     }

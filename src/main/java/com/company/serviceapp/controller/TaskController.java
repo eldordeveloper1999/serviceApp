@@ -93,7 +93,7 @@ public class TaskController {
 
         OrderDto orderDto = new OrderDto(orderById.getId(), orderById.getTask().getTitle(), orderById.getTask().getDescription(),
                 orderById.getDepartment().getName(), orderById.getStart_time(),
-                orderById.getDate(), time, data, orderById.getIs_full(), true ,orderById.getInventarNumber(), orderById.getPrinter().getModel());
+                orderById.getDate(), time, data, orderById.getIs_full(), true , orderById.getIs_accept(), orderById.getInventarNumber(), orderById.getPrinter().getModel());
 
         model.addAttribute("order", orderDto);
 
