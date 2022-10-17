@@ -1,12 +1,11 @@
 package com.company.serviceapp.service;
 
 import com.company.serviceapp.dto.ExpenseDto;
+import com.company.serviceapp.entity.*;
 import com.company.serviceapp.model.*;
 import com.company.serviceapp.projection.OrderProjectionForClient;
-import com.company.serviceapp.repository.ExpensesRepository;
-import com.company.serviceapp.repository.NewProductRepository;
-import com.company.serviceapp.repository.PrinterRepository;
-import com.company.serviceapp.repository.TaskRepository;
+import com.company.serviceapp.repository.*;
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +29,33 @@ public class TaskService {
 
     @Autowired
     NewProductRepository productRepository;
+
+    @Autowired
+    ClientOrderService clientOrderService;
+
+    @Autowired
+    DepartmentRepository departmentRepository;
+
+    @Autowired
+    BarabanRepository barabanRepository;
+
+    @Autowired
+    KartrijRepository kartrijRepository;
+
+    @Autowired
+    LezvaRepository lezvaRepository;
+
+    @Autowired
+    PlyonkaRepository plyonkaRepository;
+
+    @Autowired
+    RakelRepository rakelRepository;
+
+    @Autowired
+    TonerRepository tonerRepository;
+
+    @Autowired
+    ValRepository valRepository;
 
     public Task getTaskById(String taskId) {
 
@@ -177,6 +203,10 @@ public class TaskService {
 
     public void calculatingExpenses(ExpenseDto expensedto) {
 
+        User currentUser = clientOrderService.getCurrentUser();
+
+        Department department = departmentRepository.getByUserId(currentUser.getId());
+
         List<NewProduct> products = productRepository.findAll();
 
         String inventarToneForZapravka = null;
@@ -195,32 +225,43 @@ public class TaskService {
 
         if (expensedto.getToldirilganKartrijSoni() != null) {
             inventarToneForZapravka = expensedto.getInventarToneForZapravka();
-
+            Toner toner = new Toner(null, expensedto.getInventarToneForZapravka(), expensedto.getToldirilganKartrijSoni(), department);
+            tonerRepository.save(toner);
         }
 
         if (expensedto.getAlmashtirilganBarabanSoni() != null) {
             inventarBaraban = expensedto.getInventarBaraban();
+            Baraban baraban = new Baraban(null, expensedto.getInventarBaraban(), expensedto.getAlmashtirilganBarabanSoni(), department);
+            barabanRepository.save(baraban);
         }
 
         if (expensedto.getAlmashtirilganValSoni() != null) {
             inventarVal = expensedto.getInventarVal();
+            Val val = new Val(null, expensedto.getInventarVal(), expensedto.getAlmashtirilganValSoni(), department);
+            valRepository.save(val);
         }
 
         if (expensedto.getAlmashtirilganPlyonkaSoni() != null) {
             inventarPlyonka = expensedto.getInventarPlyonka();
+            Plyonka plyonka = new Plyonka(null, expensedto.getInventarPlyonka(), expensedto.getAlmashtirilganPlyonkaSoni(), department);
+            plyonkaRepository.save(plyonka);
         }
 
         if (expensedto.getAlmashtirilganRakelSoni() != null) {
             inventarRakel = expensedto.getInventarRakel();
+            Rakel rakel = new Rakel(null, expensedto.getInventarRakel(), expensedto.getAlmashtirilganRakelSoni(), department);
+            rakelRepository.save(rakel);
         }
 
         if (expensedto.getAlmashtirilganLezvaSoni() != null) {
             inventarLezva = expensedto.getInventarLezva();
-
+            Lezva lezva = new Lezva(null, expensedto.getInventarLezva(), expensedto.getAlmashtirilganLezvaSoni(), department);
+            lezvaRepository.save(lezva);
         }
 
         if (expensedto.getAlmashtirilganKartrijSoni() != null) {
             inventarKartrij = expensedto.getInventarKartrij();
+            Kartrij kartrij = new Kartrij(null, expensedto.getInventarKartrij(), expensedto.getAlmashtirilganKartrijSoni(), department);
         }
 
         for (NewProduct product : products) {
