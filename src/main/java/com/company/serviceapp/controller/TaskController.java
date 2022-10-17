@@ -7,6 +7,7 @@ import com.company.serviceapp.model.*;
 import com.company.serviceapp.projection.OrderProjection;
 import com.company.serviceapp.projection.OrderProjectionForClient;
 import com.company.serviceapp.repository.AnswerRepository;
+import com.company.serviceapp.repository.OrderRepository;
 import com.company.serviceapp.service.AdminService;
 import com.company.serviceapp.service.OrderService;
 import com.company.serviceapp.service.PcOrderService;
@@ -46,6 +47,9 @@ public class TaskController {
     @Autowired
     PcOrderService pcOrderService;
 
+    @Autowired
+    OrderRepository orderRepository;
+
     @GetMapping("/workplace")
     public String homePage(Model model) {
 
@@ -60,6 +64,10 @@ public class TaskController {
     public String finishTask(Model model, @PathVariable String orderId) {
 
         Order orderById = orderService.getOrderById(orderId);
+
+        orderById.setIs_finished(true);
+
+        orderRepository.save(orderById);
 
         List<Answer> answers = answerRepository.findAll();
 
@@ -82,9 +90,10 @@ public class TaskController {
             data = LocalDate.from(end_time);
 
         }
+
         OrderDto orderDto = new OrderDto(orderById.getId(), orderById.getTask().getTitle(), orderById.getTask().getDescription(),
                 orderById.getDepartment().getName(), orderById.getStart_time(),
-                orderById.getDate(), time, data, true, orderById.getInventarNumber(), orderById.getPrinter().getModel());
+                orderById.getDate(), time, data, orderById.getIs_full(), true ,orderById.getInventarNumber(), orderById.getPrinter().getModel());
 
         model.addAttribute("order", orderDto);
 
@@ -106,8 +115,6 @@ public class TaskController {
         expenseDto.setInventarNumber(orderDto.getInventarNumber());
 
         List<NewProduct> products = taskService.getNewProductsByPrinter(orderDto.getPrinterModel());
-
-        products.add(new NewProduct(null, "select", null, 0, null));
 
         model.addAttribute("expense", expenseDto);
 

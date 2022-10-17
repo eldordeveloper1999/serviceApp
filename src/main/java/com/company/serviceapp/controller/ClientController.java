@@ -187,4 +187,9 @@ public class ClientController {
         String name = authentication.getName();
         return userRepository.findByUsername(name);
     }
+
+//    @GetMapping("/accept")
+//    public String acceptResult() {
+//
+//    }
 }

@@ -48,7 +48,7 @@ public class AdminService {
 
     }
 
-    public ByteArrayInputStream getReportFile() {
+    public ByteArrayInputStream getReportFile() throws IOException {
         List<ReportProjection> baraban = expensesRepository.getBaraban();
 
         List<ReportProjection> kartrij = expensesRepository.getKartrij();
@@ -79,37 +79,144 @@ public class AdminService {
     }
 
 
-    public ByteArrayInputStream writeToWord(List<ReportProjection> reports) {
-        XWPFDocument document = new XWPFDocument();
-        try (FileOutputStream out = new FileOutputStream(new File("1111.docx"))) {
-            XWPFTable tab = document.createTable();
-            XWPFTableRow row = tab.getRow(0);
-            row.getCell(0).setText("Sl. No.");
-            row.addNewTableCell().setText("Name");
-            row.addNewTableCell().setText("Count");
-            row.addNewTableCell().setText("Inventar");
-            row.addNewTableCell().setText("Bo'lim");
-            int i = 1;
-            for (ReportProjection report : reports) {
-                row = tab.createRow();
-                row.getCell(0).setText(i++ + ".");
-                row.getCell(1).setText(report.getName());
-                row.getCell(2).setText(String.valueOf(report.getCount()));
-                row.getCell(3).setText(report.getInventorNumber());
-                row.getCell(4).setText(report.getDepartmentName());
-            }
-            document.write(out);
+    public ByteArrayInputStream writeToWord(List<ReportProjection> reports) throws IOException {
 
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            document.write(outputStream);
-            return new ByteArrayInputStream(outputStream.toByteArray());
+        XWPFDocument xwpfdocument = new XWPFDocument();
 
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+        File file = new File("src/main/resources/text.docx");
+
+        FileOutputStream ostream = new FileOutputStream(file);
+
+        XWPFParagraph para = xwpfdocument.createParagraph();
+        para.setAlignment(ParagraphAlignment.RIGHT);
+        XWPFRun xwpfrun = para.createRun();
+        xwpfrun.setFontSize(14);
+        xwpfrun.setText("УБ бошлиғи");
+        xwpfrun.addBreak();
+        xwpfrun.setText("Ш. Ш. Рихсиевга");
+        xwpfrun.addBreak();
+        xwpfrun.setText("Материалларни ҳисобдан чиқариш учун");
+        xwpfrun.addBreak();
+
+        XWPFParagraph para1 = xwpfdocument.createParagraph();
+        para1.setAlignment(ParagraphAlignment.CENTER);
+        XWPFRun xwpfrun1 = para1.createRun();
+        xwpfrun1.addBreak();
+        xwpfrun1.setFontSize(14);
+        xwpfrun1.setText("2022 Август  ой учун компьютерлар ва принтерларни таъмирлашда  фойдаланилган материаллари тўғрисида ҳисобот");
+        xwpfrun1.addBreak();
+
+        XWPFTable tab = xwpfdocument.createTable();
+        XWPFTableRow row = tab.getRow(0);
+        row.getCell(0).setText("Sl. No.");
+        row.addNewTableCell().setText("Name");
+        row.addNewTableCell().setText("Count");
+        row.addNewTableCell().setText("Inventar");
+        row.addNewTableCell().setText("Bo'lim");
+        int i = 1;
+        for (ReportProjection report : reports) {
+            row = tab.createRow();
+            row.getCell(0).setText(i++ + ".");
+            row.getCell(0).getParagraphs().get(0).setAlignment(ParagraphAlignment.CENTER);
+            row.getCell(1).setText(report.getName());
+            row.getCell(1).getParagraphs().get(0).setAlignment(ParagraphAlignment.CENTER);
+            row.getCell(2).setText(String.valueOf(report.getCount()));
+            row.getCell(2).getParagraphs().get(0).setAlignment(ParagraphAlignment.CENTER);
+            row.getCell(3).setText(report.getInventorNumber());
+            row.getCell(3).getParagraphs().get(0).setAlignment(ParagraphAlignment.CENTER);
+            row.getCell(4).setText(report.getDepartmentName());
+            row.getCell(4).getParagraphs().get(0).setAlignment(ParagraphAlignment.CENTER);
+        };
+
+        XWPFParagraph para2 = xwpfdocument.createParagraph();
+        para2.setAlignment(ParagraphAlignment.LEFT);
+        XWPFRun xwpfrun2 = para2.createRun();
+        xwpfrun2.setFontSize(14);
+        xwpfrun2.setText("Аризалар илова қилинади.");
+        xwpfrun2.addBreak();
+        xwpfrun2.setText("АТРБ бошлиғи                                                                               Н.Мухамедов");
 
 
-        return null;
+        xwpfdocument.write(ostream);
+        ostream.close();
+
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        xwpfdocument.write(outputStream);
+        return new ByteArrayInputStream(outputStream.toByteArray());
+
+
+//        try (FileOutputStream out = new FileOutputStream(new File("1111.docx"))) {
+//            XWPFTable tab = document.createTable();
+//            XWPFTableRow row = tab.getRow(0);
+//            row.getCell(0).setText("Sl. No.");
+//            row.addNewTableCell().setText("Name");
+//            row.addNewTableCell().setText("Count");
+//            row.addNewTableCell().setText("Inventar");
+//            row.addNewTableCell().setText("Bo'lim");
+//            int i = 1;
+//            for (ReportProjection report : reports) {
+//                row = tab.createRow();
+//                row.getCell(0).setText(i++ + ".");
+//                row.getCell(1).setText(report.getName());
+//                row.getCell(2).setText(String.valueOf(report.getCount()));
+//                row.getCell(3).setText(report.getInventorNumber());
+//                row.getCell(4).setText(report.getDepartmentName());
+//            }
+//            document.write(out);
+//
+//            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+//            document.write(outputStream);
+//            return new ByteArrayInputStream(outputStream.toByteArray());
+//
+//        } catch (Exception e) {
+//            System.out.println(e);
+//        }
+
+    }
+
+    public static void main(String[] args) throws Exception {
+
+        XWPFDocument xwpfdocument = new XWPFDocument();
+
+        File file = new File("src/main/resources/text.docx");
+
+        FileOutputStream ostream = new FileOutputStream(file);
+
+        XWPFParagraph para = xwpfdocument.createParagraph();
+        para.setAlignment(ParagraphAlignment.RIGHT);
+        XWPFRun xwpfrun = para.createRun();
+        xwpfrun.setFontSize(14);
+        xwpfrun.setText("УБ бошлиғи");
+        xwpfrun.addBreak();
+        xwpfrun.setText("Ш. Ш. Рихсиевга");
+        xwpfrun.addBreak();
+        xwpfrun.setText("Материалларни ҳисобдан чиқариш учун");
+        xwpfrun.addBreak();
+
+        XWPFParagraph para1 = xwpfdocument.createParagraph();
+        para1.setAlignment(ParagraphAlignment.CENTER);
+        XWPFRun xwpfrun1 = para1.createRun();
+        xwpfrun1.addBreak();
+        xwpfrun1.setFontSize(14);
+        xwpfrun1.setText("2022 Август  ой учун компьютерлар ва принтерларни таъмирлашда  фойдаланилган материаллари тўғрисида ҳисобот");
+        xwpfrun1.addBreak();
+        xwpfrun1.addBreak();
+        xwpfrun1.addBreak();
+        xwpfrun1.addBreak();
+        xwpfrun1.addBreak();
+
+        XWPFParagraph para2 = xwpfdocument.createParagraph();
+        para2.setAlignment(ParagraphAlignment.LEFT);
+        XWPFRun xwpfrun2 = para2.createRun();
+        xwpfrun2.setFontSize(14);
+        xwpfrun2.setText("Аризалар илова қилинади.");
+        xwpfrun2.addBreak();
+        xwpfrun2.setText("АТРБ бошлиғи                                                                               Н.Мухамедов");
+
+
+        xwpfdocument.write(ostream);
+        ostream.close();
     }
 
 }

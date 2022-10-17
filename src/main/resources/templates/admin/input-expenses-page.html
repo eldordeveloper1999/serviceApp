@@ -113,7 +113,7 @@
                                                             th:field="*{inventarBaraban}" selected="selected">
                                                         <div th:each="product : ${products}">
                                                             <option th:value="${product.getInventarNumber()}">
-                                                                [[${product.getName()}]]
+                                                                [[${product.getName()}]] ([[${product.getCount()}]])
                                                             </option>
                                                         </div>
                                                     </select>
@@ -135,13 +135,11 @@
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">Inventar val</label>
                                                 <div class="col-sm-9">
-<!--                                                    <input type="text" class="form-control"-->
-<!--                                                           th:field="*{inventarVal}"/>-->
                                                     <select class="form-control"
                                                             th:field="*{inventarVal}" selected="selected">
                                                         <div th:each="product : ${products}">
                                                             <option th:value="${product.getInventarNumber()}">
-                                                                [[${product.getName()}]]
+                                                                [[${product.getName()}]] ([[${product.getCount()}]])
                                                             </option>
                                                         </div>
                                                     </select>
@@ -164,13 +162,11 @@
                                             <div class="form-group row">
                                                 <label class="col-sm-3 col-form-label">Inventar plyonka</label>
                                                 <div class="col-sm-9">
-<!--                                                    <input type="text" class="form-control"-->
-<!--                                                           th:field="*{inventarPlyonka}"/>-->
                                                     <select class="form-control"
                                                             th:field="*{inventarPlyonka}" selected="selected">
                                                         <div th:each="product : ${products}">
                                                             <option th:value="${product.getInventarNumber()}">
-                                                                [[${product.getName()}]]
+                                                                [[${product.getName()}]] ([[${product.getCount()}]])
                                                             </option>
                                                         </div>
                                                     </select>
@@ -198,7 +194,7 @@
                                                             th:field="*{inventarRakel}" selected="selected">
                                                         <div th:each="product : ${products}">
                                                             <option th:value="${product.getInventarNumber()}">
-                                                                [[${product.getName()}]]
+                                                                [[${product.getName()}]] ([[${product.getCount()}]])
                                                             </option>
                                                         </div>
                                                     </select>
@@ -226,7 +222,7 @@
                                                             th:field="*{inventarLezva}" selected="selected">
                                                         <div th:each="product : ${products}">
                                                             <option th:value="${product.getInventarNumber()}">
-                                                                [[${product.getName()}]]
+                                                                [[${product.getName()}]] ([[${product.getCount()}]])
                                                             </option>
                                                         </div>
                                                     </select>
@@ -255,7 +251,7 @@
                                                             th:field="*{inventarKartrij}">
                                                         <div th:each="product : ${products}">
                                                             <option th:value="${product.getInventarNumber()}" selected="selected">
-                                                                [[${product.getName()}]]
+                                                                [[${product.getName()}]] ([[${product.getCount()}]])
                                                             </option>
                                                         </div>
                                                     </select>

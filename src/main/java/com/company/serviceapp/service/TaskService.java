@@ -262,11 +262,12 @@ public class TaskService {
         if (expensedto.getAlmashtirilganKartrijSoni() != null) {
             inventarKartrij = expensedto.getInventarKartrij();
             Kartrij kartrij = new Kartrij(null, expensedto.getInventarKartrij(), expensedto.getAlmashtirilganKartrijSoni(), department);
+            kartrijRepository.save(kartrij);
         }
 
         for (NewProduct product : products) {
             if (inventarToneForZapravka != null) {
-                if (product.getInventarNumber() == inventarToneForZapravka) {
+                if (inventarToneForZapravka.equals(product.getInventarNumber())) {
                     Integer count = product.getCount() - expensedto.getToldirilganKartrijSoni();
                     product.setCount(count);
                     if (count == 0) {
@@ -369,7 +370,7 @@ public class TaskService {
 
         LocalDate endDate = LocalDate.parse(expensedto.getTuzatilganSana());
 
-        Expense expense = new Expense(expensedto.getTexnikaNomi(), expensedto.getInventarNumber(), null, startDate, endDate, null, expensedto.getToldirilganKartrijSoni(), inventarToneForZapravka,
+        Expense expense = new Expense(expensedto.getTexnikaNomi(), expensedto.getInventarNumber(), department, startDate, endDate, currentUser, expensedto.getToldirilganKartrijSoni(), inventarToneForZapravka,
                 expensedto.getAlmashtirilganBarabanSoni(), inventarBaraban, expensedto.getAlmashtirilganValSoni(), inventarVal,
                 expensedto.getAlmashtirilganPlyonkaSoni(), inventarPlyonka, expensedto.getAlmashtirilganRakelSoni(), inventarRakel,
                 expensedto.getAlmashtirilganLezvaSoni(), inventarLezva, expensedto.getAlmashtirilganKartrijSoni(), inventarKartrij);
