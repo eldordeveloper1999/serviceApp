@@ -2,23 +2,19 @@ package com.company.serviceapp.service;
 
 import com.company.serviceapp.dto.ProductDto;
 import com.company.serviceapp.dto.ReportDto;
-import com.company.serviceapp.dto.TonerDto;
 import com.company.serviceapp.entity.Kartrij;
 import com.company.serviceapp.entity.Lezva;
 import com.company.serviceapp.model.Expense;
 import com.company.serviceapp.model.NewProduct;
 import com.company.serviceapp.model.Printer;
-import com.company.serviceapp.projection.ReportProjection;
+import com.company.serviceapp.projection.*;
 import com.company.serviceapp.repository.*;
 import org.apache.poi.xwpf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class AdminService {
@@ -72,36 +68,57 @@ public class AdminService {
 
     public ByteArrayInputStream getReportFile() throws IOException {
 
-//        List<ReportProjection> baraban = barabanRepository.getBaraban();
-//
-//        List<ReportProjection> kartrij = kartrijRepository.getKartrij();
-//
-//        List<ReportProjection> lezva = lezvaRepository.getLezva();
-//
-//        List<ReportProjection> plyonka = plyonkaRepository.getPlyonka();
+        List<ReportDto> all = new ArrayList<>();
+
+        List<BarabanProjection> baraban = barabanRepository.getBaraban();
+
+        for (BarabanProjection barabanProjection : baraban) {
+                all.add(new ReportDto(barabanProjection.getName(), barabanProjection.getInventorNumber(), barabanProjection.getCountE(), barabanProjection.getDepartmentName()));
+        }
+
+        List<KartrijProjection> kartrij = kartrijRepository.getKartrij();
+
+        for (KartrijProjection kartrijProjection : kartrij) {
+            all.add(new ReportDto(kartrijProjection.getName(), kartrijProjection.getInventorNumber(), kartrijProjection.getCountE(), kartrijProjection.getDepartmentName()));
+        }
+
+        List<LezvaProjection> lezva = lezvaRepository.getLezva();
+
+        for (LezvaProjection lezvaProjection : lezva) {
+            all.add(new ReportDto(lezvaProjection.getName(), lezvaProjection.getInventorNumber(), lezvaProjection.getCountE(), lezvaProjection.getDepartmentName()));
+        }
+
+        List<PlyonkaProjection> plyonka = plyonkaRepository.getPlyonka();
+
+        for (PlyonkaProjection plyonkaProjection : plyonka) {
+            all.add(new ReportDto(plyonkaProjection.getName(), plyonkaProjection.getInventorNumber(), plyonkaProjection.getCountE(), plyonkaProjection.getDepartmentName()));
+        }
 
         List<ReportProjection> toner = tonerRepository.getToneRZapravka();
 
-//        List<ReportProjection> val = valRepository.getVal();
-//
-//        List<ReportProjection> rakel = rakelRepository.getRakel();
+        for (ReportProjection reportProjection : toner) {
+            all.add(new ReportDto(reportProjection.getName(), reportProjection.getInventorNumber(), reportProjection.getCountE(), reportProjection.getDepartmentName()));
+        }
 
-        List<ReportProjection> all = new ArrayList<>();
+        List<ValProjection> val = valRepository.getVal();
 
-//        all.addAll(baraban);
-//        all.addAll(kartrij);
-//        all.addAll(rakel);
-//        all.addAll(val);
-//        all.addAll(plyonka);
-        all.addAll(toner);
-//        all.addAll(lezva);
+        for (ValProjection valProjection : val) {
+            all.add(new ReportDto(valProjection.getName(), valProjection.getInventorNumber(), valProjection.getCountE(), valProjection.getDepartmentName()));
+        }
+
+        List<RakelProjection> rakel = rakelRepository.getRakel();
+
+        for (RakelProjection rakelProjection : rakel) {
+            all.add(new ReportDto(rakelProjection.getName(), rakelProjection.getInventorNumber(), rakelProjection.getCountE(), rakelProjection.getDepartmentName()));
+        }
+
 
         return writeToWord(all);
 
     }
 
 
-    public ByteArrayInputStream writeToWord(List<ReportProjection> reports) throws IOException {
+    public ByteArrayInputStream writeToWord(List<ReportDto> reports) throws IOException {
 
         XWPFDocument xwpfdocument = new XWPFDocument();
 
@@ -136,17 +153,17 @@ public class AdminService {
         row.addNewTableCell().setText("Inventar");
         row.addNewTableCell().setText("Bo'lim");
         int i = 1;
-        for (ReportProjection report : reports) {
+        for (ReportDto report : reports) {
             row = tab.createRow();
             row.getCell(0).setText(i++ + ".");
             row.getCell(0).getParagraphs().get(0).setAlignment(ParagraphAlignment.CENTER);
             row.getCell(1).setText(report.getName());
             row.getCell(1).getParagraphs().get(0).setAlignment(ParagraphAlignment.CENTER);
-            row.getCell(2).setText(String.valueOf(report.getCountE()));
+            row.getCell(2).setText(String.valueOf(report.getCount()));
             row.getCell(2).getParagraphs().get(0).setAlignment(ParagraphAlignment.CENTER);
             row.getCell(3).setText(report.getInventorNumber());
             row.getCell(3).getParagraphs().get(0).setAlignment(ParagraphAlignment.CENTER);
-            row.getCell(4).setText(report.getDepartmentName().toString());
+            row.getCell(4).setText(report.getDepartments().toString());
             row.getCell(4).getParagraphs().get(0).setAlignment(ParagraphAlignment.CENTER);
         };
 

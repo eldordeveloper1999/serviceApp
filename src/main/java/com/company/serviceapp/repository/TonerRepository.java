@@ -1,6 +1,5 @@
 package com.company.serviceapp.repository;
 
-import com.company.serviceapp.dto.TonerDto;
 import com.company.serviceapp.entity.Toner;
 import com.company.serviceapp.projection.ReportProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
