@@ -112,7 +112,6 @@ public class AdminService {
             all.add(new ReportDto(rakelProjection.getName(), rakelProjection.getInventorNumber(), rakelProjection.getCountE(), rakelProjection.getDepartmentName()));
         }
 
-
         return writeToWord(all);
 
     }
@@ -170,6 +169,7 @@ public class AdminService {
         XWPFParagraph para2 = xwpfdocument.createParagraph();
         para2.setAlignment(ParagraphAlignment.LEFT);
         XWPFRun xwpfrun2 = para2.createRun();
+        xwpfrun2.addBreak();
         xwpfrun2.setFontSize(14);
         xwpfrun2.setText("Аризалар илова қилинади.");
         xwpfrun2.addBreak();
