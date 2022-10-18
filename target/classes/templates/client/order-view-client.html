@@ -18,7 +18,7 @@
         <li class="nav-item">
           <div class="d-flex sidebar-profile">
             <div class="sidebar-profile-image">
-              <img src="../images/faces/user-avatar.png" alt="image">
+              <img src="images/faces/user-avatar.png" alt="image">
               <span class="sidebar-status-indicator"></span>
             </div>
             <div class="sidebar-profile-name">
@@ -60,9 +60,11 @@
               <li class="nav-item"><a class="nav-link" th:href="@{'/c'}">Yangi buyurtma berish</a>
               </li>
               <li class="nav-item"><a class="nav-link"
-                                      th:href="@{'/c/order-view-unfinished'}">Bajarilmagan buyurtmalar</a></li>
+                                      th:href="@{'/c/order-view-unfinished'}">Bajarilmagan buyurtmalar</a>
+              </li>
               <li class="nav-item"><a class="nav-link"
-                                      th:href="@{'/c/order-view-finished'}">Tugallangan buyurtmalar</a></li>
+                                      th:href="@{'/c/order-view-finished'}">Tugallangan buyurtmalar</a>
+              </li>
             </ul>
           </div>
         </li>
@@ -82,6 +84,22 @@
             </ul>
             <ul class="nav flex-column sub-menu">
               <li class="nav-item"><a class="nav-link" href="/c/yearly">Yillik</a></li>
+            </ul>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="tables">
+            <i class="typcn typcn-th-small-outline menu-icon"></i>
+            <span class="menu-title">Buyurtmani tugatish</span>
+            <i class="menu-arrow"></i>
+          </a>
+          <div class="collapse" id="icons">
+
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item"><a class="nav-link" th:href="@{/c/get-accept/}">Kartrij to'ldirish</a></li>
+            </ul>
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item"><a class="nav-link" th:href="@{/c/get-accept-pc/}">Boshqa buyurtmalar</a></li>
             </ul>
           </div>
         </li>

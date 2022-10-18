@@ -2,13 +2,14 @@ package com.company.serviceapp.service;
 
 import com.company.serviceapp.dto.ProductDto;
 import com.company.serviceapp.dto.ReportDto;
+import com.company.serviceapp.dto.TonerDto;
+import com.company.serviceapp.entity.Kartrij;
+import com.company.serviceapp.entity.Lezva;
 import com.company.serviceapp.model.Expense;
 import com.company.serviceapp.model.NewProduct;
 import com.company.serviceapp.model.Printer;
 import com.company.serviceapp.projection.ReportProjection;
-import com.company.serviceapp.repository.ExpensesRepository;
-import com.company.serviceapp.repository.NewProductRepository;
-import com.company.serviceapp.repository.PrinterRepository;
+import com.company.serviceapp.repository.*;
 import org.apache.poi.xwpf.usermodel.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,27 @@ public class AdminService {
     @Autowired
     ExpensesRepository expensesRepository;
 
+    @Autowired
+    TonerRepository tonerRepository;
+
+    @Autowired
+    BarabanRepository barabanRepository;
+
+    @Autowired
+    KartrijRepository kartrijRepository;
+
+    @Autowired
+    LezvaRepository lezvaRepository;
+
+    @Autowired
+    PlyonkaRepository plyonkaRepository;
+
+    @Autowired
+    ValRepository valRepository;
+
+    @Autowired
+    RakelRepository rakelRepository;
+
 
     public Printer getPrinterNameById(String printer_id) {
 
@@ -49,30 +71,30 @@ public class AdminService {
     }
 
     public ByteArrayInputStream getReportFile() throws IOException {
-        List<ReportProjection> baraban = expensesRepository.getBaraban();
 
-        List<ReportProjection> kartrij = expensesRepository.getKartrij();
+//        List<ReportProjection> baraban = barabanRepository.getBaraban();
+//
+//        List<ReportProjection> kartrij = kartrijRepository.getKartrij();
+//
+//        List<ReportProjection> lezva = lezvaRepository.getLezva();
+//
+//        List<ReportProjection> plyonka = plyonkaRepository.getPlyonka();
 
-        List<ReportProjection> lezva = expensesRepository.getLezva();
+        List<ReportProjection> toner = tonerRepository.getToneRZapravka();
 
-        List<ReportProjection> plyonka = expensesRepository.getPlyonka();
-
-        List<ReportProjection> toneRZapravka = expensesRepository.getToneRZapravka();
-
-        List<ReportProjection> val = expensesRepository.getVal();
-
-        List<ReportProjection> rakel = expensesRepository.getRakel();
-
+//        List<ReportProjection> val = valRepository.getVal();
+//
+//        List<ReportProjection> rakel = rakelRepository.getRakel();
 
         List<ReportProjection> all = new ArrayList<>();
 
-        all.addAll(baraban);
-        all.addAll(kartrij);
-        all.addAll(rakel);
-        all.addAll(val);
-        all.addAll(plyonka);
-        all.addAll(toneRZapravka);
-        all.addAll(lezva);
+//        all.addAll(baraban);
+//        all.addAll(kartrij);
+//        all.addAll(rakel);
+//        all.addAll(val);
+//        all.addAll(plyonka);
+        all.addAll(toner);
+//        all.addAll(lezva);
 
         return writeToWord(all);
 
@@ -120,11 +142,11 @@ public class AdminService {
             row.getCell(0).getParagraphs().get(0).setAlignment(ParagraphAlignment.CENTER);
             row.getCell(1).setText(report.getName());
             row.getCell(1).getParagraphs().get(0).setAlignment(ParagraphAlignment.CENTER);
-            row.getCell(2).setText(String.valueOf(report.getCount()));
+            row.getCell(2).setText(String.valueOf(report.getCountE()));
             row.getCell(2).getParagraphs().get(0).setAlignment(ParagraphAlignment.CENTER);
             row.getCell(3).setText(report.getInventorNumber());
             row.getCell(3).getParagraphs().get(0).setAlignment(ParagraphAlignment.CENTER);
-            row.getCell(4).setText(report.getDepartmentName());
+            row.getCell(4).setText(report.getDepartmentName().toString());
             row.getCell(4).getParagraphs().get(0).setAlignment(ParagraphAlignment.CENTER);
         };
 
@@ -144,34 +166,6 @@ public class AdminService {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         xwpfdocument.write(outputStream);
         return new ByteArrayInputStream(outputStream.toByteArray());
-
-
-//        try (FileOutputStream out = new FileOutputStream(new File("1111.docx"))) {
-//            XWPFTable tab = document.createTable();
-//            XWPFTableRow row = tab.getRow(0);
-//            row.getCell(0).setText("Sl. No.");
-//            row.addNewTableCell().setText("Name");
-//            row.addNewTableCell().setText("Count");
-//            row.addNewTableCell().setText("Inventar");
-//            row.addNewTableCell().setText("Bo'lim");
-//            int i = 1;
-//            for (ReportProjection report : reports) {
-//                row = tab.createRow();
-//                row.getCell(0).setText(i++ + ".");
-//                row.getCell(1).setText(report.getName());
-//                row.getCell(2).setText(String.valueOf(report.getCount()));
-//                row.getCell(3).setText(report.getInventorNumber());
-//                row.getCell(4).setText(report.getDepartmentName());
-//            }
-//            document.write(out);
-//
-//            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-//            document.write(outputStream);
-//            return new ByteArrayInputStream(outputStream.toByteArray());
-//
-//        } catch (Exception e) {
-//            System.out.println(e);
-//        }
 
     }
 

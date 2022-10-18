@@ -168,11 +168,11 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group" th:if="${order.getIs_full() == true}">
+                                        <div class="form-group" th:if="${order.getIs_accept() == true}">
                                             <button type="submit" class="btn btn-primary mr-2">Davom etish</button>
                                             <input class="btn btn-light" type="button" value="Bekor qilish!" onclick="history.back()">
                                         </div>
-                                        <div class="form-group" th:if="${order.getIs_full() == false}">
+                                        <div class="form-group" th:if="${order.getIs_accept() == false}">
 <!--                                            <input type="submit" class="btn btn-primary mr-2" disabled value="Tugatish" title="Buyurtma beruvchi hali tasdiqlamadi">-->
                                             <button type="submit" class="btn btn-primary mr-2" disabled title="Buyurtma beruvchi hali tasdiqlamadi">Tugatish</button>
                                             <input class="btn btn-light" type="button" value="Bekor qilish!" onclick="history.back()">

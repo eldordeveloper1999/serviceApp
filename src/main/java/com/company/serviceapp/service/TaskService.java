@@ -225,43 +225,50 @@ public class TaskService {
 
         if (expensedto.getToldirilganKartrijSoni() != null) {
             inventarToneForZapravka = expensedto.getInventarToneForZapravka();
-            Toner toner = new Toner(null, expensedto.getInventarToneForZapravka(), expensedto.getToldirilganKartrijSoni(), department);
+            NewProduct product = productRepository.getByInventor(inventarToneForZapravka);
+            Toner toner = new Toner(null, product.getName(), expensedto.getInventarToneForZapravka(), expensedto.getToldirilganKartrijSoni(), department);
             tonerRepository.save(toner);
         }
 
         if (expensedto.getAlmashtirilganBarabanSoni() != null) {
             inventarBaraban = expensedto.getInventarBaraban();
-            Baraban baraban = new Baraban(null, expensedto.getInventarBaraban(), expensedto.getAlmashtirilganBarabanSoni(), department);
+            NewProduct product = productRepository.getByInventor(inventarBaraban);
+            Baraban baraban = new Baraban(null, product.getName(), expensedto.getInventarBaraban(), expensedto.getAlmashtirilganBarabanSoni(), department);
             barabanRepository.save(baraban);
         }
 
         if (expensedto.getAlmashtirilganValSoni() != null) {
             inventarVal = expensedto.getInventarVal();
-            Val val = new Val(null, expensedto.getInventarVal(), expensedto.getAlmashtirilganValSoni(), department);
+            NewProduct product = productRepository.getByInventor(inventarVal);
+            Val val = new Val(null, product.getName(), expensedto.getInventarVal(), expensedto.getAlmashtirilganValSoni(), department);
             valRepository.save(val);
         }
 
         if (expensedto.getAlmashtirilganPlyonkaSoni() != null) {
             inventarPlyonka = expensedto.getInventarPlyonka();
-            Plyonka plyonka = new Plyonka(null, expensedto.getInventarPlyonka(), expensedto.getAlmashtirilganPlyonkaSoni(), department);
+            NewProduct product = productRepository.getByInventor(inventarPlyonka);
+            Plyonka plyonka = new Plyonka(null, product.getName(), expensedto.getInventarPlyonka(), expensedto.getAlmashtirilganPlyonkaSoni(), department);
             plyonkaRepository.save(plyonka);
         }
 
         if (expensedto.getAlmashtirilganRakelSoni() != null) {
             inventarRakel = expensedto.getInventarRakel();
-            Rakel rakel = new Rakel(null, expensedto.getInventarRakel(), expensedto.getAlmashtirilganRakelSoni(), department);
+            NewProduct product = productRepository.getByInventor(inventarRakel);
+            Rakel rakel = new Rakel(null, product.getName(), expensedto.getInventarRakel(), expensedto.getAlmashtirilganRakelSoni(), department);
             rakelRepository.save(rakel);
         }
 
         if (expensedto.getAlmashtirilganLezvaSoni() != null) {
             inventarLezva = expensedto.getInventarLezva();
-            Lezva lezva = new Lezva(null, expensedto.getInventarLezva(), expensedto.getAlmashtirilganLezvaSoni(), department);
+            NewProduct product = productRepository.getByInventor(inventarLezva);
+            Lezva lezva = new Lezva(null, product.getName(), expensedto.getInventarLezva(), expensedto.getAlmashtirilganLezvaSoni(), department);
             lezvaRepository.save(lezva);
         }
 
         if (expensedto.getAlmashtirilganKartrijSoni() != null) {
             inventarKartrij = expensedto.getInventarKartrij();
-            Kartrij kartrij = new Kartrij(null, expensedto.getInventarKartrij(), expensedto.getAlmashtirilganKartrijSoni(), department);
+            NewProduct product = productRepository.getByInventor(inventarKartrij);
+            Kartrij kartrij = new Kartrij(null, product.getName(), expensedto.getInventarKartrij(), expensedto.getAlmashtirilganKartrijSoni(), department);
             kartrijRepository.save(kartrij);
         }
 

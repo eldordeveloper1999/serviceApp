@@ -25,6 +25,8 @@ public class Plyonka {
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     UUID id;
 
+    String name;
+
     String inventarNumber;
 
     Integer count;

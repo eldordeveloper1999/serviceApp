@@ -10,4 +10,7 @@ import java.util.UUID;
 public interface NewProductRepository extends JpaRepository<NewProduct, UUID> {
     @Query(nativeQuery = true, value = "select distinct * from new_products where printer_id = :id")
     List<NewProduct> findByPrinterId(UUID id);
+
+    @Query(nativeQuery = true, value = "select * from new_products where inventar_number = :num")
+    NewProduct getByInventor(String num);
 }

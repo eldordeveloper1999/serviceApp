@@ -1,9 +1,18 @@
 package com.company.serviceapp.repository;
 
 import com.company.serviceapp.entity.Rakel;
+import com.company.serviceapp.projection.ReportProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface RakelRepository extends JpaRepository<Rakel, UUID> {
+
+    @Query(nativeQuery = true, value = "select rakels.name as name, sum(count) as count, inventar_number as inventorNumber, array_agg(d.name) as department " +
+            " from rakels " +
+            " join departments d on rakels.department_id = d.id " +
+            " group by inventar_number, rakels.name;")
+    List<ReportProjection> getRakel();
 }
