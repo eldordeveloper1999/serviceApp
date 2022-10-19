@@ -49,5 +49,7 @@ public class ExpenseDto {
 
     String inventarKartrij;
 
+    String department;
+
 
 }

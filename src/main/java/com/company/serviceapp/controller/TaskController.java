@@ -7,6 +7,7 @@ import com.company.serviceapp.model.*;
 import com.company.serviceapp.projection.OrderProjection;
 import com.company.serviceapp.projection.OrderProjectionForClient;
 import com.company.serviceapp.repository.AnswerRepository;
+import com.company.serviceapp.repository.DepartmentRepository;
 import com.company.serviceapp.repository.OrderRepository;
 import com.company.serviceapp.service.AdminService;
 import com.company.serviceapp.service.OrderService;
@@ -49,6 +50,9 @@ public class TaskController {
 
     @Autowired
     OrderRepository orderRepository;
+
+    @Autowired
+    DepartmentRepository departmentRepository;
 
     @GetMapping("/workplace")
     public String homePage(Model model) {
@@ -112,7 +116,10 @@ public class TaskController {
         ExpenseDto expenseDto = new ExpenseDto();
 
         expenseDto.setTexnikaNomi(orderDto.getPrinterModel());
+
         expenseDto.setInventarNumber(orderDto.getInventarNumber());
+
+        expenseDto.setDepartment(orderDto.getDepartment());
 
         List<NewProduct> products = taskService.getNewProductsByPrinter(orderDto.getPrinterModel());
 

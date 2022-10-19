@@ -57,6 +57,9 @@ public class TaskService {
     @Autowired
     ValRepository valRepository;
 
+    @Autowired
+    UserRepository userRepository;
+
     public Task getTaskById(String taskId) {
 
         return taskRepository.findById(UUID.fromString(taskId)).get();
@@ -203,9 +206,9 @@ public class TaskService {
 
     public void calculatingExpenses(ExpenseDto expensedto) {
 
-        User currentUser = clientOrderService.getCurrentUser();
+        Department department = departmentRepository.getByName(expensedto.getDepartment());
 
-        Department department = departmentRepository.getByUserId(currentUser.getId());
+        User user = userRepository.findByDepartmentId(department.getId());
 
         List<NewProduct> products = productRepository.findAll();
 
@@ -377,7 +380,9 @@ public class TaskService {
 
         LocalDate endDate = LocalDate.parse(expensedto.getTuzatilganSana());
 
-        Expense expense = new Expense(expensedto.getTexnikaNomi(), expensedto.getInventarNumber(), department, startDate, endDate, currentUser, expensedto.getToldirilganKartrijSoni(), inventarToneForZapravka,
+
+
+        Expense expense = new Expense(expensedto.getTexnikaNomi(), expensedto.getInventarNumber(), department, startDate, endDate, user, expensedto.getToldirilganKartrijSoni(), inventarToneForZapravka,
                 expensedto.getAlmashtirilganBarabanSoni(), inventarBaraban, expensedto.getAlmashtirilganValSoni(), inventarVal,
                 expensedto.getAlmashtirilganPlyonkaSoni(), inventarPlyonka, expensedto.getAlmashtirilganRakelSoni(), inventarRakel,
                 expensedto.getAlmashtirilganLezvaSoni(), inventarLezva, expensedto.getAlmashtirilganKartrijSoni(), inventarKartrij);

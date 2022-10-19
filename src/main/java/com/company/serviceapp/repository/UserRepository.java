@@ -12,4 +12,7 @@ public interface UserRepository extends JpaRepository<User, UUID> {
    User findByUsername(String username);
 
     boolean existsByUsername(String username);
+
+    @Query(nativeQuery = true, value = "select * from users where department_id = :id")
+    User findByDepartmentId(UUID id);
 }
