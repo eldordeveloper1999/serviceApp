@@ -1,12 +1,10 @@
 package com.company.serviceapp.service;
 
-import com.company.serviceapp.dto.PcEquipmentDto;
-import com.company.serviceapp.dto.PcExpenseDto;
-import com.company.serviceapp.dto.PcOrderDto;
-import com.company.serviceapp.dto.PcRequestDto;
+import com.company.serviceapp.dto.*;
 import com.company.serviceapp.model.*;
 import com.company.serviceapp.projection.OrderProjection;
 import com.company.serviceapp.projection.OrderProjectionForClient;
+import com.company.serviceapp.projection.PcExpenseProjection;
 import com.company.serviceapp.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,6 +45,9 @@ public class PcOrderService {
 
     @Autowired
     ClientOrderService clientOrderService;
+
+    @Autowired
+    UserRepository userRepository;
 
     public void receiveRequestFromClient(PcRequestDto clientRequestDto) {
 
@@ -274,13 +275,17 @@ public class PcOrderService {
 
     public void setPcOrderExpenses(PcExpenseDto pcExpenseDto) {
 
+        Department department = departmentRepository.getByName(pcExpenseDto.getDepartment());
+
+        User user = userRepository.findByDepartmentId(department.getId());
+
         PcEquipment pcEquipment = pcEquipmentsRepository.getByInventor(pcExpenseDto.getConsumableProductInventor());
 
         LocalDate date = LocalDate.parse(pcExpenseDto.getDateOfViolation());
 
         LocalDate date2 = LocalDate.parse(pcExpenseDto.getFixedDate());
 
-        PCExpense pcExpense = new PCExpense(null, pcExpenseDto.getTitle(), pcExpenseDto.getInventorNumber(), date, date2, clientOrderService.getCurrentUser(),
+        PCExpense pcExpense = new PCExpense(null, pcExpenseDto.getTitle(), pcExpenseDto.getInventorNumber(), date, date2, user,
                 pcExpenseDto.getConsumableProductCount(), pcEquipment.getInventorNumber());
 
         pcEquipment.setCount(pcEquipment.getCount() - pcExpense.getConsumableProductCount());
@@ -316,5 +321,15 @@ public class PcOrderService {
         LocalDate localDate = LocalDate.from(LocalDateTime.now());
 
         return pcOrderRepository.getDailyUnFinishedPcOrdersCount(localDate);
+    }
+
+    public List<ReportDto> getPcReports() {
+        List<ReportDto> result = new ArrayList<>();
+
+        List<PcExpenseProjection> pcExpenses = pcExpenseRepository.getPcExpenses();
+
+
+
+        return result;
     }
 }

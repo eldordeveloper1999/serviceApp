@@ -229,49 +229,49 @@ public class TaskService {
         if (expensedto.getToldirilganKartrijSoni() != null) {
             inventarToneForZapravka = expensedto.getInventarToneForZapravka();
             NewProduct product = productRepository.getByInventor(inventarToneForZapravka);
-            Toner toner = new Toner(null, product.getName(), expensedto.getInventarToneForZapravka(), expensedto.getToldirilganKartrijSoni(), department);
+            Toner toner = new Toner(null, product.getName(), expensedto.getInventarToneForZapravka(), expensedto.getToldirilganKartrijSoni(), LocalDate.now(), department);
             tonerRepository.save(toner);
         }
 
         if (expensedto.getAlmashtirilganBarabanSoni() != null) {
             inventarBaraban = expensedto.getInventarBaraban();
             NewProduct product = productRepository.getByInventor(inventarBaraban);
-            Baraban baraban = new Baraban(null, product.getName(), expensedto.getInventarBaraban(), expensedto.getAlmashtirilganBarabanSoni(), department);
+            Baraban baraban = new Baraban(null, product.getName(), expensedto.getInventarBaraban(), expensedto.getAlmashtirilganBarabanSoni(), LocalDate.now(), department);
             barabanRepository.save(baraban);
         }
 
         if (expensedto.getAlmashtirilganValSoni() != null) {
             inventarVal = expensedto.getInventarVal();
             NewProduct product = productRepository.getByInventor(inventarVal);
-            Val val = new Val(null, product.getName(), expensedto.getInventarVal(), expensedto.getAlmashtirilganValSoni(), department);
+            Val val = new Val(null, product.getName(), expensedto.getInventarVal(), expensedto.getAlmashtirilganValSoni(), LocalDate.now(), department);
             valRepository.save(val);
         }
 
         if (expensedto.getAlmashtirilganPlyonkaSoni() != null) {
             inventarPlyonka = expensedto.getInventarPlyonka();
             NewProduct product = productRepository.getByInventor(inventarPlyonka);
-            Plyonka plyonka = new Plyonka(null, product.getName(), expensedto.getInventarPlyonka(), expensedto.getAlmashtirilganPlyonkaSoni(), department);
+            Plyonka plyonka = new Plyonka(null, product.getName(), expensedto.getInventarPlyonka(), expensedto.getAlmashtirilganPlyonkaSoni(), LocalDate.now(), department);
             plyonkaRepository.save(plyonka);
         }
 
         if (expensedto.getAlmashtirilganRakelSoni() != null) {
             inventarRakel = expensedto.getInventarRakel();
             NewProduct product = productRepository.getByInventor(inventarRakel);
-            Rakel rakel = new Rakel(null, product.getName(), expensedto.getInventarRakel(), expensedto.getAlmashtirilganRakelSoni(), department);
+            Rakel rakel = new Rakel(null, product.getName(), expensedto.getInventarRakel(), expensedto.getAlmashtirilganRakelSoni(), LocalDate.now(), department);
             rakelRepository.save(rakel);
         }
 
         if (expensedto.getAlmashtirilganLezvaSoni() != null) {
             inventarLezva = expensedto.getInventarLezva();
             NewProduct product = productRepository.getByInventor(inventarLezva);
-            Lezva lezva = new Lezva(null, product.getName(), expensedto.getInventarLezva(), expensedto.getAlmashtirilganLezvaSoni(), department);
+            Lezva lezva = new Lezva(null, product.getName(), expensedto.getInventarLezva(), expensedto.getAlmashtirilganLezvaSoni(), LocalDate.now(), department);
             lezvaRepository.save(lezva);
         }
 
         if (expensedto.getAlmashtirilganKartrijSoni() != null) {
             inventarKartrij = expensedto.getInventarKartrij();
             NewProduct product = productRepository.getByInventor(inventarKartrij);
-            Kartrij kartrij = new Kartrij(null, product.getName(), expensedto.getInventarKartrij(), expensedto.getAlmashtirilganKartrijSoni(), department);
+            Kartrij kartrij = new Kartrij(null, product.getName(), expensedto.getInventarKartrij(), expensedto.getAlmashtirilganKartrijSoni(), LocalDate.now(), department);
             kartrijRepository.save(kartrij);
         }
 

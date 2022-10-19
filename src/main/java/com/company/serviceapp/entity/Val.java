@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -30,6 +31,8 @@ public class Val {
     String inventarNumber;
 
     Integer count;
+
+    LocalDate date;
 
     @ManyToOne
     Department department;

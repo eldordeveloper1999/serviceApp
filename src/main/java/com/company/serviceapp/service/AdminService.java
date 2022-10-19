@@ -49,6 +49,9 @@ public class AdminService {
     @Autowired
     RakelRepository rakelRepository;
 
+    @Autowired
+    PcOrderService pcOrderService;
+
 
     public Printer getPrinterNameById(String printer_id) {
 
@@ -69,6 +72,10 @@ public class AdminService {
     public ByteArrayInputStream getReportFile() throws IOException {
 
         List<ReportDto> all = new ArrayList<>();
+
+        List<ReportDto> pcReports = pcOrderService.getPcReports();
+
+        all.addAll(pcReports);
 
         List<BarabanProjection> baraban = barabanRepository.getBaraban();
 

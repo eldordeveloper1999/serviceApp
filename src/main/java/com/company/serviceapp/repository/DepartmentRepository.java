@@ -42,5 +42,8 @@ public interface DepartmentRepository extends JpaRepository<Department, UUID> {
     @Query(nativeQuery = true, value = "select d.short_name from departments d join vals r on d.id = r.department_id where r.inventar_number = :inventar")
     List<String> getFindByValInventorNumber(String inventar);
 
+    @Query(nativeQuery = true, value = "select d.short_name from departments d join vals r on d.id = r.department_id where r.inventar_number = :inventar")
+    List<String> getFindByPcEquipmentInventorNumber(String inventar);
+
 
 }

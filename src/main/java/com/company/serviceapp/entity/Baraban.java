@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import java.time.LocalDate;
 import java.util.UUID;
 
 
@@ -31,6 +32,8 @@ public class Baraban {
     String inventarNumber;
 
     Integer count;
+
+    LocalDate date;
 
     @ManyToOne
     Department department;

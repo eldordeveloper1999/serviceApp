@@ -23,4 +23,6 @@ public class PcExpenseDto {
         Integer consumableProductCount;
 
         String consumableProductInventor;
+
+        String department;
 }
