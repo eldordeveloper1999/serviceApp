@@ -47,7 +47,9 @@ public class PCOrder {
 
     Boolean is_finished;   //for admin
 
-    Boolean is_full;   //for client
+    Boolean is_full;   //for all
+
+    Boolean is_accept;   //for client
 
     String description;
 

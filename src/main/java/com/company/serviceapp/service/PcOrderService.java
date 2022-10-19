@@ -58,7 +58,7 @@ public class PcOrderService {
         Department department = clientOrderService.getCurrentUser().getDepartment();
 
 
-        PCOrder order = new PCOrder(null, task, department, status, LocalTime.now(), LocalDate.now(), null, false, false, clientRequestDto.getDescription(), clientRequestDto.getInventarName());
+        PCOrder order = new PCOrder(null, task, department, status, LocalTime.now(), LocalDate.now(), null, false, false, false, clientRequestDto.getDescription(), clientRequestDto.getInventarName());
         pcOrderRepository.save(order);
 
     }

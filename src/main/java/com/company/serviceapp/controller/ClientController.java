@@ -59,15 +59,14 @@ public class ClientController {
 
         List<Task> tasks = new ArrayList<>();
 
-        Task printer = new Task();
-
         for (Task task : taskList) {
             if (!task.getTitle().equals("Zapravka kartrij")) {
                 tasks.add(task);
-            } else {
-                printer = task;
             }
         }
+
+        Boolean isHaveUnfinishKartrijTask = clientOrderService.isHaveUnFinishKartrijTask(currentUser.getId());
+        Boolean isHaveUnFinishPcTask = clientOrderService.isHaveUnFinishPcTask(currentUser.getId());
 
         model.addAttribute("printers", printers);
         model.addAttribute("statuses", statusList);

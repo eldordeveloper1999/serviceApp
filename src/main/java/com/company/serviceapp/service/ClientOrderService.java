@@ -39,6 +39,9 @@ public class ClientOrderService {
     @Autowired
     PrinterRepository printerRepository;
 
+    @Autowired
+    PcOrderRepository pcOrderRepository;
+
 
     public void receiveRequestFromClient(ClientRequestDto clientRequestDto) {
 
@@ -265,5 +268,22 @@ public class ClientOrderService {
         Order result = orderRepository.getOrderForAcceptResult(currentUser.getId());
         result.setIs_accept(true);
         orderRepository.save(result);
+    }
+
+    public Boolean isHaveUnFinishKartrijTask(UUID id) {
+
+        List<OrderProjection> unfinishedOrdersForProjectionByUserId = orderRepository.getUnfinishedOrdersForProjectionByUserId(id);
+
+        if (unfinishedOrdersForProjectionByUserId.size() > 0) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public Boolean isHaveUnFinishPcTask(UUID id) {
+
+        List<PCOrder> pcOrders = pcOrderRepository.getUnfinishedTasks(id);
+return true;
     }
 }

@@ -68,7 +68,7 @@ public interface OrderRepository extends JpaRepository<Order, UUID> {
             "            join departments d on d.id = O.department_id\n" +
             "            join status s on s.id = O.status_id\n" +
             "            join users u on d.id = u.department_id\n" +
-            "            where is_finished = false and is_full = false and u.id = :id")
+            "            where is_full = false and is_accept = false and u.id = :id")
     List<OrderProjection> getUnfinishedOrdersForProjectionByUserId(UUID id);
 
     @Query(nativeQuery = true, value = "select cast(o.id as varchar), t.title, O.date, O.start_time, d.name as department, s.name as status, o.end_time\n" +
