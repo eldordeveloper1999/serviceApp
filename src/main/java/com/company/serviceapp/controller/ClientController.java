@@ -2,11 +2,13 @@ package com.company.serviceapp.controller;
 
 import com.company.serviceapp.dto.ClientRequestDto;
 import com.company.serviceapp.dto.OrderDto;
+import com.company.serviceapp.dto.PcOrderDto;
 import com.company.serviceapp.model.*;
 import com.company.serviceapp.projection.OrderProjection;
 import com.company.serviceapp.projection.OrderProjectionForClient;
 import com.company.serviceapp.repository.*;
 import com.company.serviceapp.service.ClientOrderService;
+import com.company.serviceapp.service.PcOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
 import org.springframework.security.core.Authentication;
@@ -46,6 +48,9 @@ public class ClientController {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    PcOrderService pcOrderService;
+
     @GetMapping
     public String homePage(Model model, RedirectAttributes redirectAttrs) {
 
@@ -73,6 +78,8 @@ public class ClientController {
         model.addAttribute("tasks", tasks);
         model.addAttribute("currentUser", currentUser.getFullName());
         model.addAttribute("clientRequest", new ClientRequestDto());
+        model.addAttribute("isHaveUnfinishKartrijTask", isHaveUnfinishKartrijTask);
+        model.addAttribute("isHaveUnFinishPcTask", isHaveUnFinishPcTask);
 
         return "client/clientPage";
     }
@@ -234,6 +241,25 @@ public class ClientController {
     @PostMapping("/accept")
     public String acceptResult(@ModelAttribute("order") OrderDto orderDto, Model model) {
         clientOrderService.acceptResultFromAdmin();
+        model.addAttribute("msg", "Amalni muvaffiqayatli yakunladingiz");
+        return "client/successPage";
+    }
+
+    @GetMapping("/get-accept-pc")
+    public String getPcAcceptPage(Model model) {
+
+        User currentUser = getCurrentUser();
+
+        PcOrderDto pcOrderDto = pcOrderService.getPcOrderDtoByClientId(currentUser.getId());
+
+        model.addAttribute("pcOrderDto", pcOrderDto);
+
+        return "client/pc-order-accept-page";
+    }
+
+    @PostMapping("/pc-accept")
+    public String accepPcResult(@ModelAttribute("pcOrderDto") PcOrderDto pcOrderDto, Model model) {
+        clientOrderService.acceptPcResultFromAdmin(pcOrderDto);
         model.addAttribute("msg", "Amalni muvaffiqayatli yakunladingiz");
         return "client/successPage";
     }

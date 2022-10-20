@@ -42,13 +42,15 @@ public class PcOrderDto {
 
     Boolean is_full;
 
+    Boolean is_accept;
+
     String inventarNumber;
 
     String description;
 
     public PcOrderDto(UUID id, String title, String taskDescription, String department, LocalTime start_time,
                       LocalDate start_date, LocalTime time, LocalDate date, Boolean is_full,
-                      String inventarNumber, String description) {
+                      String inventarNumber, String description, boolean is_accept) {
         this.id = id;
         this.title = title;
         this.taskDescription = taskDescription;
@@ -60,5 +62,6 @@ public class PcOrderDto {
         this.is_full = is_full;
         this.inventarNumber = inventarNumber;
         this.description = description;
+        this.is_accept = is_accept;
     }
 }

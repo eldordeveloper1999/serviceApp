@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>CelestialUI Admin</title>
+  <title>Service App</title>
   <link rel="stylesheet" href="../../vendors/typicons.font/font/typicons.css">
   <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css">
   <link rel="stylesheet" href="../../vendors/select2/select2.min.css">
@@ -15,13 +15,13 @@
 
 <body>
 <div class="container-scroller">
-  <nav th:replace="client/layout/navbar :: navbar"></nav>
+  <nav th:replace="layouts/navbar :: navbar"></nav>
   <div class="container-fluid page-body-wrapper">
     <div class="theme-setting-wrapper">
       <div id="settings-trigger"><i class="typcn typcn-cog-outline"></i></div>
       <div id="theme-settings" class="settings-panel">
         <i class="settings-close typcn typcn-delete-outline"></i>
-        <p class="settings-heading">Dash Colors</p>
+        <p class="settings-heading">SIDEBAR SKINS</p>
         <div class="sidebar-bg-options" id="sidebar-light-theme">
           <div class="img-ss rounded-circle bg-light border mr-3"></div>
           Light
@@ -30,7 +30,7 @@
           <div class="img-ss rounded-circle bg-dark border mr-3"></div>
           Dark
         </div>
-        <p class="settings-heading mt-2">Header Colors</p>
+        <p class="settings-heading mt-2">HEADER SKINS</p>
         <div class="color-tiles mx-0 px-4">
           <div class="tiles success"></div>
           <div class="tiles warning"></div>
@@ -42,7 +42,10 @@
         </div>
       </div>
     </div>
+
     <nav th:replace="client/layout/sidebar :: sidebar"></nav>
+
+    <!-- partial -->
     <div class="main-panel">
       <div class="content-wrapper">
         <div class="row">
@@ -50,35 +53,33 @@
             <div class="card">
               <div class="card-body">
                 <h4 class="card-title">Buyurtmani tugatish</h4>
-                <form class="form-sample" method="post" th:action="@{/c/accept}" th:object="${order}">
+                <form class="form-sample" method="post" th:action="@{/c/pc-accept}"
+                      th:object="${pcOrderDto}">
                   <p class="card-description">
                     Buyurtmani yakunlash
                   </p>
                   <form class="form-sample">
                     <div class="row">
-                      <div class="col-md-4">
+                      <div class="col-md-6">
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Buyurtma nomi</label>
                           <div class="col-sm-9">
-                            <input type="hidden" name="id" th:field="*{id}" th:value="${order.id}"/>
-                            <input type="hidden" name="id" th:field="*{is_full}" th:value="${order.is_full}"/>
-                            <input type="text" class="form-control" th:field="*{title}"  th:value="${order.getTitle}" readonly/>
+                            <input type="hidden" name="id" th:field="*{id}"
+                                   th:value="${pcOrderDto.id}"/>
+                            <input type="hidden" name="id" th:field="*{is_full}"
+                                   th:value="${pcOrderDto.is_full}"/>
+                            <input type="text" class="form-control" th:field="*{title}"
+                                   th:value="${pcOrderDto.getTitle()}" readonly/>
                           </div>
                         </div>
                       </div>
-                      <div class="col-md-4">
+                      <div class="col-md-6">
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Tavsif</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control"  th:field="*{description}" name= "description" th:value="${order.getDescription()}" readonly/>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="form-group row">
-                          <label class="col-sm-3 col-form-label">Model</label>
-                          <div class="col-sm-9">
-                            <input type="text" class="form-control"  th:field="*{printerModel}" name= "description" th:value="${order.printerModel}" readonly/>
+                            <input type="text" class="form-control"
+                                   th:field="*{description}" name="description"
+                                   th:value="${pcOrderDto.getTaskDescription()}" readonly/>
                           </div>
                         </div>
                       </div>
@@ -88,8 +89,9 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Bo'lim</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control" name= "department" th:field="*{department}"
-                                   th:value="${order.department}" readonly/>
+                            <input type="text" class="form-control" name="department"
+                                   th:field="*{department}"
+                                   th:value="${pcOrderDto.department}" readonly/>
                           </div>
                         </div>
                       </div>
@@ -97,8 +99,9 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Inventar raqami</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control" name= "department" th:field="*{inventarNumber}"
-                                   th:value="${order.inventarNumber}" readonly/>
+                            <input type="text" class="form-control" name="department"
+                                   th:field="*{inventarNumber}"
+                                   th:value="${pcOrderDto.inventarNumber}" readonly/>
                           </div>
                         </div>
                       </div>
@@ -111,8 +114,9 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Sana</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control" name="date" th:field="*{start_date}"
-                                   th:value="${order.getDate()}" readonly/>
+                            <input type="text" class="form-control" name="date"
+                                   th:field="*{start_date}"
+                                   th:value="${pcOrderDto.getDate()}" readonly/>
                           </div>
                         </div>
                       </div>
@@ -120,8 +124,9 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Vaqt</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control" name="start_time" th:field="*{start_time}"
-                                   th:value="${order.getStart_time()}" readonly/>
+                            <input type="text" class="form-control" name="start_time"
+                                   th:field="*{start_time}"
+                                   th:value="${pcOrderDto.getStart_time()}" readonly/>
                           </div>
                         </div>
                       </div>
@@ -135,7 +140,7 @@
                           <label class="col-sm-3 col-form-label">Sana</label>
                           <div class="col-sm-9">
                             <input type="text" class="form-control" th:field="*{date}"
-                                   th:value="${order.date}" readonly/>
+                                   th:value="${pcOrderDto.date}" readonly/>
                           </div>
                         </div>
                       </div>
@@ -144,14 +149,26 @@
                           <label class="col-sm-3 col-form-label">Vaqt</label>
                           <div class="col-sm-9">
                             <input type="text" class="form-control" th:field="*{time}"
-                                   th:value="${order.time}" readonly/>
+                                   th:value="${pcOrderDto.time}" readonly/>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group row">
+                          <label class="col-sm-3 col-form-label">Natija</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control" th:field="*{description}"
+                                   th:value="${pcOrderDto.description}" readonly/>
                           </div>
                         </div>
                       </div>
                     </div>
                     <div class="form-group">
                       <button type="submit" class="btn btn-primary mr-2">Davom etish</button>
-                      <input class="btn btn-light" type="button" value="Bekor qilish!" onclick="history.back()">
+                      <input class="btn btn-light" type="button" value="Bekor qilish!"
+                             onclick="history.back()">
                     </div>
                   </form>
                 </form>

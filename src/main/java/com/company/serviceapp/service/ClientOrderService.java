@@ -1,6 +1,7 @@
 package com.company.serviceapp.service;
 
 import com.company.serviceapp.dto.ClientRequestDto;
+import com.company.serviceapp.dto.PcOrderDto;
 import com.company.serviceapp.model.*;
 import com.company.serviceapp.projection.OrderProjection;
 import com.company.serviceapp.projection.OrderProjectionForClient;
@@ -270,20 +271,31 @@ public class ClientOrderService {
         orderRepository.save(result);
     }
 
+    public void acceptPcResultFromAdmin(PcOrderDto pcOrderDto) {
+        User currentUser = getCurrentUser();
+        PCOrder pcOrder = pcOrderRepository.getByClientId(currentUser.getId());
+        pcOrder.setIs_accept(true);
+        pcOrderRepository.save(pcOrder);
+    }
+
     public Boolean isHaveUnFinishKartrijTask(UUID id) {
 
         List<OrderProjection> unfinishedOrdersForProjectionByUserId = orderRepository.getUnfinishedOrdersForProjectionByUserId(id);
 
         if (unfinishedOrdersForProjectionByUserId.size() > 0) {
-            return false;
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     public Boolean isHaveUnFinishPcTask(UUID id) {
 
         List<PCOrder> pcOrders = pcOrderRepository.getUnfinishedTasks(id);
-return true;
+        if (pcOrders.size() > 0) {
+            return true;
+        }
+
+        return false;
     }
 }

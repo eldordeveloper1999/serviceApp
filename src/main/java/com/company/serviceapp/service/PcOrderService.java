@@ -95,7 +95,7 @@ public class PcOrderService {
 
         return new PcOrderDto(pcOrder.getId(), pcOrder.getTask().getTitle(), pcOrder.getTask().getDescription(), pcOrder.getDepartment().getName(),
                 pcOrder.getStart_time(), pcOrder.getDate(), time, date, true, pcOrder.getInventarNumber(),
-                pcOrder.getDescription());
+                pcOrder.getDescription(), pcOrder.getIs_accept());
     }
 
     public void finishOrder(PcOrderDto pcOrderDto) {
@@ -331,5 +331,35 @@ public class PcOrderService {
 
 
         return result;
+    }
+
+    public PcOrderDto getPcOrderDtoByClientId(UUID id) {
+
+        PCOrder pcOrder = pcOrderRepository.getByClientId(id);
+
+        LocalDateTime end_time = pcOrder.getEnd_time();
+
+        LocalTime time;
+
+        LocalDate date;
+
+        if (end_time == null) {
+
+            time = LocalTime.now();
+
+            date = LocalDate.now();
+
+        } else {
+
+            time = LocalTime.from(end_time);
+
+            date = LocalDate.from(end_time);
+
+        }
+
+        return new PcOrderDto(pcOrder.getId(), pcOrder.getTask().getTitle(), pcOrder.getTask().getDescription(), pcOrder.getDepartment().getName(),
+                pcOrder.getStart_time(), pcOrder.getDate(), time, date, false, pcOrder.getInventarNumber(),
+                pcOrder.getDescription(), pcOrder.getIs_accept());
+
     }
 }

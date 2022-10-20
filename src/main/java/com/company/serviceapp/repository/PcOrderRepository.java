@@ -73,4 +73,8 @@ public interface PcOrderRepository extends JpaRepository<PCOrder, UUID> {
 
     @Query(nativeQuery = true, value = "select * from pc_orders where is_full = false and is_accept = true;")
     List<PCOrder> getUnfinishedTasks(UUID id);
+
+    @Query(nativeQuery = true, value = "select * from pc_orders p join users u on p.department_id = u.department_id\n" +
+            "where p.is_accept = false and u.id = :id")
+    PCOrder getByClientId(UUID id);
 }
