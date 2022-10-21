@@ -117,6 +117,6 @@ public interface OrderRepository extends JpaRepository<Order, UUID> {
             "from orders\n" +
             "         join departments d on d.id = orders.department_id\n" +
             "         join users u on d.id = u.department_id\n" +
-            " where is_finished = true and is_full = false and is_accept = false and u.id = :id")
+            " where is_full = false and is_accept = false and u.id = :id")
     Order getOrderForAcceptResult(UUID id);
 }
