@@ -21,11 +21,10 @@ public class ReportDto {
 
     List<String> departments;
 
-    @Override
-    public String toString() {
+    public String toSString() {
         StringBuilder result = new StringBuilder();
         for (String department : departments) {
-            result.append(",").append(department);
+            result.append(department).append(",");
         }
         return result.toString();
     }

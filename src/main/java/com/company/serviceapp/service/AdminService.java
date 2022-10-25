@@ -169,8 +169,7 @@ public class AdminService {
             row.getCell(2).getParagraphs().get(0).setAlignment(ParagraphAlignment.CENTER);
             row.getCell(3).setText(report.getInventorNumber());
             row.getCell(3).getParagraphs().get(0).setAlignment(ParagraphAlignment.CENTER);
-            row.getCell(4).setText(report.getDepartments().toString());
-            System.out.println(report.getDepartments().toString());
+            row.getCell(4).setText(report.toSString());
             row.getCell(4).getParagraphs().get(0).setAlignment(ParagraphAlignment.CENTER);
         };
 
