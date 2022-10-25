@@ -170,8 +170,10 @@ public class AdminService {
             row.getCell(3).setText(report.getInventorNumber());
             row.getCell(3).getParagraphs().get(0).setAlignment(ParagraphAlignment.CENTER);
             row.getCell(4).setText(report.getDepartments().toString());
+            System.out.println(report.getDepartments().toString());
             row.getCell(4).getParagraphs().get(0).setAlignment(ParagraphAlignment.CENTER);
         };
+
 
         XWPFParagraph para2 = xwpfdocument.createParagraph();
         para2.setAlignment(ParagraphAlignment.LEFT);
