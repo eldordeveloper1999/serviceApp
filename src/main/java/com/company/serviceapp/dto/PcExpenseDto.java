@@ -16,7 +16,9 @@ public class PcExpenseDto {
 
         String inventorNumber;
 
-        String  dateOfViolation;
+        String nameOfPcEquipment;
+
+        String dateOfViolation;
 
         String fixedDate;
 

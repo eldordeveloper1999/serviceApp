@@ -275,6 +275,8 @@ public class PcOrderService {
 
     public void setPcOrderExpenses(PcExpenseDto pcExpenseDto) {
 
+        PcEquipment equipment = pcEquipmentsRepository.getByInventor(pcExpenseDto.getInventorNumber());
+
         Department department = departmentRepository.getByName(pcExpenseDto.getDepartment());
 
         User user = userRepository.findByDepartmentId(department.getId());
@@ -285,7 +287,7 @@ public class PcOrderService {
 
         LocalDate date2 = LocalDate.parse(pcExpenseDto.getFixedDate());
 
-        PCExpense pcExpense = new PCExpense(null, pcExpenseDto.getTitle(), pcExpenseDto.getInventorNumber(), date, date2, user,
+        PCExpense pcExpense = new PCExpense(null, pcExpenseDto.getTitle(), pcExpenseDto.getInventorNumber(), equipment.getName(), date, date2, user,
                 pcExpenseDto.getConsumableProductCount(), pcEquipment.getInventorNumber());
 
         pcEquipment.setCount(pcEquipment.getCount() - pcExpense.getConsumableProductCount());
@@ -328,7 +330,9 @@ public class PcOrderService {
 
         List<PcExpenseProjection> pcExpenses = pcExpenseRepository.getPcExpenses();
 
-
+        for (PcExpenseProjection pcExpense : pcExpenses) {
+            result.add(new ReportDto(pcExpense.getName(), pcExpense.getInventorNumber(), pcExpense.getCountE(), pcExpense.getDepartmentName()));
+        }
 
         return result;
     }

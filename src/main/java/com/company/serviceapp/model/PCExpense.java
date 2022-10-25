@@ -28,6 +28,8 @@ public class PCExpense {
 
     String inventorNumber;
 
+    String nameOfEquipment;
+
     LocalDate dateOfViolation;
 
     LocalDate fixedDate;

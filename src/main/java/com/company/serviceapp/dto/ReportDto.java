@@ -20,4 +20,13 @@ public class ReportDto {
     Integer count;
 
     List<String> departments;
+
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        for (String department : departments) {
+            result.append(",").append(department);
+        }
+        return result.toString();
+    }
 }
