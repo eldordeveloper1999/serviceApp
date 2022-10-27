@@ -41,9 +41,6 @@ public class Expense {
     @ManyToOne
     User user;
 
-//    @ManyToOne
-//    Order order;
-
     Integer toldirilganKartrijSoni;
 
     String inventarToneForZapravka;
