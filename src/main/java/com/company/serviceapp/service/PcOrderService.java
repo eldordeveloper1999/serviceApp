@@ -275,7 +275,7 @@ public class PcOrderService {
 
     public void setPcOrderExpenses(PcExpenseDto pcExpenseDto) {
 
-        PcEquipment equipment = pcEquipmentsRepository.getByInventor(pcExpenseDto.getInventorNumber());
+        PcEquipment equipment = pcEquipmentsRepository.getByInventor(pcExpenseDto.getConsumableProductInventor());
 
         Department department = departmentRepository.getByName(pcExpenseDto.getDepartment());
 

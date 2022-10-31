@@ -54,6 +54,7 @@
                         <div class="col-sm-9">
                           <input class="form-control" type="hidden" th:field="*{title}" th:value="${pcExpense.getTitle()}"/>
                           <input class="form-control" type="hidden" th:field="*{inventorNumber}" th:value="${pcExpense.getInventorNumber()}"/>
+                          <input class="form-control" type="hidden" th:field="*{department}" th:value="${pcExpense.getDepartment()}"/>
                           <input type="number" class="form-control"
                                  th:field="*{consumableProductCount}"/>
                         </div>

@@ -65,7 +65,7 @@ public class PcOrderController {
         PcExpenseDto pcExpenseDto = new PcExpenseDto();
         pcExpenseDto.setTitle(pcOrderDto.getTitle());
         pcExpenseDto.setInventorNumber(pcOrderDto.getInventarNumber());
-        pcExpenseDto.setDepartment(pcExpenseDto.getDepartment());
+        pcExpenseDto.setDepartment(pcOrderDto.getDepartment());
         model.addAttribute("pcOrderDto", pcOrderDto);
         model.addAttribute("equipments", equipments);
         model.addAttribute("pcExpense", pcExpenseDto);

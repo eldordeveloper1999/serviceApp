@@ -186,7 +186,7 @@
                                             <input class="btn btn-light" type="button" value="Bekor qilish!"
                                                    onclick="history.back()">
                                             <a class="btn btn-sm btn-secondary"
-                                               th:href="@{'/pc/expense/' + ${pcOrderDto.getIs_accept()}}">Xarajatlarni kiritish</a>
+                                               th:href="@{'/pc/expense/' + ${pcOrderDto.getId()}}">Xarajatlarni kiritish</a>
                                         </div>
                                         <div class="form-group" th:if="${pcOrderDto.getIs_accept() == false}">
                                           <button type="submit" class="btn btn-primary mr-2" disabled
