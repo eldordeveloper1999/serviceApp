@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -197,11 +198,16 @@ public class ClientController {
 
 
     @GetMapping("/get-accept")
-    public String getAcceptResultPage(Model model) {
+    public String getAcceptResultPage(Model model, HttpServletResponse response) {
 
         User currentUser = getCurrentUser();
 
         Order orderById = orderRepository.getOrderForAcceptResult(currentUser.getId());
+
+        if (orderById == null) {
+            model.addAttribute("msg", "Bajarilmagan buyurtma yo'q. Yangi buyurtma berishingiz mumkin!");
+            return "client/successPage";
+        }
 
         orderById.setIs_finished(true);
 
@@ -251,6 +257,11 @@ public class ClientController {
         User currentUser = getCurrentUser();
 
         PcOrderDto pcOrderDto = pcOrderService.getPcOrderDtoByClientId(currentUser.getId());
+
+        if (pcOrderDto == null) {
+            model.addAttribute("msg", "Bajarilmagan buyurtma yo'q. Yangi buyurtma berishingiz mumkin!");
+            return "client/successPage";
+        }
 
         model.addAttribute("pcOrderDto", pcOrderDto);
 

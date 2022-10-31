@@ -34,6 +34,7 @@
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control" th:field="*{texnikaNomi}"
                                                            th:value="${expense.getTexnikaNomi()}" readonly/>
+                                                    <input class="form-control" type="hidden" th:field="*{department}" th:value="${expense.getDepartment()}"/>
                                                 </div>
                                             </div>
                                         </div>

@@ -11,9 +11,9 @@ import java.util.UUID;
 
 public interface RakelRepository extends JpaRepository<Rakel, UUID> {
 
-    @Query(nativeQuery = true, value = "select rakels.name as name, sum(count) as countE, inventar_number as inventorNumber " +
+    @Query(nativeQuery = true, value = "select rakels.name as name, sum(count) as countE, inventar_number as inventorNumber, rakels.date " +
             " from rakels " +
             " join departments d on rakels.department_id = d.id " +
-            " group by inventar_number, rakels.name;")
+            " group by inventar_number, rakels.name, rakels.date;")
     List<RakelProjection> getRakel();
 }

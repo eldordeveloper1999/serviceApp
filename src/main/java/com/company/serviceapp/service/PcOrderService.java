@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 @Service
@@ -330,8 +331,12 @@ public class PcOrderService {
 
         List<PcExpenseProjection> pcExpenses = pcExpenseRepository.getPcExpenses();
 
+        int date = LocalDate.now().getMonthValue();
+
         for (PcExpenseProjection pcExpense : pcExpenses) {
-            result.add(new ReportDto(pcExpense.getName(), pcExpense.getInventorNumber(), pcExpense.getCountE(), pcExpense.getDepartmentName()));
+            if (pcExpense.getDate().getMonthValue() == (date  - 1)) {
+                result.add(new ReportDto(pcExpense.getName(), pcExpense.getInventorNumber(), pcExpense.getCountE(), pcExpense.getDepartmentName()));
+            }
         }
 
         return result;
@@ -340,6 +345,10 @@ public class PcOrderService {
     public PcOrderDto getPcOrderDtoByClientId(UUID id) {
 
         PCOrder pcOrder = pcOrderRepository.getByClientId(id);
+
+        if (pcOrder == null) {
+            return null;
+        }
 
         LocalDateTime end_time = pcOrder.getEnd_time();
 

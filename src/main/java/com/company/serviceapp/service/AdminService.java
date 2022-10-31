@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
+import java.time.LocalDate;
 import java.util.*;
 
 @Service
@@ -75,48 +76,64 @@ public class AdminService {
 
         List<ReportDto> pcReports = pcOrderService.getPcReports();
 
+        Integer date = LocalDate.now().getMonthValue();
+
         all.addAll(pcReports);
 
         List<BarabanProjection> baraban = barabanRepository.getBaraban();
 
         for (BarabanProjection barabanProjection : baraban) {
+            if (barabanProjection.getDate().getMonthValue() == (date - 1)) {
                 all.add(new ReportDto(barabanProjection.getName(), barabanProjection.getInventorNumber(), barabanProjection.getCountE(), barabanProjection.getDepartmentName()));
+            }
         }
 
         List<KartrijProjection> kartrij = kartrijRepository.getKartrij();
 
         for (KartrijProjection kartrijProjection : kartrij) {
-            all.add(new ReportDto(kartrijProjection.getName(), kartrijProjection.getInventorNumber(), kartrijProjection.getCountE(), kartrijProjection.getDepartmentName()));
+            if (kartrijProjection.getDate().getMonthValue() == (date - 1)) {
+                all.add(new ReportDto(kartrijProjection.getName(), kartrijProjection.getInventorNumber(), kartrijProjection.getCountE(), kartrijProjection.getDepartmentName()));
+            }
         }
 
         List<LezvaProjection> lezva = lezvaRepository.getLezva();
 
         for (LezvaProjection lezvaProjection : lezva) {
-            all.add(new ReportDto(lezvaProjection.getName(), lezvaProjection.getInventorNumber(), lezvaProjection.getCountE(), lezvaProjection.getDepartmentName()));
+            if (lezvaProjection.getDate().getMonthValue() == (date - 1)) {
+                all.add(new ReportDto(lezvaProjection.getName(), lezvaProjection.getInventorNumber(), lezvaProjection.getCountE(), lezvaProjection.getDepartmentName()));
+            }
         }
 
         List<PlyonkaProjection> plyonka = plyonkaRepository.getPlyonka();
 
         for (PlyonkaProjection plyonkaProjection : plyonka) {
-            all.add(new ReportDto(plyonkaProjection.getName(), plyonkaProjection.getInventorNumber(), plyonkaProjection.getCountE(), plyonkaProjection.getDepartmentName()));
+            if (plyonkaProjection.getDate().getMonthValue() == (date - 1)) {
+                all.add(new ReportDto(plyonkaProjection.getName(), plyonkaProjection.getInventorNumber(), plyonkaProjection.getCountE(), plyonkaProjection.getDepartmentName()));
+            }
         }
 
         List<ReportProjection> toner = tonerRepository.getToneRZapravka();
 
         for (ReportProjection reportProjection : toner) {
-            all.add(new ReportDto(reportProjection.getName(), reportProjection.getInventorNumber(), reportProjection.getCountE(), reportProjection.getDepartmentName()));
+            if (reportProjection.getDate().getMonthValue() == (date - 1)) {
+                all.add(new ReportDto(reportProjection.getName(), reportProjection.getInventorNumber(), reportProjection.getCountE(), reportProjection.getDepartmentName()));
+            }
         }
 
         List<ValProjection> val = valRepository.getVal();
 
         for (ValProjection valProjection : val) {
-            all.add(new ReportDto(valProjection.getName(), valProjection.getInventorNumber(), valProjection.getCountE(), valProjection.getDepartmentName()));
+            if (valProjection.getDate().getMonthValue() == (date - 1)) {
+                all.add(new ReportDto(valProjection.getName(), valProjection.getInventorNumber(), valProjection.getCountE(), valProjection.getDepartmentName()));
+            }
         }
 
         List<RakelProjection> rakel = rakelRepository.getRakel();
 
         for (RakelProjection rakelProjection : rakel) {
-            all.add(new ReportDto(rakelProjection.getName(), rakelProjection.getInventorNumber(), rakelProjection.getCountE(), rakelProjection.getDepartmentName()));
+            if (rakelProjection.getDate().getMonthValue() == (date - 1)) {
+                all.add(new ReportDto(rakelProjection.getName(), rakelProjection.getInventorNumber(), rakelProjection.getCountE(), rakelProjection.getDepartmentName()));
+            }
         }
 
         return writeToWord(all);
@@ -152,6 +169,7 @@ public class AdminService {
         xwpfrun1.addBreak();
 
         XWPFTable tab = xwpfdocument.createTable();
+        tab.setWidth("100%");
         XWPFTableRow row = tab.getRow(0);
         row.getCell(0).setText("Sl. No.");
         row.addNewTableCell().setText("Name");
@@ -171,7 +189,8 @@ public class AdminService {
             row.getCell(3).getParagraphs().get(0).setAlignment(ParagraphAlignment.CENTER);
             row.getCell(4).setText(report.toSString());
             row.getCell(4).getParagraphs().get(0).setAlignment(ParagraphAlignment.CENTER);
-        };
+        }
+        ;
 
 
         XWPFParagraph para2 = xwpfdocument.createParagraph();
