@@ -45,6 +45,10 @@ public class SecurityConfig {
                                         .formLogin()
                                         .loginPage("/login")
                                         .loginProcessingUrl("/loginPost")
+                                        .and()
+                                        .logout()
+                                        .logoutUrl("/logout")
+                                        .logoutSuccessUrl("/logoutSuccess")
                                         .permitAll();
                             } catch (Exception e) {
                                 throw new RuntimeException(e);

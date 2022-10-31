@@ -34,6 +34,11 @@ public class AuthController {
         System.out.println(loginRequest);
     }
 
+    @GetMapping("/logout")
+    public String logout() {
+
+    }
+
     @GetMapping("/register")
     public String register(Model model, UserDto userdto) {
 
