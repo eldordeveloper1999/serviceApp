@@ -50,12 +50,10 @@
   <p>[[${msg}]]</p>
 
   <br>
-
-  <div th:if="${is_admin == false}">
   <a class="btn btn-sm btn-success" th:href="@{'/c'}">Tizimga kirish!</a>
-  </div>
+
   <div th:if="${is_admin == true}">
-  <a class="btn btn-sm btn-success" th:href="@{'/'}">Tizimga kirish!</a>
+  <a class="btn btn-sm btn-success" th:href="@{'/c'}">Tizimga kirish!</a>
   </div>
 </div>
 </body>

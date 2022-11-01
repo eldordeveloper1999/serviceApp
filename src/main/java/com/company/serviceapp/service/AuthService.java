@@ -1,5 +1,6 @@
 package com.company.serviceapp.service;
 
+import com.company.serviceapp.dto.LoginRequest;
 import com.company.serviceapp.dto.UserDto;
 import com.company.serviceapp.model.Department;
 import com.company.serviceapp.model.User;
@@ -33,4 +34,9 @@ public class AuthService{
         userRepository.save(user);
     }
 
+    public User getUser(LoginRequest loginRequest) {
+
+        return userRepository.findByUsername(loginRequest.getUsername());
+
+    }
 }

@@ -19,6 +19,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,9 +49,13 @@ public class HomeController {
     ClientOrderService clientOrderService;
 
     @GetMapping("/")
-    public String homePage(Model model) {
+    public String homePage(Model model, HttpServletResponse response) throws IOException {
 
         User currentUser = clientOrderService.getCurrentUser();
+
+        if (Objects.equals(currentUser.getRoles(), "ROLE_USER")) {
+            response.sendRedirect("/c");
+        }
 
         List<DepartmentProjection> departmentProjections = orderService.getDepartmentOrdersCount();
 

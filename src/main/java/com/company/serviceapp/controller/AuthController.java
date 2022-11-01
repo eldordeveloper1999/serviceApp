@@ -40,36 +40,17 @@ public class AuthController {
     }
 
     @PostMapping("/loginPost")
-    public void Login(@ModelAttribute("loginRequest") LoginRequest loginRequest) {
-        System.out.println(loginRequest);
+    public void Login(@ModelAttribute("loginRequest") LoginRequest loginRequest, HttpServletResponse response) throws IOException {
     }
 
     @GetMapping("/logout")
-    public String logout(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
+    public void logout(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null){
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
-
-        model.addAttribute("msg", "Siz tizimdan muvaffaqiyatli chiqdingiz!!!");
-
-        return "client/logout-success";
     }
 
-    @GetMapping("/logoutSuccess")
-    public String logoutSuccess(Model model) {
-
-        User currentUser = clientOrderService.getCurrentUser();
-
-        Boolean is_admin = null;
-
-        is_admin = !Objects.equals(currentUser.getRoles(), "USER");
-
-        model.addAttribute("msg", "Siz tizimdan muvaffaqiyatli chiqdingiz!!!");
-        model.addAttribute("is_admin", is_admin);
-
-        return "client/logout-success";
-    }
 
 
 

@@ -39,8 +39,8 @@ public class SecurityConfig {
                         {
                             try {
                                 auth
-                                        .antMatchers("/", "/task/**", "/monthly/{month}", "/last/{day1}").hasRole("ADMIN")
-                                        .antMatchers("/c/**", "/pc/**").hasAnyRole("USER", "ADMIN")
+                                        .antMatchers("/task/**", "/monthly/{month}", "/last/{day1}").hasRole("ADMIN")
+                                        .antMatchers("/", "/c/**", "/pc/**").hasAnyRole("USER", "ADMIN")
                                         .and()
                                         .formLogin()
                                         .loginPage("/login")
@@ -48,7 +48,6 @@ public class SecurityConfig {
                                         .and()
                                         .logout()
                                         .logoutUrl("/logout")
-                                        .logoutSuccessUrl("/logoutSuccess")
                                         .permitAll();
                             } catch (Exception e) {
                                 throw new RuntimeException(e);
