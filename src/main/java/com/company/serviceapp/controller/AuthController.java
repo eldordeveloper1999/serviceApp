@@ -5,6 +5,7 @@ import com.company.serviceapp.dto.UserDto;
 import com.company.serviceapp.model.Department;
 import com.company.serviceapp.model.User;
 import com.company.serviceapp.service.AuthService;
+import com.company.serviceapp.service.ClientOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,7 +19,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.lang.ref.Cleaner;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 public class AuthController {
@@ -26,6 +29,9 @@ public class AuthController {
 
     @Autowired
     AuthService authService;
+    
+    @Autowired
+    ClientOrderService clientOrderService;
 
     @GetMapping("/login")
     public String login(Model model) {
@@ -39,13 +45,33 @@ public class AuthController {
     }
 
     @GetMapping("/logout")
-    public void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public String logout(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null){
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
-        response.sendRedirect("/login");
+
+        model.addAttribute("msg", "Siz tizimdan muvaffaqiyatli chiqdingiz!!!");
+
+        return "client/logout-success";
     }
+
+    @GetMapping("/logoutSuccess")
+    public String logoutSuccess(Model model) {
+
+        User currentUser = clientOrderService.getCurrentUser();
+
+        Boolean is_admin = null;
+
+        is_admin = !Objects.equals(currentUser.getRoles(), "USER");
+
+        model.addAttribute("msg", "Siz tizimdan muvaffaqiyatli chiqdingiz!!!");
+        model.addAttribute("is_admin", is_admin);
+
+        return "client/logout-success";
+    }
+
+
 
 
     @GetMapping("/register")

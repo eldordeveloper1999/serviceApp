@@ -48,6 +48,7 @@ public class SecurityConfig {
                                         .and()
                                         .logout()
                                         .logoutUrl("/logout")
+                                        .logoutSuccessUrl("/logoutSuccess")
                                         .permitAll();
                             } catch (Exception e) {
                                 throw new RuntimeException(e);
