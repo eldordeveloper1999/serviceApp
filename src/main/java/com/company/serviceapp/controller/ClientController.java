@@ -188,6 +188,80 @@ public class ClientController {
 
     }
 
+    @GetMapping("/pc-monthly")
+    public String getMonthlyPcOrders(Model model) {
+
+        UUID userId = getCurrentUser().getId();
+
+        List<OrderProjectionForClient> monthlyPcOrders = pcOrderService.getMonthlyPcOrders(userId);
+
+        model.addAttribute("tasksForShow", monthlyPcOrders);
+
+        return "client/statistics/pc-monthly";
+
+    }
+
+    @GetMapping("/pc-kvartal")
+    public String getCurrentQuarterlyPcOrders(Model model) {
+
+        UUID userId = getCurrentUser().getId();
+
+        List<OrderProjectionForClient> quarterlyPcOrders = clientOrderService.getQuarterlyPcOrders(userId);
+
+        model.addAttribute("tasksForShow", quarterlyPcOrders);
+
+        model.addAttribute("kvartal", clientOrderService.getCurrentQuarter());
+
+        return "client/statistics/quarterly";
+
+    }
+
+    @GetMapping("/pc-kvartal/{num}")
+    public String getQuarterlyPcOrders(Model model, @PathVariable String num) {
+
+        UUID userId = getCurrentUser().getId();
+
+        List<OrderProjectionForClient> quarterlyPcOrders = clientOrderService.getQuarterlyPcOrders(userId, num);
+
+        model.addAttribute("tasksForShow", quarterlyPcOrders);
+
+        model.addAttribute("kvartal", num);
+
+        return "client/statistics/quarterly";
+
+    }
+
+    @GetMapping("/pc-yearly")
+    public String getCurrentYearlyPcOrders(Model model) {
+
+        UUID userId = getCurrentUser().getId();
+
+        List<OrderProjectionForClient> yearlyPcOrders = clientOrderService.getYearlyPcOrders(userId);
+
+        model.addAttribute("tasksForShow", yearlyPcOrders);
+
+        model.addAttribute("year", LocalDate.now().getYear());
+
+        return "client/statistics/pc-yearly";
+
+    }
+
+    @GetMapping("/pc-yearly/{year}")
+    public String getYearlyPcOrders(Model model, @PathVariable String year) {
+
+        UUID userId = getCurrentUser().getId();
+
+        List<OrderProjectionForClient> yearlyPcOrders = clientOrderService.getYearlyPcOrders(userId, year);
+
+        model.addAttribute("tasksForShow", yearlyPcOrders);
+
+        model.addAttribute("year", year);
+
+        return "client/statistics/pc-yearly";
+
+    }
+
+
     public User getCurrentUser() {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -195,7 +269,6 @@ public class ClientController {
         String name = authentication.getName();
         return userRepository.findByUsername(name);
     }
-
 
     @GetMapping("/get-accept")
     public String getAcceptResultPage(Model model, HttpServletResponse response) {

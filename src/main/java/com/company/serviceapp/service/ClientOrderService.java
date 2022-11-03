@@ -298,4 +298,131 @@ public class ClientOrderService {
 
         return false;
     }
+
+    public List<OrderProjectionForClient> getQuarterlyPcOrders(UUID userId) {
+        List<OrderProjectionForClient> result = new ArrayList<>();
+
+        LocalDate date = LocalDate.now();
+
+        int month = date.getMonth().getValue();
+
+        int quarter = switch (month) {
+            case 1, 2, 3 -> 1;
+            case 4, 5, 6 -> 2;
+            case 7, 8, 9 -> 3;
+            case 10, 11, 12 -> 4;
+            default -> 0;
+        };
+
+        List<OrderProjectionForClient> quarterlyPcOrdersByClient = pcOrderRepository.getQuarterlyPcOrdersByClient(userId);
+
+        for (OrderProjectionForClient orderProjection : quarterlyPcOrdersByClient) {
+            switch (quarter) {
+                case 1: {
+                    if (orderProjection.getEnd_time().getMonth().getValue() == 1 || orderProjection.getEnd_time().getMonth().getValue() == 2 || orderProjection.getEnd_time().getMonth().getValue() == 3) {
+                        result.add(orderProjection);
+                    }
+                }
+                break;
+                case 2: {
+                    if (orderProjection.getEnd_time().getMonth().getValue() == 4 || orderProjection.getEnd_time().getMonth().getValue() == 5 || orderProjection.getEnd_time().getMonth().getValue() == 6) {
+                        result.add(orderProjection);
+                    }
+                }
+                break;
+                case 3: {
+                    if (orderProjection.getEnd_time().getMonth().getValue() == 7 || orderProjection.getEnd_time().getMonth().getValue() == 8 || orderProjection.getEnd_time().getMonth().getValue() == 9) {
+                        result.add(orderProjection);
+                    }
+                }
+                break;
+                case 4: {
+                    if (orderProjection.getEnd_time().getMonth().getValue() == 10 || orderProjection.getEnd_time().getMonth().getValue() == 11 || orderProjection.getEnd_time().getMonth().getValue() == 12) {
+                        result.add(orderProjection);
+                    }
+                }
+                break;
+            }
+        }
+
+        return result;
+    }
+
+    public List<OrderProjectionForClient> getQuarterlyPcOrders(UUID userId, String kvartal) {
+
+
+        List<OrderProjectionForClient> result = new ArrayList<>();
+
+        int quarter = Integer.parseInt(kvartal);
+
+        List<OrderProjectionForClient> quarterlyPcOrdersByClient = pcOrderRepository.getQuarterlyPcOrdersByClient(userId);
+
+        for (OrderProjectionForClient orderProjection : quarterlyPcOrdersByClient) {
+            switch (quarter) {
+                case 1: {
+                    if (orderProjection.getEnd_time().getMonth().getValue() == 1 || orderProjection.getEnd_time().getMonth().getValue() == 2 || orderProjection.getEnd_time().getMonth().getValue() == 3) {
+                        result.add(orderProjection);
+                    }
+                }
+                break;
+                case 2: {
+                    if (orderProjection.getEnd_time().getMonth().getValue() == 4 || orderProjection.getEnd_time().getMonth().getValue() == 5 || orderProjection.getEnd_time().getMonth().getValue() == 6) {
+                        result.add(orderProjection);
+                    }
+                }
+                break;
+                case 3: {
+                    if (orderProjection.getEnd_time().getMonth().getValue() == 7 || orderProjection.getEnd_time().getMonth().getValue() == 8 || orderProjection.getEnd_time().getMonth().getValue() == 9) {
+                        result.add(orderProjection);
+                    }
+                }
+                break;
+                case 4: {
+                    if (orderProjection.getEnd_time().getMonth().getValue() == 10 || orderProjection.getEnd_time().getMonth().getValue() == 11 || orderProjection.getEnd_time().getMonth().getValue() == 12) {
+                        result.add(orderProjection);
+                    }
+                }
+                break;
+            }
+        }
+
+        return result;
+
+    }
+
+    public List<OrderProjectionForClient> getYearlyPcOrders(UUID userId) {
+
+        List<OrderProjectionForClient> result = new ArrayList<>();
+
+        LocalDate date = LocalDate.now();
+
+        int year = date.getYear();
+
+        List<OrderProjectionForClient> yearlyOrdersByClient = pcOrderRepository.getYearlyOrdersByClient(userId);
+
+        for (OrderProjectionForClient orderProjection : yearlyOrdersByClient) {
+            if (orderProjection.getEnd_time().getYear() == year) {
+                result.add(orderProjection);
+            }
+        }
+
+        return result;
+    }
+
+    public List<OrderProjectionForClient> getYearlyPcOrders(UUID userId, String y) {
+
+        List<OrderProjectionForClient> result = new ArrayList<>();
+
+        int year = Integer.parseInt(y);
+
+        List<OrderProjectionForClient> yearlyOrdersByClient = orderRepository.getYearlyOrdersByClient(userId);
+
+        for (OrderProjectionForClient orderProjection : yearlyOrdersByClient) {
+            if (orderProjection.getEnd_time().getYear() == year) {
+                result.add(orderProjection);
+            }
+        }
+
+        return result;
+    }
 }

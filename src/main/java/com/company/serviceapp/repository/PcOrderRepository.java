@@ -77,4 +77,37 @@ public interface PcOrderRepository extends JpaRepository<PCOrder, UUID> {
     @Query(nativeQuery = true, value = "select * from pc_orders p join users u on p.department_id = u.department_id\n" +
             "where p.is_accept = false and u.id = :id")
     PCOrder getByClientId(UUID id);
+
+    @Query(nativeQuery = true, value = "select cast(o.id as varchar), t.title, O.date, O.start_time, d.name as department, s.name as status, o.end_time\n" +
+            "from pc_orders o\n" +
+            "         join users u on o.department_id = u.department_id\n" +
+            "         join departments d on d.id = o.department_id\n" +
+            "            JOIN tasks t on t.id = O.task_id\n" +
+            "            join status s on s.id = O.status_id\n" +
+            "where o.is_full = true\n" +
+            "  and o.is_finished = true " +
+            "and u.id = :userId")
+    List<OrderProjectionForClient> getMonthlyOrdersByUser(UUID userId);
+
+    @Query(nativeQuery = true, value = "select cast(o.id as varchar), t.title, O.date, O.start_time, d.name as department, s.name as status, o.end_time\n" +
+            "from pc_orders o\n" +
+            "         join users u on o.department_id = u.department_id\n" +
+            "         join departments d on d.id = o.department_id\n" +
+            "            JOIN tasks t on t.id = O.task_id\n" +
+            "            join status s on s.id = O.status_id\n" +
+            "where o.is_full = true\n" +
+            "  and o.is_finished = true " +
+            "and u.id = :userId")
+    List<OrderProjectionForClient> getQuarterlyPcOrdersByClient(UUID userId);
+
+    @Query(nativeQuery = true, value = "select cast(o.id as varchar), t.title, O.date, O.start_time, d.name as department, s.name as status, o.end_time\n" +
+            "from pc_orders o\n" +
+            "         join users u on o.department_id = u.department_id\n" +
+            "         join departments d on d.id = o.department_id\n" +
+            "            JOIN tasks t on t.id = O.task_id\n" +
+            "            join status s on s.id = O.status_id\n" +
+            "where o.is_full = true\n" +
+            "  and o.is_finished = true" +
+            " and u.id = :id")
+    List<OrderProjectionForClient> getYearlyOrdersByClient(UUID id);
 }

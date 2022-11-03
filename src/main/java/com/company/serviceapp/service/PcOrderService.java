@@ -375,4 +375,24 @@ public class PcOrderService {
                 pcOrder.getDescription(), pcOrder.getIs_accept());
 
     }
+
+    public List<OrderProjectionForClient> getMonthlyPcOrders(UUID userId) {
+
+        List<OrderProjectionForClient> result = new ArrayList<>();
+
+        LocalDate date = LocalDate.now();
+
+        int month = date.getMonth().getValue();
+
+        List<OrderProjectionForClient> monthlyOrdersByUser = pcOrderRepository.getMonthlyOrdersByUser(userId);
+
+        for (OrderProjectionForClient orderProjection : monthlyOrdersByUser) {
+            if (orderProjection.getEnd_time().getMonth().getValue() == month) {
+                result.add(orderProjection);
+            }
+        }
+
+        return result;
+
+    }
 }
