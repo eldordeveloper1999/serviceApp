@@ -425,4 +425,12 @@ public class ClientOrderService {
 
         return result;
     }
+
+    public List<OrderProjection> getUnfinishedPcOrdersProjectionByUserId(UUID userId) {
+        return pcOrderRepository.getUnfinishedPcOrdersProjectionByUserId(userId);
+    }
+
+    public List<OrderProjectionForClient> getFinishedPcOrdersProjectionByUserId(UUID userId) {
+        return pcOrderRepository.getFinishedPcOrdersProjectionByUserId(userId);
+    }
 }

@@ -1,4 +1,4 @@
-package com.company.serviceapp.command;
+package com.company.serviceapp.config.command;
 
 import com.company.serviceapp.model.*;
 import com.company.serviceapp.repository.*;

@@ -52,7 +52,7 @@ public class ClientController {
     @Autowired
     PcOrderService pcOrderService;
 
-    @GetMapping
+    @GetMapping("/home")
     public String homePage(Model model, RedirectAttributes redirectAttrs) {
 
         User currentUser = clientOrderService.getCurrentUser();
@@ -104,6 +104,18 @@ public class ClientController {
         return "client/order-view-client";
     }
 
+    @GetMapping("/pc-order-view-unfinished")
+    public String unfinishedPcOrderViewForClient(Model model) {
+
+        UUID userId = getCurrentUser().getId();
+
+        List<OrderProjection> tasksProjections = clientOrderService.getUnfinishedPcOrdersProjectionByUserId(userId);
+
+        model.addAttribute("tasksForShow", tasksProjections);
+
+        return "client/pc-order-view-client";
+    }
+
     @GetMapping("/order-view-finished")
     public String finishedOrderViewForClient(Model model) {
 
@@ -114,6 +126,18 @@ public class ClientController {
         model.addAttribute("tasksForShow", tasksProjections);
 
         return "client/order-view-client-finish";
+    }
+
+    @GetMapping("/pc-order-view-finished")
+    public String finishedPcOrderViewForClient(Model model) {
+
+        UUID userId = getCurrentUser().getId();
+
+        List<OrderProjectionForClient> tasksProjections = clientOrderService.getFinishedPcOrdersProjectionByUserId(userId);
+
+        model.addAttribute("tasksForShow", tasksProjections);
+
+        return "client/pc-order-view-client-finish";
     }
 
     @GetMapping("/monthly")
