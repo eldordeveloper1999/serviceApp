@@ -26,7 +26,7 @@
                 </div>
                 <div class="row  mt-3">
                     <div class="col-xl-12 d-flex grid-margin stretch-card">
-                        <div class="col-md-6 grid-margin stretch-card">
+                        <div class="col-md-12 grid-margin stretch-card">
                             <div class="card">
                                 <div class="card-body">
                                     <h4 class="card-title">Printer</h4>
@@ -77,58 +77,61 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 grid-margin stretch-card">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h4 class="card-title">Boshqa buyurtmalar</h4>
-                                    <form class="form-sample" method="post" th:action="@{/pc/receiveRequest}"
-                                          th:object="${clientRequest}">
-                                        </br>
-                                        <div class="form-group row">
-                                            <div class="col">
-                                                <label>Inventar nomer</label>
-                                                <div id="bloodhound">
-                                                    <input class="typeahead" type="text" placeholder="inventar"
-                                                           th:field="*{inventarName}">
-                                                </div>
-                                            </div>
+                    </div>
+                </div>
+                <div class="row  mt-3">
+                    <div class="col-xl-12 d-flex grid-margin stretch-card">
+                <div class="col-md-12 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Boshqa buyurtmalar</h4>
+                            <form class="form-sample" method="post" th:action="@{/pc/receiveRequest}"
+                                  th:object="${clientRequest}">
+                                </br>
+                                <div class="form-group row">
+                                    <div class="col">
+                                        <label>Inventar nomer</label>
+                                        <div id="bloodhound">
+                                            <input class="typeahead" type="text" placeholder="inventar"
+                                                   th:field="*{inventarName}">
                                         </div>
-                                        <div class="form-group">
-                                            <label for="exampleFormControlSelect3">Iltimos buyurtmani tanlang</label>
-                                            <select class="form-control" id="exampleFormControlSelect3"
-                                                    th:field="*{taskId}">
-                                                <div th:each="task : ${tasks}">
-                                                    <option th:value="${task.getId()}">[[${task.getTitle()}]]</option>
-                                                </div>
-                                            </select>
-                                        </div>
-                                        </br>
-                                        </br>
-                                        <div class="form-group">
-                                            <label for="exampleFormControlSelect4">Iltimos buyurtma statusini
-                                                tanlang</label>
-                                            <select class="form-control" id="exampleFormControlSelect4"
-                                                    th:field="*{statusId}">
-                                                <div th:each="status : ${statuses}">
-                                                    <option th:value="${status.getId()}">[[${status.getName()}]]
-                                                    </option>
-                                                </div>
-                                            </select>
-                                        </div>
-                                        </br>
-                                        <div class="form-group" th:if="${isHaveUnFinishPcTask == false}">
-                                            <button type="submit" class="btn btn-primary">Buyurtma berish</button>
-                                        </div>
-                                        <div class="form-group" th:if="${isHaveUnFinishPcTask == true}">
-                                            <button type="submit" class="btn btn-primary" disabled title="Sizda hali tugatilmagan buyurtma bor, iltimos oldin buyurtmani bajarilishini kuting">Buyurtma berish</button>
-                                        </div>
-                                    </form>
+                                    </div>
                                 </div>
-                            </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlSelect3">Iltimos buyurtmani tanlang</label>
+                                    <select class="form-control" id="exampleFormControlSelect3"
+                                            th:field="*{taskId}">
+                                        <div th:each="task : ${tasks}">
+                                            <option th:value="${task.getId()}">[[${task.getTitle()}]]</option>
+                                        </div>
+                                    </select>
+                                </div>
+                                </br>
+                                </br>
+                                <div class="form-group">
+                                    <label for="exampleFormControlSelect4">Iltimos buyurtma statusini
+                                        tanlang</label>
+                                    <select class="form-control" id="exampleFormControlSelect4"
+                                            th:field="*{statusId}">
+                                        <div th:each="status : ${statuses}">
+                                            <option th:value="${status.getId()}">[[${status.getName()}]]
+                                            </option>
+                                        </div>
+                                    </select>
+                                </div>
+                                </br>
+                                <div class="form-group" th:if="${isHaveUnFinishPcTask == false}">
+                                    <button type="submit" class="btn btn-primary">Buyurtma berish</button>
+                                </div>
+                                <div class="form-group" th:if="${isHaveUnFinishPcTask == true}">
+                                    <button type="submit" class="btn btn-primary" disabled title="Sizda hali tugatilmagan buyurtma bor, iltimos oldin buyurtmani bajarilishini kuting">Buyurtma berish</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
-
+                    </div>
+                </div>
             </div>
             <div class="row">
             </div>

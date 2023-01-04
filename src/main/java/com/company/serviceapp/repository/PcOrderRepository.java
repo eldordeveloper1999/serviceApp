@@ -71,7 +71,7 @@ public interface PcOrderRepository extends JpaRepository<PCOrder, UUID> {
     @Query(nativeQuery = true, value = "select count(*) from pc_orders where date = :localDate and is_finished = false and is_full = false")
     Integer getDailyUnFinishedPcOrdersCount(LocalDate localDate);
 
-    @Query(nativeQuery = true, value = "select * from pc_orders where is_full = false and is_accept = false;")
+    @Query(nativeQuery = true, value = "select * from pc_orders where is_full = false and is_accept = false and pc_orders.department_id = :id")
     List<PCOrder> getUnfinishedTasks(UUID id);
 
     @Query(nativeQuery = true, value = "select * from pc_orders p join users u on p.department_id = u.department_id\n" +

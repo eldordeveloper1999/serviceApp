@@ -291,7 +291,8 @@ public class ClientOrderService {
 
     public Boolean isHaveUnFinishPcTask(UUID id) {
 
-        List<PCOrder> pcOrders = pcOrderRepository.getUnfinishedTasks(id);
+        Department byUserId = departmentRepository.getByUserId(id);
+        List<PCOrder> pcOrders = pcOrderRepository.getUnfinishedTasks(byUserId.getId());
         if (pcOrders.size() > 0) {
             return true;
         }

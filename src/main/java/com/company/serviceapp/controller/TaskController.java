@@ -258,10 +258,6 @@ public class TaskController {
         return "admin/workplace-for-finished";
     }
 
-//    @GetMapping(value = "/report-file")
-//    public void getReportFile() {
-//        adminService.getReportFile();
-//    }
 
     @GetMapping("/report-file")
     public void downloadCsv(HttpServletResponse response) throws IOException {
