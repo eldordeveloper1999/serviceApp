@@ -21,7 +21,7 @@ public class ReportDto {
 
     List<String> departments;
 
-    public String toSString() {
+    public String toString() {
         StringBuilder result = new StringBuilder();
         for (String department : departments) {
             result.append(department).append(",");

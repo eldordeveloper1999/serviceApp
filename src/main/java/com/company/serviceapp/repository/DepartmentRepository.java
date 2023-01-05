@@ -21,28 +21,28 @@ public interface DepartmentRepository extends JpaRepository<Department, UUID> {
             " where u.id= :userId")
     Department getByUserId(UUID userId);
 
-    @Query(nativeQuery = true, value = "select d.short_name from departments d join toners t on d.id = t.department_id where t.inventar_number = :inventar")
+    @Query(nativeQuery = true, value = "select distinct d.short_name from departments d join toners t on d.id = t.department_id where t.inventar_number = :inventar")
     List<String> getFindByInventorNumber(String inventar);
 
-    @Query(nativeQuery = true, value = "select d.short_name from departments d join barabans b on d.id = b.department_id where b.inventar_number = :inventar")
+    @Query(nativeQuery = true, value = "select distinct d.short_name from departments d join barabans b on d.id = b.department_id where b.inventar_number = :inventar")
     List<String> getFindByBarabanInventorNumber(String inventar);
 
-    @Query(nativeQuery = true, value = "select d.short_name from departments d join rakels r on d.id = r.department_id where r.inventar_number = :inventar")
+    @Query(nativeQuery = true, value = "select distinct d.short_name from departments d join rakels r on d.id = r.department_id where r.inventar_number = :inventar")
     List<String> getFindByRakelInventorNumber(String inventar);
 
-    @Query(nativeQuery = true, value = "select d.short_name from departments d join kartrijs r on d.id = r.department_id where r.inventar_number = :inventar")
+    @Query(nativeQuery = true, value = "select distinct d.short_name from departments d join kartrijs r on d.id = r.department_id where r.inventar_number = :inventar")
     List<String> getFindByKartrijInventorNumber(String inventar);
 
-    @Query(nativeQuery = true, value = "select d.short_name from departments d join lezvas r on d.id = r.department_id where r.inventar_number = :inventar")
+    @Query(nativeQuery = true, value = "select distinct d.short_name from departments d join lezvas r on d.id = r.department_id where r.inventar_number = :inventar")
     List<String> getFindByLezvaInventorNumber(String inventar);
 
-    @Query(nativeQuery = true, value = "select d.short_name from departments d join plyonkas r on d.id = r.department_id where r.inventar_number = :inventar")
+    @Query(nativeQuery = true, value = "select distinct d.short_name from departments d join plyonkas r on d.id = r.department_id where r.inventar_number = :inventar")
     List<String> getFindByPlyonkaInventorNumber(String inventar);
 
-    @Query(nativeQuery = true, value = "select d.short_name from departments d join vals r on d.id = r.department_id where r.inventar_number = :inventar")
+    @Query(nativeQuery = true, value = "select distinct d.short_name from departments d join vals r on d.id = r.department_id where r.inventar_number = :inventar")
     List<String> getFindByValInventorNumber(String inventar);
 
-    @Query(nativeQuery = true, value = "select d.short_name from departments d\n" +
+    @Query(nativeQuery = true, value = "select distinct d.short_name from departments d\n" +
             "join users u on d.id = u.department_id\n" +
             "join pc_expenses pe on u.id = pe.user_id where pe.consumable_product_inventor = :inventar")
     List<String> getFindByPcEquipmentInventorNumber(String inventar);
