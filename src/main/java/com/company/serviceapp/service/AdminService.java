@@ -213,48 +213,9 @@ public class AdminService {
 
     }
 
-    public static void main(String[] args) throws Exception {
-
-        XWPFDocument xwpfdocument = new XWPFDocument();
-
-        File file = new File("src/main/resources/text.docx");
-
-        FileOutputStream ostream = new FileOutputStream(file);
-
-        XWPFParagraph para = xwpfdocument.createParagraph();
-        para.setAlignment(ParagraphAlignment.RIGHT);
-        XWPFRun xwpfrun = para.createRun();
-        xwpfrun.setFontSize(14);
-        xwpfrun.setText("УБ бошлиғи");
-        xwpfrun.addBreak();
-        xwpfrun.setText("Ш. Ш. Рихсиевга");
-        xwpfrun.addBreak();
-        xwpfrun.setText("Материалларни ҳисобдан чиқариш учун");
-        xwpfrun.addBreak();
-
-        XWPFParagraph para1 = xwpfdocument.createParagraph();
-        para1.setAlignment(ParagraphAlignment.CENTER);
-        XWPFRun xwpfrun1 = para1.createRun();
-        xwpfrun1.addBreak();
-        xwpfrun1.setFontSize(14);
-        xwpfrun1.setText("2022 Август  ой учун компьютерлар ва принтерларни таъмирлашда  фойдаланилган материаллари тўғрисида ҳисобот");
-        xwpfrun1.addBreak();
-        xwpfrun1.addBreak();
-        xwpfrun1.addBreak();
-        xwpfrun1.addBreak();
-        xwpfrun1.addBreak();
-
-        XWPFParagraph para2 = xwpfdocument.createParagraph();
-        para2.setAlignment(ParagraphAlignment.LEFT);
-        XWPFRun xwpfrun2 = para2.createRun();
-        xwpfrun2.setFontSize(14);
-        xwpfrun2.setText("Аризалар илова қилинади.");
-        xwpfrun2.addBreak();
-        xwpfrun2.setText("АТРБ бошлиғи                                                                               Н.Мухамедов");
-
-
-        xwpfdocument.write(ostream);
-        ostream.close();
+    public static void main(String[] args) {
+        Integer date = LocalDate.now().getMonthValue();
+        System.out.println(date-1);
     }
 
 }
