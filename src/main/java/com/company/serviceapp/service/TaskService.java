@@ -99,30 +99,32 @@ public class TaskService {
             default -> 0;
         };
 
+        int year = LocalDate.now().getYear();
+
         List<OrderProjectionForClient> quarterlyOrdersByClient = taskRepository.getQuarterlyOrders();
 
         for (OrderProjectionForClient orderProjection : quarterlyOrdersByClient) {
             switch (quarter) {
                 case 1: {
-                    if (orderProjection.getEnd_time().getMonth().getValue() == 1 || orderProjection.getEnd_time().getMonth().getValue() == 2 || orderProjection.getEnd_time().getMonth().getValue() == 3) {
+                    if ((orderProjection.getEnd_time().getMonth().getValue() == 1 || orderProjection.getEnd_time().getMonth().getValue() == 2 || orderProjection.getEnd_time().getMonth().getValue() == 3) && (orderProjection.getEnd_time().getYear() == year)) {
                         result.add(orderProjection);
                     }
                 }
                 break;
                 case 2: {
-                    if (orderProjection.getEnd_time().getMonth().getValue() == 4 || orderProjection.getEnd_time().getMonth().getValue() == 5 || orderProjection.getEnd_time().getMonth().getValue() == 6) {
+                    if ((orderProjection.getEnd_time().getMonth().getValue() == 4 || orderProjection.getEnd_time().getMonth().getValue() == 5 || orderProjection.getEnd_time().getMonth().getValue() == 6) && (orderProjection.getEnd_time().getYear() == year)) {
                         result.add(orderProjection);
                     }
                 }
                 break;
                 case 3: {
-                    if (orderProjection.getEnd_time().getMonth().getValue() == 7 || orderProjection.getEnd_time().getMonth().getValue() == 8 || orderProjection.getEnd_time().getMonth().getValue() == 9) {
+                    if ((orderProjection.getEnd_time().getMonth().getValue() == 7 || orderProjection.getEnd_time().getMonth().getValue() == 8 || orderProjection.getEnd_time().getMonth().getValue() == 9) && (orderProjection.getEnd_time().getYear() == year)) {
                         result.add(orderProjection);
                     }
                 }
                 break;
                 case 4: {
-                    if (orderProjection.getEnd_time().getMonth().getValue() == 10 || orderProjection.getEnd_time().getMonth().getValue() == 11 || orderProjection.getEnd_time().getMonth().getValue() == 12) {
+                    if ((orderProjection.getEnd_time().getMonth().getValue() == 10 || orderProjection.getEnd_time().getMonth().getValue() == 11 || orderProjection.getEnd_time().getMonth().getValue() == 12) && (orderProjection.getEnd_time().getYear() == year)) {
                         result.add(orderProjection);
                     }
                 }
@@ -138,28 +140,29 @@ public class TaskService {
 
         List<OrderProjectionForClient> quarterlyOrdersByClient = taskRepository.getQuarterlyOrders();
 
+        int year = LocalDate.now().getYear();
         for (OrderProjectionForClient orderProjection : quarterlyOrdersByClient) {
             switch (quarter) {
                 case 1: {
-                    if (orderProjection.getEnd_time().getMonth().getValue() == 1 || orderProjection.getEnd_time().getMonth().getValue() == 2 || orderProjection.getEnd_time().getMonth().getValue() == 3) {
+                    if ((orderProjection.getEnd_time().getMonth().getValue() == 1 || orderProjection.getEnd_time().getMonth().getValue() == 2 || orderProjection.getEnd_time().getMonth().getValue() == 3) && (orderProjection.getEnd_time().getYear() == year)) {
                         result.add(orderProjection);
                     }
                 }
                 break;
                 case 2: {
-                    if (orderProjection.getEnd_time().getMonth().getValue() == 4 || orderProjection.getEnd_time().getMonth().getValue() == 5 || orderProjection.getEnd_time().getMonth().getValue() == 6) {
+                    if ((orderProjection.getEnd_time().getMonth().getValue() == 4 || orderProjection.getEnd_time().getMonth().getValue() == 5 || orderProjection.getEnd_time().getMonth().getValue() == 6) && (orderProjection.getEnd_time().getYear() == year)) {
                         result.add(orderProjection);
                     }
                 }
                 break;
                 case 3: {
-                    if (orderProjection.getEnd_time().getMonth().getValue() == 7 || orderProjection.getEnd_time().getMonth().getValue() == 8 || orderProjection.getEnd_time().getMonth().getValue() == 9) {
+                    if ((orderProjection.getEnd_time().getMonth().getValue() == 7 || orderProjection.getEnd_time().getMonth().getValue() == 8 || orderProjection.getEnd_time().getMonth().getValue() == 9) && (orderProjection.getEnd_time().getYear() == year)) {
                         result.add(orderProjection);
                     }
                 }
                 break;
                 case 4: {
-                    if (orderProjection.getEnd_time().getMonth().getValue() == 10 || orderProjection.getEnd_time().getMonth().getValue() == 11 || orderProjection.getEnd_time().getMonth().getValue() == 12) {
+                    if ((orderProjection.getEnd_time().getMonth().getValue() == 10 || orderProjection.getEnd_time().getMonth().getValue() == 11 || orderProjection.getEnd_time().getMonth().getValue() == 12) && (orderProjection.getEnd_time().getYear() == year)) {
                         result.add(orderProjection);
                     }
                 }

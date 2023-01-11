@@ -52,6 +52,11 @@ public class ClientController {
     @Autowired
     PcOrderService pcOrderService;
 
+    @GetMapping("/")
+    public String smth() {
+        return "client/client-index";
+    }
+
     @GetMapping("/home")
     public String homePage(Model model, RedirectAttributes redirectAttrs) {
 

@@ -54,7 +54,7 @@ public class HomeController {
         User currentUser = clientOrderService.getCurrentUser();
 
         if (Objects.equals(currentUser.getRoles(), "ROLE_USER")) {
-            response.sendRedirect("/c/home");
+            response.sendRedirect("/c/");
         }
 
         List<DepartmentProjection> departmentProjections = orderService.getDepartmentOrdersCount();
