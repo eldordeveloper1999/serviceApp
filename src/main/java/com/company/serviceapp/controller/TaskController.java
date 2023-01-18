@@ -220,7 +220,7 @@ public class TaskController {
 
         adminService.addToBase(productDto);
 
-        //response.sendRedirect("/task/printer/{" + productDto.getPrinterId() + "}");
+        response.sendRedirect("/task/printer/" + productDto.getPrinterId() + "");
     }
 
     @GetMapping(value = "/new")
@@ -257,7 +257,6 @@ public class TaskController {
         model.addAttribute("tasksForShow", pcTasks);
         return "admin/workplace-for-finished";
     }
-
 
     @GetMapping("/report-file")
     public void downloadCsv(HttpServletResponse response) throws IOException {

@@ -1,5 +1,6 @@
 package com.company.serviceapp.service;
 
+import com.company.serviceapp.bot.TelegramBot;
 import com.company.serviceapp.dto.ClientRequestDto;
 import com.company.serviceapp.dto.PcOrderDto;
 import com.company.serviceapp.model.*;
@@ -15,7 +16,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -43,6 +43,11 @@ public class ClientOrderService {
     @Autowired
     PcOrderRepository pcOrderRepository;
 
+    final TelegramBot telegramBot;
+
+    public ClientOrderService(TelegramBot telegramBot) {
+        this.telegramBot = telegramBot;
+    }
 
     public void receiveRequestFromClient(ClientRequestDto clientRequestDto) {
 
@@ -69,6 +74,8 @@ public class ClientOrderService {
         Printer printer = printerRepository.findById(clientRequestDto.getPrinterId()).get();
         Order order = new Order(null, printer1, department, status, LocalTime.now(), LocalDate.now(), null, false, false, false, null, clientRequestDto.getInventarName(), printer);
         orderRepository.save(order);
+        telegramBot.sendMessage(Long.valueOf("5635787934"), department.getName() + "dan printer bo'yicha zayavka qabul qilindi!!!");
+
 
     }
 

@@ -1,6 +1,6 @@
 package com.company.serviceapp.service;
 
-import com.company.serviceapp.dto.ClientRequestDto;
+import com.company.serviceapp.bot.TelegramBot;
 import com.company.serviceapp.dto.OrderDto;
 import com.company.serviceapp.model.*;
 import com.company.serviceapp.projection.DepartmentProjection;
@@ -9,11 +9,12 @@ import com.company.serviceapp.projection.OrderProjectionForClient;
 import com.company.serviceapp.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.telegram.telegrambots.meta.api.objects.Message;
+import org.telegram.telegrambots.meta.api.objects.Update;
 
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -41,8 +42,6 @@ public class OrderService {
 
     @Autowired
     PrinterRepository printerRepository;
-
-
 //    public List<Order> getUnfinishedOrdersByDepartment() {
 //
 //        UUID userId = clientOrderService.getCurrentUser().getId();
@@ -173,6 +172,7 @@ public class OrderService {
         Order order = new Order(orderDto.getId(), task, department, status, orderDto.getStart_time(), orderDto.getDate(), end_time, true, true, true, answer, orderDto.getInventarNumber(), printer);
 
         orderRepository.save(order);
+
     }
 
     public List<OrderProjection> getUnFinishedPrinterTasks() {
