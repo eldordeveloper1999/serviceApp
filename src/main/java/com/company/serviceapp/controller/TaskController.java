@@ -266,4 +266,17 @@ public class TaskController {
         IOUtils.copy(stream, response.getOutputStream());
     }
 
+    @GetMapping("/show-base/{id}")
+    public String getBaseByPrinter(@PathVariable String id, Model model) {
+        if(id.equals("null")) {
+            List<PcEquipment> basePcProducts = taskService.getBasePcProducts(id);
+            model.addAttribute("productsPc", basePcProducts);
+            return "admin/show/show-base-pc";
+        } else {
+            List<NewProduct> baseProducts = taskService.getBaseProducts(id);
+            model.addAttribute("products", baseProducts);
+            return "admin/show/show-base";
+        }
+    }
+
 }

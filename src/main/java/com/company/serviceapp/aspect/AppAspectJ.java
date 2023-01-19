@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Aspect
@@ -38,10 +39,14 @@ public class AppAspectJ {
 
                 List<Printer> printers = aspectService.getPrinters();
 
+                List<Printer> printersS = new ArrayList<>(printers);
+                printersS.add(new Printer(null, "Boshqa mahsulotlar"));
+
                 List<OrderProjection> pcOrders = aspectService.getPcOrders();
 
                 ((Model) arg).addAttribute("notifications_count", taskProjections.size() + pcOrders.size());
                 ((Model) arg).addAttribute("printers", printers);
+                ((Model) arg).addAttribute("printersS", printersS);
 
                // ((Model) arg).addAttribute("notifications", taskProjections);
             }

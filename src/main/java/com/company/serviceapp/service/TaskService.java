@@ -60,6 +60,12 @@ public class TaskService {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    PcEquipmentsRepository pcEquipmentsRepository;
+
+    @Autowired
+    NewProductRepository newProductRepository;
+
     public Task getTaskById(String taskId) {
 
         return taskRepository.findById(UUID.fromString(taskId)).get();
@@ -384,7 +390,6 @@ public class TaskService {
         LocalDate endDate = LocalDate.parse(expensedto.getTuzatilganSana());
 
 
-
         Expense expense = new Expense(expensedto.getTexnikaNomi(), expensedto.getInventarNumber(), department, startDate, endDate, user, expensedto.getToldirilganKartrijSoni(), inventarToneForZapravka,
                 expensedto.getAlmashtirilganBarabanSoni(), inventarBaraban, expensedto.getAlmashtirilganValSoni(), inventarVal,
                 expensedto.getAlmashtirilganPlyonkaSoni(), inventarPlyonka, expensedto.getAlmashtirilganRakelSoni(), inventarRakel,
@@ -430,5 +435,15 @@ public class TaskService {
         }
 
         return res;
+    }
+
+    public List<NewProduct> getBaseProducts(String id) {
+        List<NewProduct> byPrinterId = newProductRepository.findByPrinterId(UUID.fromString(id));
+        return byPrinterId;
+    }
+
+    public List<PcEquipment> getBasePcProducts(String id) {
+        List<PcEquipment> all = pcEquipmentsRepository.findAll();
+        return all;
     }
 }

@@ -1,5 +1,6 @@
 package com.company.serviceapp.service;
 
+import com.company.serviceapp.bot.TelegramBot;
 import com.company.serviceapp.dto.*;
 import com.company.serviceapp.model.*;
 import com.company.serviceapp.projection.OrderProjection;
@@ -8,13 +9,15 @@ import com.company.serviceapp.projection.PcExpenseProjection;
 import com.company.serviceapp.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.telegram.telegrambots.meta.api.objects.Chat;
+import org.telegram.telegrambots.meta.api.objects.Message;
+import org.telegram.telegrambots.meta.api.objects.Update;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.UUID;
 
 @Service
@@ -50,6 +53,13 @@ public class PcOrderService {
     @Autowired
     UserRepository userRepository;
 
+    final TelegramBot telegramBot;
+
+    public PcOrderService(TelegramBot telegramBot) {
+        this.telegramBot = telegramBot;
+    }
+
+
     public void receiveRequestFromClient(PcRequestDto clientRequestDto) {
 
         Task task = taskRepository.findById(clientRequestDto.getTaskId()).get();
@@ -61,6 +71,7 @@ public class PcOrderService {
 
         PCOrder order = new PCOrder(null, task, department, status, LocalTime.now(), LocalDate.now(), null, false, false, false, clientRequestDto.getDescription(), clientRequestDto.getInventarName());
         pcOrderRepository.save(order);
+        telegramBot.sendMessage(Long.valueOf("5635787934"), department.getName() + "dan zayavka qabul qilindi!!!");
 
     }
 

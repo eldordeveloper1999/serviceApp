@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Client Page</title>
+  <link rel="stylesheet" href="../../vendors/typicons.font/font/typicons.css">
+  <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css">
+  <link rel="stylesheet" href="../../css/vertical-layout-light/style.css">
+  <link rel="shortcut icon" href="../../images/favicon.png" />
+  <style>
+    .top-left {
+      position: absolute;
+      top: 8px;
+      left: 16px;
+    }
+
+  </style>
+</head>
+
+<body>
+<div class="container-scroller">
+  <nav th:replace="client/layout/navbar :: navbar"></nav>
+  <div class="container-fluid page-body-wrapper">
+    <nav th:replace="client/layout/sidebar :: sidebar"></nav>
+    <div class="main-panel">
+      <div class="content-wrapper">
+        <div class="card" style="width: 100rem; height: 50rem">
+          <img class="card-img-top" th:src="@{/images/11111.jpg}" alt="Card image cap">
+          <div class="top-left"><h1>E-BUYURTMA</h1></div>
+        </div>
+      </div>
+      <div class="row">
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="../../vendors/js/vendor.bundle.base.js"></script>
+<script src="../../js/off-canvas.js"></script>
+<script src="../../js/hoverable-collapse.js"></script>
+<script src="../../js/template.js"></script>
+<script src="../../js/settings.js"></script>
+<script src="../../js/todolist.js"></script>
+</body>
+
+</html>

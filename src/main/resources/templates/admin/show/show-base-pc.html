@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Base Products</title>
+  <link rel="stylesheet" href="../../vendors/typicons.font/font/typicons.css">
+  <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css">
+  <link rel="stylesheet" href="../../css/vertical-layout-light/style.css">
+  <link rel="shortcut icon" href="../../images/favicon.png"/>
+</head>
+<body>
+<div class="container-scroller">
+  <nav th:replace="layouts/navbar :: navbar"></nav>
+  <div class="container-fluid page-body-wrapper">
+    <nav th:replace="layouts/sidebar :: sidebar"></nav>
+    <div class="main-panel">
+      <div class="content-wrapper">
+        <div class="row  mt-3">
+          <div class="col-xl-12 d-flex grid-margin stretch-card">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex flex-wrap justify-content-between">
+                  <h4 class="card-title mb-3">Bazadagi mavjud mahsulotlar</h4>
+                  <br>
+                </div>
+                <div class="table-responsive">
+                  <table class="table">
+                    <tbody>
+                    <tr th:each="product : ${productsPc}">
+                      <td>
+                        <div class="d-flex">
+                          <div>
+                            <div> Nomi</div>
+                            <div class="font-weight-bold mt-1" th:utext="${product.getName()}"></div>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        Inventar
+                        <div class="font-weight-bold  mt-1" th:utext="${product.getInventorNumber()}"></div>
+                      </td>
+                      <td>
+                        Soni
+                        <div class="font-weight-bold text-success  mt-1" th:utext="${product.getCount()}"></div>
+                      </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                  <div class="text-right">
+                    <input class="btn btn-light" type="button" value="Orqaga!" onclick="history.back()">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="../../vendors/js/vendor.bundle.base.js"></script>
+<script src="../../js/off-canvas.js"></script>
+<script src="../../js/hoverable-collapse.js"></script>
+<script src="../../js/template.js"></script>
+<script src="../../js/settings.js"></script>
+<script src="../../js/todolist.js"></script>
+<script src="../../vendors/progressbar.js/progressbar.min.js"></script>
+<script src="../../vendors/chart.js/Chart.min.js"></script>
+<script src="../../js/dashboard.js"></script>
+</body>
+</html>
+
