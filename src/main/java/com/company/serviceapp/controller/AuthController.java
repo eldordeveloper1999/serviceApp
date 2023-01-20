@@ -51,10 +51,6 @@ public class AuthController {
         }
     }
 
-
-
-
-
     @GetMapping("/register")
     public String register(Model model, UserDto userdto) {
 

@@ -1,0 +1,110 @@
+<nav class="sidebar sidebar-offcanvas" id="sidebar" th:fragment="sidebar">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="d-flex sidebar-profile">
+        <div class="sidebar-profile-image">
+          <img src="../images/faces/user-avatar.png" alt="image">
+          <span class="sidebar-status-indicator"></span>
+        </div>
+        <div class="sidebar-profile-name">
+          <p class="sidebar-name">
+            Admin
+          </p>
+          <p class="sidebar-designation">
+            Welcome
+          </p>
+        </div>
+      </div>
+      <div class="nav-search">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Type to search..." aria-label="search"
+                 aria-describedby="search">
+          <div class="input-group-append">
+                  <span class="input-group-text" id="search">
+                    <i class="typcn typcn-zoom"></i>
+                  </span>
+          </div>
+        </div>
+      </div>
+      <p class="sidebar-menu-title">Dashboard menu</p>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/acc">
+        <i class="typcn typcn-device-desktop menu-icon"></i>
+        <span class="menu-title">Dashboard </span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false"
+         aria-controls="ui-basic">
+        <i class="typcn typcn-briefcase menu-icon"></i>
+        <span class="menu-title">Buyurtmalar</span>
+        <i class="typcn typcn-chevron-right menu-arrow"></i>
+      </a>
+      <div class="collapse" id="ui-basic">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item"><a class="nav-link" href=/c/home>Yangi buyurtma berish</a>
+          </li>
+          <li class="nav-item"><a class="nav-link"
+                                  th:href="@{'/c/order-view-unfinished'}">Bajarilmagan buyurtmalar</a>
+          </li>
+          <li class="nav-item"><a class="nav-link"
+                                  th:href="@{'/c/order-view-finished'}">Bajarilgan buyurtmalar</a>
+          </li>
+        </ul>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="collapse" href="#form-elements" aria-expanded="false"
+         aria-controls="form-elements">
+        <i class="typcn typcn-film menu-icon"></i>
+        <span class="menu-title">Statistika</span>
+        <i class="menu-arrow"></i>
+      </a>
+      <div class="collapse" id="form-elements">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item"><a class="nav-link" href="/task/monthly">Oylik</a></li>
+        </ul>
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item"><a class="nav-link" href="/task/kvartal">Kvartal</a></li>
+        </ul>
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item"><a class="nav-link" href="/task/yearly">Yillik</a></li>
+        </ul>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="collapse" href="#icons" aria-expanded="false" aria-controls="tables">
+        <i class="typcn typcn-th-small-outline menu-icon"></i>
+        <span class="menu-title">Hisobot</span>
+        <i class="menu-arrow"></i>
+      </a>
+      <div class="collapse" id="icons">
+
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item"><a class="nav-link" th:href="@{/task/report-file/}">Material hisoboti</a></li>
+        </ul>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="collapse" href="#error" aria-expanded="false" aria-controls="error">
+        <i class="typcn typcn-globe-outline menu-icon"></i>
+        <span class="menu-title">Bazadagi mahsulotlar</span>
+        <i class="menu-arrow"></i>
+      </a>
+      <div class="collapse" id="error" th:each="printer : ${printersS}">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item"><a class="nav-link" th:href="@{'/task/show-base/' + ${printer.getId()}}">[[${printer.getModel()}]]</a>
+          </li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+</nav>
+
+
+
+
+
+
+
