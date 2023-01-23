@@ -29,7 +29,7 @@
       <p class="sidebar-menu-title">Dashboard menu</p>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="/acc">
+      <a class="nav-link" href="/acc/">
         <i class="typcn typcn-device-desktop menu-icon"></i>
         <span class="menu-title">Dashboard </span>
       </a>
@@ -43,13 +43,13 @@
       </a>
       <div class="collapse" id="ui-basic">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"><a class="nav-link" href=/c/home>Yangi buyurtma berish</a>
+          <li class="nav-item"><a class="nav-link" th:href="@{/acc/new}">Yangi buyurtma berish</a>
           </li>
           <li class="nav-item"><a class="nav-link"
-                                  th:href="@{'/c/order-view-unfinished'}">Bajarilmagan buyurtmalar</a>
+                                  th:href="@{/acc/printer}">Printer bo'yicha</a>
           </li>
           <li class="nav-item"><a class="nav-link"
-                                  th:href="@{'/c/order-view-finished'}">Bajarilgan buyurtmalar</a>
+                                  th:href="@{/acc/others}">Boshqalar</a>
           </li>
         </ul>
       </div>
@@ -63,13 +63,32 @@
       </a>
       <div class="collapse" id="form-elements">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"><a class="nav-link" href="/task/monthly">Oylik</a></li>
+          <li class="nav-item"><a class="nav-link" th:href="@{'/acc/monthly'}">Oylik</a></li>
         </ul>
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"><a class="nav-link" href="/task/kvartal">Kvartal</a></li>
+          <li class="nav-item"><a class="nav-link" th:href="@{'/acc/quarterly'}">Kvartal</a></li>
         </ul>
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"><a class="nav-link" href="/task/yearly">Yillik</a></li>
+          <li class="nav-item"><a class="nav-link" th:href="@{'/acc/yearly'}">Yillik</a></li>
+        </ul>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="collapse" href="#error" aria-expanded="false"
+         aria-controls="tables">
+        <i class="typcn typcn-th-small-outline menu-icon"></i>
+        <span class="menu-title">Buyurtmani tugatish</span>
+        <i class="menu-arrow"></i>
+      </a>
+      <div class="collapse" id="error">
+
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item"><a class="nav-link" th:href="@{/acc/get-accept/}">Kartrij to'ldirish</a>
+          </li>
+        </ul>
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item"><a class="nav-link" th:href="@{/acc/get-accept-pc/}">Boshqa
+            buyurtmalar</a></li>
         </ul>
       </div>
     </li>
@@ -82,20 +101,7 @@
       <div class="collapse" id="icons">
 
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"><a class="nav-link" th:href="@{/task/report-file/}">Material hisoboti</a></li>
-        </ul>
-      </div>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" data-toggle="collapse" href="#error" aria-expanded="false" aria-controls="error">
-        <i class="typcn typcn-globe-outline menu-icon"></i>
-        <span class="menu-title">Bazadagi mahsulotlar</span>
-        <i class="menu-arrow"></i>
-      </a>
-      <div class="collapse" id="error" th:each="printer : ${printersS}">
-        <ul class="nav flex-column sub-menu">
-          <li class="nav-item"><a class="nav-link" th:href="@{'/task/show-base/' + ${printer.getId()}}">[[${printer.getModel()}]]</a>
-          </li>
+          <li class="nav-item"><a class="nav-link" th:href="@{/acc/report-file/}">Material hisoboti</a></li>
         </ul>
       </div>
     </li>

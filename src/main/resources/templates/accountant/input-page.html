@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Client Page</title>
+
+  <link rel="stylesheet" href="../../vendors/typicons.font/font/typicons.css">
+  <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css">
+
+  <link rel="stylesheet" href="../../css/vertical-layout-light/style.css">
+
+  <link rel="shortcut icon" href="../../images/favicon.png"/>
+</head>
+<body>
+<div class="container-scroller">
+  <nav th:replace="accountant/layout/navbar :: navbar"></nav>
+  <div class="container-fluid page-body-wrapper">
+    <nav th:replace="accountant/layout/sidebar :: sidebar"></nav>
+    <div class="main-panel">
+      <div class="content-wrapper">
+        <div class="row">
+          <div class="col-sm-6">
+            <h3 class="mb-0 font-weight-bold">[[${currentUser}]]</h3>
+          </div>
+        </div>
+        <div class="row  mt-3">
+          <div class="col-xl-12 d-flex grid-margin stretch-card">
+            <div class="col-md-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Printer</h4>
+                  <form class="form-sample" method="post" th:action="@{/acc/receiveRequest}"
+                        th:object="${clientRequest}">
+                    </br>
+                    <div class="form-group">
+                      <label for="qwerty">Iltimos qurilma modelini tanlang</label>
+                      <select class="form-control" id="qwerty"
+                              th:field="*{printerId}">
+                        <div th:each="printer1 : ${printers}">
+                          <option th:value="${printer1.getId()}">[[${printer1.getModel()}]]
+                          </option>
+                        </div>
+                      </select>
+                    </div>
+                    </br>
+                    <div class="form-group row">
+                      <div class="col">
+                        <label>Inventar nomer</label>
+                        <div id="the-basics">
+                          <input class="typeahead" type="text" placeholder="inventar"
+                                 th:field="*{inventarName}">
+                        </div>
+                      </div>
+                    </div>
+                    </br>
+                    </br>
+                    <div class="form-group">
+                      <label for="exampleFormControlSelect2">Iltimos buyurtma statusini
+                        tanlang</label>
+                      <select class="form-control" id="exampleFormControlSelect2"
+                              th:field="*{statusId}">
+                        <div th:each="status : ${statuses}">
+                          <option th:value="${status.getId()}">[[${status.getName()}]]
+                          </option>
+                        </div>
+                      </select>
+                    </div>
+                    </br>
+                    <div class="form-group" th:if="${isHaveUnfinishKartrijTask == false}">
+                      <button type="submit" class="btn btn-primary">Buyurtma berish</button>
+                    </div>
+                    <div class="form-group" th:if="${isHaveUnfinishKartrijTask == true}">
+                      <button type="submit" class="btn btn-primary" disabled title="Sizda hali tugatilmagan buyurtma bor, iltimos oldin buyurtmani bajarilishini kuting">Buyurtma berish</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row  mt-3">
+          <div class="col-xl-12 d-flex grid-margin stretch-card">
+            <div class="col-md-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Boshqa buyurtmalar</h4>
+                  <form class="form-sample" method="post" th:action="@{/acc/receiveRequestPc}"
+                        th:object="${clientRequest}">
+                    </br>
+                    <div class="form-group row">
+                      <div class="col">
+                        <label>Inventar nomer</label>
+                        <div id="bloodhound">
+                          <input class="typeahead" type="text" placeholder="inventar"
+                                 th:field="*{inventarName}">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleFormControlSelect3">Iltimos buyurtmani tanlang</label>
+                      <select class="form-control" id="exampleFormControlSelect3"
+                              th:field="*{taskId}">
+                        <div th:each="task : ${tasks}">
+                          <option th:value="${task.getId()}">[[${task.getTitle()}]]</option>
+                        </div>
+                      </select>
+                    </div>
+                    </br>
+                    </br>
+                    <div class="form-group">
+                      <label for="exampleFormControlSelect4">Iltimos buyurtma statusini
+                        tanlang</label>
+                      <select class="form-control" id="exampleFormControlSelect4"
+                              th:field="*{statusId}">
+                        <div th:each="status : ${statuses}">
+                          <option th:value="${status.getId()}">[[${status.getName()}]]
+                          </option>
+                        </div>
+                      </select>
+                    </div>
+                    </br>
+                    <div class="form-group" th:if="${isHaveUnFinishPcTask == false}">
+                      <button type="submit" class="btn btn-primary">Buyurtma berish</button>
+                    </div>
+                    <div class="form-group" th:if="${isHaveUnFinishPcTask == true}">
+                      <button type="submit" class="btn btn-primary" disabled title="Sizda hali tugatilmagan buyurtma bor, iltimos oldin buyurtmani bajarilishini kuting">Buyurtma berish</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+      </div>
+    </div>
+  </div>
+</div>
+<script src="../../vendors/js/vendor.bundle.base.js"></script>
+<script src="../../js/off-canvas.js"></script>
+<script src="../../js/hoverable-collapse.js"></script>
+<script src="../../js/template.js"></script>
+<script src="../../js/settings.js"></script>
+<script src="../../js/todolist.js"></script>
+<script src="../../vendors/progressbar.js/progressbar.min.js"></script>
+<script src="../../vendors/chart.js/Chart.min.js"></script>
+<script src="../../js/dashboard.js"></script>
+
+<script type="text/javascript" src="newChart.js"></script>
+<script type="text/javascript">
+  myBarChart.myBarChart();
+</script>
+</body>
+</html>
+
+
+
+

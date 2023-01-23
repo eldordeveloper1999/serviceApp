@@ -74,7 +74,7 @@ public class ClientOrderService {
         Printer printer = printerRepository.findById(clientRequestDto.getPrinterId()).get();
         Order order = new Order(null, printer1, department, status, LocalTime.now(), LocalDate.now(), null, false, false, false, null, clientRequestDto.getInventarName(), printer);
         orderRepository.save(order);
-        telegramBot.sendMessage(Long.valueOf("5635787934"), department.getName() + "dan printer bo'yicha zayavka qabul qilindi!!!");
+        telegramBot.sendMessage(Long.valueOf("1973135410"), department.getName() + "dan printer bo'yicha zayavka qabul qilindi!!!");
 
 
     }
