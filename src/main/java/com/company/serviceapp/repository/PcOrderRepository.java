@@ -27,8 +27,7 @@ public interface PcOrderRepository extends JpaRepository<PCOrder, UUID> {
             "         join departments d on d.id = o.department_id\n" +
             "            JOIN tasks t on t.id = O.task_id\n" +
             "            join status s on s.id = O.status_id\n" +
-            "where o.is_full = true\n" +
-            "  and o.is_finished = true")
+            "where o.is_full = true and o.is_finished = true and is_accept = true")
     List<OrderProjectionForClient> getFinishedPcOrdersForProjection();
 
 

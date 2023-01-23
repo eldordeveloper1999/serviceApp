@@ -7,20 +7,14 @@ import com.company.serviceapp.dto.PcRequestDto;
 import com.company.serviceapp.model.*;
 import com.company.serviceapp.projection.OrderProjectionForClient;
 import com.company.serviceapp.repository.*;
-import com.company.serviceapp.service.AdminService;
-import com.company.serviceapp.service.ClientOrderService;
-import com.company.serviceapp.service.OrderService;
-import com.company.serviceapp.service.PcOrderService;
+import com.company.serviceapp.service.*;
 import org.apache.commons.compress.utils.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
@@ -29,6 +23,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -61,6 +56,9 @@ public class AccountantController {
 
     @Autowired
     OrderService orderService;
+
+    @Autowired
+    TaskService taskService;
 
     @GetMapping("/")
     public String home() {
@@ -193,31 +191,138 @@ public class AccountantController {
 
     @GetMapping("/printer")
     public String getPrinterOrders(Model model) {
+
         List<OrderProjectionForClient> printerTasks = orderService.getFinishedPrinterTasks();
 
         model.addAttribute("tasksForShow", printerTasks);
 
-        return "accountant/";
+        return "accountant/view-orders";
     }
 
     @GetMapping("/others")
-    public String getOtherOrders() {
-        return "";
+    public String getOtherOrders(Model model) {
+
+        List<OrderProjectionForClient> pcTasks = pcOrderService.getFinishedPcTasks();
+
+        model.addAttribute("tasksForShow", pcTasks);
+
+        return "accountant/view-pc-orders";
     }
 
     @GetMapping("/monthly")
-    public String getMonthlyOrders() {
-        return "";
+    public String getMonthlyOrders(Model model) {
+        List<String> months = new ArrayList<>(Arrays.asList("Yanvar", "Fevral", "Mart", "Aprel", "May", "Iyun", "Iyul", "Avgust", "Sentabr", "Oktabr", "Noyabr", "Decabr"));
+        List<OrderProjectionForClient> monthlyOrders = taskService.getMonthlyOrders();
+        model.addAttribute("tasksForShow", monthlyOrders);
+        model.addAttribute("months", months);
+        return "accountant/statistics/month";
+    }
+
+    @GetMapping("/pc-monthly")
+    public String getMonthlyPcOrders(Model model) {
+        List<OrderProjectionForClient> monthlyOrders = pcOrderService.getMonthlyOrders();
+        model.addAttribute("tasksForShow", monthlyOrders);
+        return "accountant/statistics/pc-month";
     }
 
     @GetMapping("/quarterly")
-    public String getQuarterly() {
-        return "";
+    public String getQuarterly(Model model) {
+        List<OrderProjectionForClient> quarterlyOrders = taskService.getQuarterlyOrders();
+
+        Integer currentQuarter = taskService.getCurrentQuarter();
+
+        model.addAttribute("tasksForShow", quarterlyOrders);
+        model.addAttribute("quarter", currentQuarter);
+        return "accountant/statistics/quarterly";
+    }
+
+    @GetMapping("/quarterly/{num}")
+    public String getQuarterlyOrders(Model model, @PathVariable Integer num) {
+
+        List<OrderProjectionForClient> quarterlyOrders = taskService.getQuarterlyOrders(num);
+
+        model.addAttribute("tasksForShow", quarterlyOrders);
+        model.addAttribute("quarter", num);
+        return "accountant/statistics/quarterly";
+
+    }
+
+    @GetMapping("/pc-quarterly")
+    public String getCurrentQuarterlyPcOrders(Model model) {
+
+        List<OrderProjectionForClient> quarterlyOrders = pcOrderService.getQuarterlyOrders();
+
+        model.addAttribute("tasksForShow", quarterlyOrders);
+
+        Integer currentQuarter = pcOrderService.getCurrentQuarter();
+        model.addAttribute("quarter", currentQuarter);
+
+        return "accountant/statistics/pc-quarterly";
+
+    }
+
+    @GetMapping("/pc-quarterly/{num}")
+    public String getQuarterlyPcOrders(Model model, @PathVariable Integer num) {
+
+        List<OrderProjectionForClient> quarterlyOrders = pcOrderService.getQuarterlyOrders(num);
+
+        model.addAttribute("tasksForShow", quarterlyOrders);
+        model.addAttribute("quarter", num);
+
+        return "accountant/statistics/pc-quarterly";
+
     }
 
     @GetMapping("/yearly")
-    public String getYearly() {
-        return "";
+    public String getCurrentYearlyOrders(Model model) {
+
+        List<OrderProjectionForClient> yearlyOrders = taskService.getYearlyOrders();
+
+        model.addAttribute("tasksForShow", yearlyOrders);
+
+        model.addAttribute("year", LocalDate.now().getYear());
+
+        return "accountant/statistics/yearly";
+
+    }
+
+    @GetMapping("/yearly/{year}")
+    public String getYearlyOrders(Model model, @PathVariable String year) {
+
+        List<OrderProjectionForClient> yearlyOrders = taskService.getYearlyOrders(year);
+
+        model.addAttribute("year", year);
+
+        model.addAttribute("tasksForShow", yearlyOrders);
+
+        return "accountant/statistics/yearly";
+
+    }
+
+    @GetMapping("/pc-yearly")
+    public String getYearlyPcOrders(Model model) {
+
+        List<OrderProjectionForClient> yearlyOrders = pcOrderService.getYearlyOrders();
+
+        model.addAttribute("tasksForShow", yearlyOrders);
+
+        model.addAttribute("year", LocalDate.now().getYear());
+
+        return "accountant/statistics/pc-yearly";
+
+    }
+
+    @GetMapping("/pc-yearly/{year}")
+    public String getYearlyPcOrders(Model model, @PathVariable String year) {
+
+        List<OrderProjectionForClient> yearlyOrders = pcOrderService.getYearlyOrders(year);
+
+        model.addAttribute("tasksForShow", yearlyOrders);
+
+        model.addAttribute("year", year);
+
+        return "accountant/statistics/pc-yearly";
+
     }
 
     @GetMapping("/report-file")
