@@ -313,7 +313,7 @@ public class AccountantController {
     }
 
     @GetMapping("/pc-yearly/{year}")
-    public String getYearlyPcOrders(Model model, @PathVariable String year) {
+    public String getYearlyPcOrders(Model model, @PathVariable String year)     {
 
         List<OrderProjectionForClient> yearlyOrders = pcOrderService.getYearlyOrders(year);
 
