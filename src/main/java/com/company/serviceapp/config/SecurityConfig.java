@@ -39,9 +39,10 @@ public class SecurityConfig {
                         {
                             try {
                                 auth
+                                        .antMatchers("/").hasAnyRole("ADMIN", "ACCOUNTANT", "USER")
                                         .antMatchers("/task/**", "/monthly/{month}", "/last/{day1}").hasRole("ADMIN")
-                                        .antMatchers("/", "/acc/**").hasAnyRole("ACCOUNTANT", "ADMIN")
-                                        .antMatchers("/", "/c/**", "/pc/**").hasAnyRole("USER", "ADMIN")
+                                        .antMatchers("/acc/**").hasAnyRole("ACCOUNTANT", "ADMIN")
+                                        .antMatchers("/c/**", "/pc/**").hasAnyRole("USER", "ADMIN")
                                         .and()
                                         .formLogin()
                                         .loginPage("/login")

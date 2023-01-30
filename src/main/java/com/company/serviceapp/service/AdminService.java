@@ -143,6 +143,10 @@ public class AdminService {
 
     public ByteArrayInputStream writeToWord(List<ReportDto> reports) throws IOException {
 
+        Integer year =  LocalDate.now().getYear();
+
+        Integer month = LocalDate.now().getMonth().getValue();
+
         XWPFDocument xwpfdocument = new XWPFDocument();
 
         File file = new File("src/main/resources/text.docx");
@@ -165,7 +169,7 @@ public class AdminService {
         XWPFRun xwpfrun1 = para1.createRun();
         xwpfrun1.addBreak();
         xwpfrun1.setFontSize(14);
-        xwpfrun1.setText("2022 Август  ой учун компьютерлар ва принтерларни таъмирлашда  фойдаланилган материаллари тўғрисида ҳисобот");
+        xwpfrun1.setText("" + year + " йил" + month + " ой учун компьютерлар ва принтерларни таъмирлашда  фойдаланилган материаллари тўғрисида ҳисобот");
         xwpfrun1.addBreak();
 
         XWPFTable tab = xwpfdocument.createTable();

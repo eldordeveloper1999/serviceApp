@@ -55,7 +55,7 @@ public class HomeController {
 
 
         if (Objects.equals(currentUser.getRoles(), "ROLE_USER")) {
-            return "redirect:/c";
+            response.sendRedirect("/c/");
         } else if (Objects.equals(currentUser.getRoles(), "ROLE_ACCOUNTANT")) {
             response.sendRedirect("/acc/");
         }
