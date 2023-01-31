@@ -76,76 +76,79 @@ public class AdminService {
 
         List<ReportDto> pcReports = pcOrderService.getPcReports();
 
-        Integer date = LocalDate.now().getMonthValue();
+//        Integer date = LocalDate.now().getMonthValue();
+
+        int date = 2;
 
         all.addAll(pcReports);
 
-        List<BarabanProjection> baraban = barabanRepository.getBaraban();
+        List<BarabanProjection> baraban = barabanRepository.getBaraban(date - 1);
 
         for (BarabanProjection barabanProjection : baraban) {
-            if (barabanProjection.getDate().getMonthValue() == (date - 1)) {
+          //  if (barabanProjection.getDate().getMonthValue() == (date - 1)) {
                 all.add(new ReportDto(barabanProjection.getName(), barabanProjection.getInventorNumber(), barabanProjection.getCountE(), barabanProjection.getDepartmentName()));
-            }
+          //  }
         }
 
-        List<KartrijProjection> kartrij = kartrijRepository.getKartrij();
+        List<KartrijProjection> kartrij = kartrijRepository.getKartrij(date - 1);
 
         for (KartrijProjection kartrijProjection : kartrij) {
-            if (kartrijProjection.getDate().getMonthValue() == (date - 1)) {
+      //      if (kartrijProjection.getDate().getMonthValue() == (date - 1)) {
                 all.add(new ReportDto(kartrijProjection.getName(), kartrijProjection.getInventorNumber(), kartrijProjection.getCountE(), kartrijProjection.getDepartmentName()));
-            }
+         //   }
         }
 
-        List<LezvaProjection> lezva = lezvaRepository.getLezva();
+        List<LezvaProjection> lezva = lezvaRepository.getLezva(date - 1);
 
         for (LezvaProjection lezvaProjection : lezva) {
-            if (lezvaProjection.getDate().getMonthValue() == (date - 1)) {
+       //     if (lezvaProjection.getDate().getMonthValue() == (date - 1)) {
                 all.add(new ReportDto(lezvaProjection.getName(), lezvaProjection.getInventorNumber(), lezvaProjection.getCountE(), lezvaProjection.getDepartmentName()));
-            }
+          //  }
         }
 
-        List<PlyonkaProjection> plyonka = plyonkaRepository.getPlyonka();
+        List<PlyonkaProjection> plyonka = plyonkaRepository.getPlyonka(date - 1);
 
         for (PlyonkaProjection plyonkaProjection : plyonka) {
-            if (plyonkaProjection.getDate().getMonthValue() == (date - 1)) {
+       //     if (plyonkaProjection.getDate().getMonthValue() == (date - 1)) {
                 all.add(new ReportDto(plyonkaProjection.getName(), plyonkaProjection.getInventorNumber(), plyonkaProjection.getCountE(), plyonkaProjection.getDepartmentName()));
-            }
+         //   }
         }
 
-        List<ReportProjection> toner = tonerRepository.getToneRZapravka();
+        List<ReportProjection> toner = tonerRepository.getToneRZapravka(date - 1);
 
         for (ReportProjection reportProjection : toner) {
-            if (reportProjection.getDate().getMonthValue() == (date - 1)) {
+        //    if (reportProjection.getDate().getMonthValue() == (date - 1)) {
                 all.add(new ReportDto(reportProjection.getName(), reportProjection.getInventorNumber(), reportProjection.getCountE(), reportProjection.getDepartmentName()));
-            }
+         //   }
         }
 
-        List<ValProjection> val = valRepository.getVal();
+        List<ValProjection> val = valRepository.getVal(date - 1);
 
         for (ValProjection valProjection : val) {
-            if (valProjection.getDate().getMonthValue() == (date - 1)) {
+        //    if (valProjection.getDate().getMonthValue() == (date - 1)) {
                 all.add(new ReportDto(valProjection.getName(), valProjection.getInventorNumber(), valProjection.getCountE(), valProjection.getDepartmentName()));
-            }
+         //   }
         }
 
-        List<RakelProjection> rakel = rakelRepository.getRakel();
+        List<RakelProjection> rakel = rakelRepository.getRakel(date - 1);
 
         for (RakelProjection rakelProjection : rakel) {
-            if (rakelProjection.getDate().getMonthValue() == (date - 1)) {
+        //    if (rakelProjection.getDate().getMonthValue() == (date - 1)) {
                 all.add(new ReportDto(rakelProjection.getName(), rakelProjection.getInventorNumber(), rakelProjection.getCountE(), rakelProjection.getDepartmentName()));
-            }
+          //  }
         }
 
         return writeToWord(all);
 
     }
 
-
     public ByteArrayInputStream writeToWord(List<ReportDto> reports) throws IOException {
 
         Integer year =  LocalDate.now().getYear();
 
-        Integer month = LocalDate.now().getMonth().getValue();
+        Integer monthInt = LocalDate.now().getMonth().getValue();
+
+        String month = getMonth(monthInt);
 
         XWPFDocument xwpfdocument = new XWPFDocument();
 
@@ -169,17 +172,19 @@ public class AdminService {
         XWPFRun xwpfrun1 = para1.createRun();
         xwpfrun1.addBreak();
         xwpfrun1.setFontSize(14);
-        xwpfrun1.setText("" + year + " йил" + month + " ой учун компьютерлар ва принтерларни таъмирлашда  фойдаланилган материаллари тўғрисида ҳисобот");
+        xwpfrun1.setText("" + year + " йил " + month + " ой учун компьютерлар ва принтерларни таъмирлашда  фойдаланилган материаллари тўғрисида ҳисобот");
         xwpfrun1.addBreak();
 
         XWPFTable tab = xwpfdocument.createTable();
         tab.setWidth("100%");
         XWPFTableRow row = tab.getRow(0);
-        row.getCell(0).setText("Sl. No.");
-        row.addNewTableCell().setText("Name");
-        row.addNewTableCell().setText("Count");
-        row.addNewTableCell().setText("Inventar");
-        row.addNewTableCell().setText("Bo'lim");
+        row.getCell(0).setText("Т/р");
+        row.addNewTableCell().setText("Номи");
+        row.addNewTableCell().setText("Номенкла тура рақами");
+        row.addNewTableCell().setText("Ўлчов бирлиги");
+        row.addNewTableCell().setText("Сони");
+        row.addNewTableCell().setText("Изоҳ\n" +
+                "(Буюрма асосида)\n");
         int i = 1;
         for (ReportDto report : reports) {
             row = tab.createRow();
@@ -187,12 +192,14 @@ public class AdminService {
             row.getCell(0).getParagraphs().get(0).setAlignment(ParagraphAlignment.CENTER);
             row.getCell(1).setText(report.getName());
             row.getCell(1).getParagraphs().get(0).setAlignment(ParagraphAlignment.CENTER);
-            row.getCell(2).setText(String.valueOf(report.getCount()));
+            row.getCell(2).setText(report.getInventorNumber());
             row.getCell(2).getParagraphs().get(0).setAlignment(ParagraphAlignment.CENTER);
-            row.getCell(3).setText(report.getInventorNumber());
+            row.getCell(3).setText("дона");
             row.getCell(3).getParagraphs().get(0).setAlignment(ParagraphAlignment.CENTER);
-            row.getCell(4).setText(report.toString());
+            row.getCell(4).setText(String.valueOf(report.getCount()));
             row.getCell(4).getParagraphs().get(0).setAlignment(ParagraphAlignment.CENTER);
+            row.getCell(5).setText(report.toString());
+            row.getCell(5).getParagraphs().get(0).setAlignment(ParagraphAlignment.CENTER);
         }
         ;
 
@@ -215,6 +222,26 @@ public class AdminService {
         xwpfdocument.write(outputStream);
         return new ByteArrayInputStream(outputStream.toByteArray());
 
+    }
+
+    private String getMonth(Integer month) {
+        String result = "";
+        switch (month) {
+            case 1: result = "" + "Январь";
+            case 2: result = "" + "Февраль";
+            case 3: result = "" + "Март";
+            case 4: result = "" + "Апрель";
+            case 5: result = "" + "Май";
+            case 6: result = "" + "Июнь";
+            case 7: result = "" + "Июль";
+            case 8: result = "" + "Август";
+            case 9: result = "" + "Сентябрь";
+            case 10: result = "" + "Октябрь";
+            case 11: result = "" + "Ноябрь";
+            case 12: result = "" + "Декабрь";
+        }
+
+        return result;
     }
 
     public static void main(String[] args) {

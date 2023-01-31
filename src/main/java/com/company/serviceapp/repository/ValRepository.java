@@ -10,9 +10,10 @@ import java.util.List;
 import java.util.UUID;
 
 public interface ValRepository extends JpaRepository<Val, UUID> {
-    @Query(nativeQuery = true, value = "select vals.name as name, sum(count) as countE, inventar_number as inventorNumber, vals.date " +
+    @Query(nativeQuery = true, value = "select vals.name as name, sum(count) as countE, inventar_number as inventorNumber " +
             " from vals " +
             " join departments d on vals.department_id = d.id " +
-            " group by inventar_number, vals.name, vals.date;")
-    List<ValProjection> getVal();
+            "where DATE_PART('month', vals.date) = :date "+
+            " group by inventar_number, vals.name;")
+    List<ValProjection> getVal(Integer date);
 }

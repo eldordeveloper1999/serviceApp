@@ -10,9 +10,10 @@ import java.util.List;
 import java.util.UUID;
 
 public interface LezvaRepository extends JpaRepository<Lezva, UUID> {
-    @Query(nativeQuery = true, value = "select lezvas.name as name, sum(count) as countE, inventar_number as inventorNumber, lezvas.date " +
+    @Query(nativeQuery = true, value = "select lezvas.name as name, sum(count) as countE, inventar_number as inventorNumber " +
             " from lezvas " +
             " join departments d on lezvas.department_id = d.id " +
-            " group by inventar_number, lezvas.name, lezvas.date;")
-    List<LezvaProjection> getLezva();
+            "where DATE_PART('month', lezvas.date) = :date "+
+            " group by inventar_number, lezvas.name;")
+    List<LezvaProjection> getLezva(Integer date);
 }

@@ -5,6 +5,7 @@ import com.company.serviceapp.dto.OrderDto;
 import com.company.serviceapp.dto.PcOrderDto;
 import com.company.serviceapp.dto.PcRequestDto;
 import com.company.serviceapp.model.*;
+import com.company.serviceapp.projection.OrderProjection;
 import com.company.serviceapp.projection.OrderProjectionForClient;
 import com.company.serviceapp.repository.*;
 import com.company.serviceapp.service.*;
@@ -25,6 +26,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/acc")
@@ -189,24 +191,52 @@ public class AccountantController {
         return "accountant/successPage";
     }
 
-    @GetMapping("/printer")
-    public String getPrinterOrders(Model model) {
+    @GetMapping("/order-view-unfinished")
+    public String unfinishedOrderViewForClient(Model model) {
 
-        List<OrderProjectionForClient> printerTasks = orderService.getFinishedPrinterTasks();
+        UUID userId = getCurrentUser().getId();
 
-        model.addAttribute("tasksForShow", printerTasks);
+        List<OrderProjection> tasksProjections = clientOrderService.getUnfinishedOrdersProjectionByUserId(userId);
+
+        model.addAttribute("tasksForShow", tasksProjections);
 
         return "accountant/view-orders";
     }
 
-    @GetMapping("/others")
-    public String getOtherOrders(Model model) {
+    @GetMapping("/pc-order-view-unfinished")
+    public String unfinishedPcOrderViewForClient(Model model) {
 
-        List<OrderProjectionForClient> pcTasks = pcOrderService.getFinishedPcTasks();
+        UUID userId = getCurrentUser().getId();
 
-        model.addAttribute("tasksForShow", pcTasks);
+        List<OrderProjection> tasksProjections = clientOrderService.getUnfinishedPcOrdersProjectionByUserId(userId);
+
+        model.addAttribute("tasksForShow", tasksProjections);
 
         return "accountant/view-pc-orders";
+    }
+
+    @GetMapping("/order-view-finished")
+    public String finishedOrderViewForClient(Model model) {
+
+        UUID userId = getCurrentUser().getId();
+
+        List<OrderProjectionForClient> tasksProjections = clientOrderService.getFinishedOrdersProjectionByUserId(userId);
+
+        model.addAttribute("tasksForShow", tasksProjections);
+
+        return "accountant/view-orders-f";
+    }
+
+    @GetMapping("/pc-order-view-finished")
+    public String finishedPcOrderViewForClient(Model model) {
+
+        UUID userId = getCurrentUser().getId();
+
+        List<OrderProjectionForClient> tasksProjections = clientOrderService.getFinishedPcOrdersProjectionByUserId(userId);
+
+        model.addAttribute("tasksForShow", tasksProjections);
+
+        return "accountant/view-pc-orders-f";
     }
 
     @GetMapping("/monthly")

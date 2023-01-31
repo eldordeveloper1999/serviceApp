@@ -11,9 +11,10 @@ import java.util.UUID;
 
 public interface BarabanRepository extends JpaRepository<Baraban, UUID> {
     @Query(nativeQuery = true, value = "select barabans.name as name, sum(count) as countE, " +
-            "inventar_number as inventorNumber, barabans.date " +
+            "inventar_number as inventorNumber " +
             "from barabans " +
             "join departments d on barabans.department_id = d.id " +
-            "group by inventar_number, barabans.name, barabans.date;")
-    List<BarabanProjection> getBaraban();
+            "where DATE_PART('month', barabans.date) = :date "+
+            "group by inventar_number, barabans.name;")
+    List<BarabanProjection> getBaraban(Integer date);
 }

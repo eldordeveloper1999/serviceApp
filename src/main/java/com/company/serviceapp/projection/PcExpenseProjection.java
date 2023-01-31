@@ -16,7 +16,7 @@ public interface PcExpenseProjection {
 
     Integer getCountE();
 
-    LocalDate getDate();
+//    LocalDate getDate();
 
     @Value("#{@departmentRepository.getFindByPcEquipmentInventorNumber(target.inventorNumber)}")
     List<String> getDepartmentName();

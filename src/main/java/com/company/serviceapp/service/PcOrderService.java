@@ -346,16 +346,14 @@ public class PcOrderService {
     public List<ReportDto> getPcReports() {
         List<ReportDto> result = new ArrayList<>();
 
-        int date = LocalDate.now().getMonthValue();
+//        int date = LocalDate.now().getMonthValue();
+
+        int date = 2;
 
         List<PcExpenseProjection> pcExpenses = pcExpenseRepository.getPcExpenses(date - 1);
 
         for (PcExpenseProjection pcExpense : pcExpenses) {
             result.add(new ReportDto(pcExpense.getName(), pcExpense.getInventorNumber(), pcExpense.getCountE(), pcExpense.getDepartmentName()));
-        }
-
-        for (ReportDto reportDto : result) {
-            System.out.println(reportDto);
         }
 
         return result;

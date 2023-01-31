@@ -10,9 +10,10 @@ import java.util.List;
 import java.util.UUID;
 
 public interface PlyonkaRepository extends JpaRepository<Plyonka, UUID> {
-    @Query(nativeQuery = true, value = "select plyonkas.name as name, sum(count) as countE, inventar_number as inventorNumber, plyonkas.date" +
+    @Query(nativeQuery = true, value = "select plyonkas.name as name, sum(count) as countE, inventar_number as inventorNumber " +
             " from plyonkas " +
             " join departments d on plyonkas.department_id = d.id " +
-            " group by inventar_number, plyonkas.name, plyonkas.date;")
-    List<PlyonkaProjection> getPlyonka();
+            "where DATE_PART('month', plyonkas.date) = :date "+
+            " group by inventar_number, plyonkas.name;")
+    List<PlyonkaProjection> getPlyonka(Integer date);
 }
